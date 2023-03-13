@@ -90,8 +90,8 @@ pre {
 
 .page p,
 .page pre {
-  font-size: 18px;
-  line-height: 26px;
+  font-size: 22px;
+  line-height: 30px;
 }
 
 .header {
@@ -327,7 +327,7 @@ body.welcome-cover {
 }
 
 ul {
-  font-size: 18px;
+  font-size: 22px;
 }
 
 .mobile-ferris {
@@ -335,7 +335,7 @@ ul {
 }
 
 .page h1 {
-  font-size: 22px;
+  font-size: 26px;
 }
 
 .code {
@@ -391,13 +391,13 @@ iframe {
   }
 
   .page h1 {
-    font-size: 22px;
+    font-size: 26px;
   }
 
   .page p,
   .page pre {
-    font-size: 18px;
-    line-height: 26px;
+    font-size: 22px;
+    line-height: 30px;
   }
 
   .page {
