@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+    <html lang="ko">
+    <head>
+        <title>Rust 튜토리얼 - 자기주도프로젝트</title>
+
+        <meta charset="UTF-8">
+        <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+        <meta content="utf-8" http-equiv="encoding">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="keywords" content="Rust, Programming, Learning">
+        <meta name="description" content="Rust tutorial website based on tour_of_rust">
+        <meta name="theme-color" content="#ff6801"/>
+        <meta http-equiv="Cache-Control" content="max-age=3600">
+        
+        <link rel="stylesheet" href="tour.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/night-owl.min.css">
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.7.0/highlight.min.js"></script>
+
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="./site.webmanifest">
+
+        <script src="./tour.js" defer></script>
+        <script>hljs.highlightAll();</script>
+    </head>
+    <body>
+        <div class="tour">
+            <div class="header">
+                <span class="title"><a href="index.html">Rust 튜토리얼</a></span>
+                <span class="nav">
+                <span class="toc"><a href="TOC_ko.html">목차</a></span>
+            </div>
+            <div class="page">
+            <h1>변수 업데이트</h1>
+            <p>Rust는 변수가 변경 가능한지 여부에 대해 많은 주의를 기울입니다.</p>
+<ul>
+<li><strong>mutable (가변)</strong> - 컴파일러는 해당 변수에 대해 <code>쓰거나 읽을 수</code> 있도록 허용합니다.</li>
+<li><strong>immutable (불변)</strong> - 컴파일러는 해당 변수에 대해서 <code>읽기만</code> 가능하도록 허용합니다.</li>
+</ul>
+<p>가변 값은 <strong>mut</strong> 키워드로 구분됩니다.</p>
+            <div class="bottomnav">
+                <span class="back"><a href="07_ko.html" rel="prev">❮ 이전</a></span>
+                <span class="next"><a href="09_ko.html" rel="next">다음 ❯</a></span>
+            </div>
+            </div>
+            <div class="code">
+            <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&code=fn%20main()%20%7B%0A%20%20%20%20let%20mut%20x%20%3D%2042%3B%0A%20%20%20%20println!(%22%7B%7D%22%2C%20x)%3B%0A%20%20%20%20x%20%3D%2013%3B%0A%20%20%20%20println!(%22%7B%7D%22%2C%20x)%3B%0A%7D%0A" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
+            </div>
+        </div>
+        <!-- <script>
+          document.addEventListener("DOMContentLoaded", function() {
+            // Select the widget's text element using its XPath
+            const xpath = '/html/body/main/div/div/div[1]/div[1]/div/button[1]/div';
+            const widgetText = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+
+            // Change the text content of the element
+            widgetText.textContent = "New Text";
+          });
+        </script> -->
+    </body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+    <html lang="ko">
+    <head>
+        <title>Rust 튜토리얼 - 자기주도프로젝트</title>
+
+        <meta charset="UTF-8">
+        <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+        <meta content="utf-8" http-equiv="encoding">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="keywords" content="Rust, Programming, Learning">
+        <meta name="description" content="Rust tutorial website based on tour_of_rust">
+        <meta name="theme-color" content="#ff6801"/>
+        <meta http-equiv="Cache-Control" content="max-age=3600">
+        
+        <link rel="stylesheet" href="tour.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/night-owl.min.css">
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.7.0/highlight.min.js"></script>
+
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="./site.webmanifest">
+
+        <script src="./tour.js" defer></script>
+        <script>hljs.highlightAll();</script>
+    </head>
+    <body>
+        <div class="tour">
+            <div class="header">
+                <span class="title"><a href="index.html">Rust 튜토리얼</a></span>
+                <span class="nav">
+                <span class="toc"><a href="TOC_ko.html">목차</a></span>
+            </div>
+            <div class="page">
+            <h1>Rust 언어 소개 cont'd</h1>
+            <div align="center">
+<p>
+    <img src="https://user-images.githubusercontent.com/2356749/223428889-67c3ad26-41e4-4469-b008-ec2c0b493e42.png">
+</p>
+<h3>Stackoverflow survey @ 2022</h3>
+</div>
+<p>2022년 Stack Overflow 개발자 설문조사 기준으로 Rust는 "가장 사랑받는 언어" 부문에서 <code>7년 연속</code>으로 1위를 차지할 정도입니다.</p>
+<p>실제 예로 IT 대기업들 Facebook, Google, Mozilla 등이 Rust를 사용하고 있습니다.</p>
+<ul>
+<li><code>Facebook</code>은 Rust를 기반으로 하는 Libra, 디지털 자산을 위한 글로벌 금융 시스템을 구축하는 것을 목표  블록체인 프로젝트를 진행하고 있습니다.</li>
+<li><code>Google</code>은 안드로이드 운영 체제의 새로운 버전에 Rust를 도입</li>
+<li><code>Discord</code>, Discord의 크로스 플랫폼 클라이언트 애플리케이션인 Discord Desktop은 Rust로 작성된 인터페이스 레이어로 구성, Discord Desktop의 인터페이스 레이어는 Chromium Embedded Framework (CEF)을 사용하며, Rust 코드는 CEF의 C++ 래퍼에서 호출됨. 또한 대규모 분산 시스템 처리에 쓰임</li>
+<li><code>Mozilla</code>는 Firefox 브라우저의 일부를 Rust로 작성하여 메모리 안정성을 강화했으며, Rust를 사용하여 Servo라는 웹 렌더링 엔진을 개발, 또한 Rust로 작성된 Cranelift 프로젝트를 통해 LLVM 대체를 위한 컴파일러 및 라이브러리를 제공, 또한 Mozilla의 모바일 운영 체제인 Firefox OS에서 Rust를 사용하는 것도 고려</li>
+<li><code>Linux</code>, C언어만 좋아하는 linus torvald가 linux kernel 6.1부터 공식 지원 언어로 추가</li>
+<li><code>Dropbox</code>, 클라우드 스토리지 회사인 드롭박스는 Rust를 사용하여 안전하고 효율적인 파일 검색 및 동기화 엔진을 구축</li>
+</ul>
+<div align="center">
+<p>
+    <img src="https://user-images.githubusercontent.com/2356749/223660836-5a3dd239-4ddb-432b-9a4a-2e6ac90816ee.png">
+</p>
+</div>
+<p>이제 Rust 광팬처럼 이야기 하지 말고 Rust 언어가 전체적으로 어떻게 작동하는지 자세히 알아보겠습니다.</p>
+<hr />
+<p><code>Rust</code>는 메모리 안정성, 스레드 안전성, 코드 가독성 등을 강조하는 언어입니다.</p>
+<p><code>가비지 컬렉션이나 런타임 오버헤드 없이</code> 메모리를 안전하게 보호할 수 있어 최신 컴퓨팅에서 매우 유용합니다.</p>
+<p>이러한 기능 덕분에 Rust는 빠르고 안정적이며 효율적인 소프트웨어를 작성하는 데 완벽한 언어입니다.</p>
+<p>객체 지향 프로그래밍을 지원하지만, 이를 구현하는 방식이 다릅니다.</p>
+<p>"트레잇(trait)"이라는 개념을 사용하여 <code>객체 지향 프로그래밍</code>을 구현하고 <code>연산자 오버로딩을 지원</code>하며, 이를 통해 객체 지향적인 코드를 작성할 수 있습니다.</p>
+<p><code>암묵적인 타입 변환</code>을 지원하지 않습니다. Rust에서는 <code>C와 직접적으로 상호작용</code>할 수 있는 Foreign Function Interface(FFI)가 제공됩니다.</p>
+<p>Rust는 LLVM(컴파일러 인프라스트럭처) 프로젝트의 일부로 개발되어 <code>LLVM</code>을 사용하여 코드를 컴파일하고 최적화하여 빠른 실행 속도를 제공합니다.</p>
+<p>Rust는 또한 npm처럼 <code>패키지 매니저 Cargo</code>를 내장해 의존성 관리와 빌드 자동화를 지원합니다.</p>
+<div align="center">
+<p>
+    <img src="https://doc.rust-lang.org/cargo/images/Cargo-Logo-Small.png">
+</p>
+</div>
+            <div class="bottomnav">
+                <span class="back"><a href="01_ko.html" rel="prev">❮ 이전</a></span>
+                <span class="next"><a href="03_ko.html" rel="next">다음 ❯</a></span>
+            </div>
+            </div>
+            <div class="code">
+            <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=%23!%5Ballow(dead_code)%5D%0A%0A%2F%2F%20%EC%84%9C%EB%A1%9C%20%EB%8B%A4%EB%A5%B8%20%EB%9D%BC%EC%9D%B4%ED%94%84%ED%83%80%EC%9E%84%EC%9D%84%20%EA%B0%80%EC%A7%84%20%EB%91%90%20%EA%B0%9C%EC%9D%98%20%EC%B0%B8%EC%A1%B0%EB%A5%BC%20%ED%8F%AC%ED%95%A8%ED%95%98%EB%8A%94%20%EA%B5%AC%EC%A1%B0%EC%B2%B4%0Astruct%20Foo%3C'a%2C%20'b%3E%20%7B%0A%20%20%20%20x%3A%20%26'a%20i32%2C%0A%20%20%20%20y%3A%20%26'b%20i32%2C%0A%7D%0A%0A%2F%2F%20Foo%20%EA%B5%AC%EC%A1%B0%EC%B2%B4%EB%A5%BC%20%EA%B0%80%EC%A0%B8%EC%99%80%EC%84%9C%20x%EC%99%80%20%EB%8F%99%EC%9D%BC%ED%95%9C%20%EB%9D%BC%EC%9D%B4%ED%94%84%20%ED%83%80%EC%9E%84%EC%9D%84%20%EA%B0%80%EC%A7%84%20%EC%B0%B8%EC%A1%B0%EB%A5%BC%20%EB%B0%98%ED%99%98%ED%95%98%EB%8A%94%20%ED%95%A8%EC%88%98%0Afn%20get_x%3C'a%2C%20'b%3E(foo%3A%20%26Foo%3C'a%2C%20'b%3E)%20-%3E%20%26'a%20i32%20%7B%0A%20%20%20%20foo.x%0A%7D%0A%0A%2F%2F%20%EC%9B%90%EC%8B%9C%20%ED%8F%AC%EC%9D%B8%ED%84%B0%EB%A5%BC%20%EA%B0%80%EC%A0%B8%EC%99%80%20%EC%9E%84%EC%9D%98%EC%9D%98%20%EB%9D%BC%EC%9D%B4%ED%94%84%ED%83%80%EC%9E%84%EC%9D%84%20%EA%B0%80%EC%A7%84%20%EC%B0%B8%EC%A1%B0%EB%A5%BC%20%EB%B0%98%ED%99%98%ED%95%98%EB%8A%94%20unsafe%20%ED%95%A8%EC%88%98%0Aunsafe%20fn%20deref_raw%3C'a%3E(ptr%3A%20*const%20i32)%20-%3E%20%26'a%20i32%20%7B%0A%20%20%20%20%26*ptr%20%2F%2F%20dereference%20raw%20pointer%0A%7D%0A%0Afn%20main()%20%7B%0A%20%20%20%20let%20x%20%3D%2010%3B%0A%20%20%20%20let%20y%20%3D%2020%3B%0A%0A%20%20%20%20%2F%2F%20x%EC%99%80%20y%EC%97%90%20%EB%8C%80%ED%95%9C%20%EC%B0%B8%EC%A1%B0%EB%A5%BC%20%ED%8F%AC%ED%95%A8%ED%95%98%EB%8A%94%20Foo%20%EA%B5%AC%EC%A1%B0%EC%B2%B4%20%EB%A7%8C%EB%93%A4%EA%B8%B0%0A%20%20%20%20let%20foo%20%3D%20Foo%20%7B%20x%3A%20%26x%2C%20y%3A%20%26y%20%7D%3B%0A%0A%20%20%20%20%2F%2F%20get_x%20%ED%98%B8%EC%B6%9C%ED%95%98%EB%A9%B4%EC%84%9C%20foo.x%EC%99%80%20%EB%8F%99%EC%9D%BC%ED%95%9C%20%EB%9D%BC%EC%9D%B4%ED%94%84%ED%83%80%EC%9E%84%EC%9D%84%20%EA%B0%80%EC%A7%84%20x%EC%97%90%20%EB%8C%80%ED%95%9C%20%EC%B0%B8%EC%A1%B0%20%EA%B0%80%EC%A0%B8%EC%98%A4%EA%B8%B0%0A%20%20%20%20let%20r1%20%3D%20get_x(%26foo)%3B%0A%0A%20%20%20%20%2F%2F%20r1%EC%97%90%EC%84%9C%20%EC%9B%90%EC%8B%9C(raw)%20%ED%8F%AC%EC%9D%B8%ED%84%B0%20%EB%A7%8C%EB%93%A4%EA%B8%B0%0A%20%20%20%20let%20ptr%20%3D%20r1%20as%20*const%20i32%3B%0A%0A%20%20%20%20%2F%2F%20deref_raw%20%ED%98%B8%EC%B6%9C%ED%95%B4%EC%84%9C%20%EC%9E%84%EC%9D%98%EC%9D%98%20%EB%9D%BC%EC%9D%B4%ED%94%84%ED%83%80%EC%9E%84%20'a%EB%A5%BC%20%EA%B0%80%EC%A7%84%20r1%EC%97%90%20%EB%8C%80%ED%95%9C%20%EC%B0%B8%EC%A1%B0%20%EA%B0%80%EC%A0%B8%EC%98%A4%EA%B8%B0%0A%20%20%20%20let%20r2%20%3D%20unsafe%20%7B%20deref_raw(ptr)%20%7D%3B%0A%0A%20%20%20%20%2F%2F%20r1%EA%B3%BC%20r2%EC%9D%98%20%EA%B0%92%EC%9D%84%20%EC%B6%9C%EB%A0%A5%ED%95%98%EA%B8%B0%0A%20%20%20%20println!(%22r1%20%3D%20%7B%7D%2C%20r2%20%3D%20%7B%7D%22%2C%20r1%2C%20r2)%3B%20%20%2F%2F%20r1%20%3D%2010%2C%20r2%20%3D%2010%0A%7D%0A" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
+            </div>
+        </div>
+        <!-- <script>
+          document.addEventListener("DOMContentLoaded", function() {
+            // Select the widget's text element using its XPath
+            const xpath = '/html/body/main/div/div/div[1]/div[1]/div/button[1]/div';
+            const widgetText = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+
+            // Change the text content of the element
+            widgetText.textContent = "New Text";
+          });
+        </script> -->
+    </body>
+</html>

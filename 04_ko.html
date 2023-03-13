@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+    <html lang="ko">
+    <head>
+        <title>Rust 튜토리얼 - 자기주도프로젝트</title>
+
+        <meta charset="UTF-8">
+        <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+        <meta content="utf-8" http-equiv="encoding">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="keywords" content="Rust, Programming, Learning">
+        <meta name="description" content="Rust tutorial website based on tour_of_rust">
+        <meta name="theme-color" content="#ff6801"/>
+        <meta http-equiv="Cache-Control" content="max-age=3600">
+        
+        <link rel="stylesheet" href="tour.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/night-owl.min.css">
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.7.0/highlight.min.js"></script>
+
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="./site.webmanifest">
+
+        <script src="./tour.js" defer></script>
+        <script>hljs.highlightAll();</script>
+    </head>
+    <body>
+        <div class="tour">
+            <div class="header">
+                <span class="title"><a href="index.html">Rust 튜토리얼</a></span>
+                <span class="nav">
+                <span class="toc"><a href="TOC_ko.html">목차</a></span>
+            </div>
+            <div class="page">
+            <h1>Chapter 0 - Conclusion</h1>
+            <p>Rust 소스코드는 <code>.rs</code> 확장자를 가집니다.</p>
+<pre><code class="rust language-rust">fn main() {
+    println!("Hello, world!");
+}
+</code></pre>
+<p>위 코드는 가장 간단한 Rust 프로그램입니다.</p>
+<p>main 함수를 정의하고, println! 매크로를 사용하여 "Hello, world!"를 출력하도록 되어 있습니다.</p>
+<p>위 코드를 hello.rs라는 이름으로 저장한 뒤, 터미널에서 다음과 같은 명령어를 입력해보세요.</p>
+<pre><code class="bash language-bash">$ rustc hello.rs
+$ ./hello
+</code></pre>
+<p><code>Google evcxr</code> - Rust REPL</p>
+            <div class="bottomnav">
+                <span class="back"><a href="03_ko.html" rel="prev">❮ 이전</a></span>
+                <span class="next"><a href="chapter_1_ko.html" rel="next">다음 ❯</a></span>
+            </div>
+            </div>
+            <div class="code"><center><img src="/ferris_lofi.png" alt="Mascot Ferris" width="300" height="236"></center></div>
+        </div>
+        <!-- <script>
+          document.addEventListener("DOMContentLoaded", function() {
+            // Select the widget's text element using its XPath
+            const xpath = '/html/body/main/div/div/div[1]/div[1]/div/button[1]/div';
+            const widgetText = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+
+            // Change the text content of the element
+            widgetText.textContent = "New Text";
+          });
+        </script> -->
+    </body>
+</html>

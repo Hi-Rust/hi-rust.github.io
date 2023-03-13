@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+  <!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+
+  <url>
+    <loc>http://rust-tutorial.site/</loc>
+    <lastmod>2023-03-09T14:17:29+00:00</lastmod>
+    <priority>1.00</priority>
+  </url>
+  <url>
+    <loc>http://rust-tutorial.site/index.html</loc>
+    <lastmod>2023-03-09T14:17:29+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>http://rust-tutorial.site/TOC_en.html</loc>
+    <lastmod>2023-03-09T14:17:29+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>http://rust-tutorial.site/01.html</loc>
+    <lastmod>2023-03-09T14:17:29+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>http://rust-tutorial.site/02.html</loc>
+    <lastmod>2023-03-09T14:17:29+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>http://rust-tutorial.site/03.html</loc>
+    <lastmod>2023-03-09T14:17:29+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>http://rust-tutorial.site/04.html</loc>
+    <lastmod>2023-03-09T14:17:29+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>http://rust-tutorial.site/chapter_1.html</loc>
+    <lastmod>2023-03-09T14:17:29+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>http://rust-tutorial.site/06.html</loc>
+    <lastmod>2023-03-09T14:17:29+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>http://rust-tutorial.site/07.html</loc>
+    <lastmod>2023-03-09T14:17:29+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>http://rust-tutorial.site/08.html</loc>
+    <lastmod>2023-03-09T14:17:29+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>http://rust-tutorial.site/09.html</loc>
+    <lastmod>2023-03-09T14:17:29+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>http://rust-tutorial.site/10.html</loc>
+    <lastmod>2023-03-09T14:17:29+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>http://rust-tutorial.site/11.html</loc>
+    <lastmod>2023-03-09T14:17:29+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>http://rust-tutorial.site/12.html</loc>
+    <lastmod>2023-03-09T14:17:29+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>http://rust-tutorial.site/13.html</loc>
+    <lastmod>2023-03-09T14:17:29+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>http://rust-tutorial.site/14.html</loc>
+    <lastmod>2023-03-09T14:17:29+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>http://rust-tutorial.site/15.html</loc>
+    <lastmod>2023-03-09T14:17:29+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>http://rust-tutorial.site/16.html</loc>
+    <lastmod>2023-03-09T14:17:29+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+
+
+</urlset>

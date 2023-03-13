@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+    <html lang="ko">
+    <head>
+        <title>Rust 튜토리얼 - 자기주도프로젝트</title>
+
+        <meta charset="UTF-8">
+        <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+        <meta content="utf-8" http-equiv="encoding">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="keywords" content="Rust, Programming, Learning">
+        <meta name="description" content="Rust tutorial website based on tour_of_rust">
+        <meta name="theme-color" content="#ff6801"/>
+        <meta http-equiv="Cache-Control" content="max-age=3600">
+        
+        <link rel="stylesheet" href="tour.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/night-owl.min.css">
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.7.0/highlight.min.js"></script>
+
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="./site.webmanifest">
+
+        <script src="./tour.js" defer></script>
+        <script>hljs.highlightAll();</script>
+    </head>
+    <body>
+        <div class="tour">
+            <div class="header">
+                <span class="title"><a href="index.html">Rust 튜토리얼</a></span>
+                <span class="nav">
+                <span class="toc"><a href="TOC_ko.html">목차</a></span>
+            </div>
+            <div class="page">
+            <h1>Constants</h1>
+            <p>Constants allow us to specify a common value that's used throughout
+our code many times efficiently.  Instead of copying values like variables
+where they are used, constants directly replace the text identifier where they
+are used with their value at compile time.</p>
+<p>Unlike variables, constants must always have explicit types.</p>
+<p>Constant names are always in <code>SCREAMING_SNAKE_CASE</code>.</p>
+            <div class="bottomnav">
+                <span class="back"><a href="10_ko.html" rel="prev">❮ 이전</a></span>
+                <span class="next"><a href="12_ko.html" rel="next">다음 ❯</a></span>
+            </div>
+            </div>
+            <div class="code">
+            <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&code=const%20PI%3A%20f32%20%3D%203.14159%3B%0A%0Afn%20main()%20%7B%0A%20%20%20%20println!(%0A%20%20%20%20%20%20%20%20%22To%20make%20an%20apple%20%7B%7D%20from%20scratch%2C%20you%20must%20first%20create%20a%20universe.%22%2C%0A%20%20%20%20%20%20%20%20PI%0A%20%20%20%20)%3B%0A%7D%0A" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
+            </div>
+        </div>
+        <!-- <script>
+          document.addEventListener("DOMContentLoaded", function() {
+            // Select the widget's text element using its XPath
+            const xpath = '/html/body/main/div/div/div[1]/div[1]/div/button[1]/div';
+            const widgetText = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+
+            // Change the text content of the element
+            widgetText.textContent = "New Text";
+          });
+        </script> -->
+    </body>
+</html>

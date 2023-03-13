@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+    <html lang="ko">
+    <head>
+        <title>Rust 튜토리얼 - 자기주도프로젝트</title>
+
+        <meta charset="UTF-8">
+        <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+        <meta content="utf-8" http-equiv="encoding">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="keywords" content="Rust, Programming, Learning">
+        <meta name="description" content="Rust tutorial website based on tour_of_rust">
+        <meta name="theme-color" content="#ff6801"/>
+        <meta http-equiv="Cache-Control" content="max-age=3600">
+        
+        <link rel="stylesheet" href="tour.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/night-owl.min.css">
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.7.0/highlight.min.js"></script>
+
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="./site.webmanifest">
+
+        <script src="./tour.js" defer></script>
+        <script>hljs.highlightAll();</script>
+    </head>
+    <body>
+        <div class="tour">
+            <div class="header">
+                <span class="title"><a href="index.html">Rust 튜토리얼</a></span>
+                <span class="nav">
+                <span class="toc"><a href="TOC_ko.html">목차</a></span>
+            </div>
+            <div class="page">
+            <h1>Rust 언어 소개</h1>
+            <div align="center">
+<p>
+    <img src="https://user-images.githubusercontent.com/2356749/223437049-ef50db6b-1ba4-4087-b67f-efeca5569201.png" alt="Rust logo" style="width: 20%; margin-bottom: 20px; border-radius: 10px;">
+</p>
+<h3>Rust official logo</h3>
+</div>
+<blockquote>
+  <p>I burnt out; ran out of emotional energy to be effective in my role as technical lead for the project mid way through 2013 (at the tail end of my divorce, and while recovering from a surgery -- not a great time in my life), so I took a break, switched off the Rust team - Graydon Hoare</p>
+</blockquote>
+<p>Rust는 Firefox 브라우저로 유명한 Mozilla의 개발자 Graydon Hoare에 의해 2009년에 첫 시작된 <s>지금은 Swift 언어 기여자</s></p>
+<p>안전하고 빠른 시스템 개발을 위한 언어로, 다음과 같은 이유에서 다양한 분야에서 점점 더 많이 사용:</p>
+<ul>
+<li><b>안전성</b>: 메모리 안정성과 스레드 안전성을 강조하는 언어, Rust 컴파일러는 실행 시간 오류를 줄이기 위해 메모리 오류를 검출하고, 이를 방지하기 위해 안전한 코드를 작성할 수 있도록 도움</li>
+<li><b>높은 성능</b>: 꽤 많은 경우에서 C와 비슷한 수준의 성능을 낼 수도 있음, LLVM을 사용하여 코드를 컴파일하고 최적화하여 빠른 실행 속도를 제공</li>
+<li><b>확장성</b>: 다양한 운영 체제와 아키텍처를 지원, 크로스 플랫폼 개발에 적합하며, 다양한 분야에서 사용</li>
+<li><b>생산성</b>: 코드의 가독성을 강조하며, 표준 라이브러리와 함께 제공되는 Cargo를 통해 의존성 관리와 빌드 자동화를 지원</li>
+<li><b>지속 가능성</b>: 대형 기업들이 개발하고 사용하고 있으며, 다양한 커뮤니티와 생태계가 활발하게 운영</li>
+</ul>
+<div align="center">
+<p>
+    <img src="https://user-images.githubusercontent.com/2356749/223432206-3c5feda9-a212-485c-a9b8-21ee2aebfbda.png">
+</p>
+<h3>정렬 알고리즘 (C/Rust 비교)</h3>
+</div>
+            <div class="bottomnav">
+                <span class="back"><a href="index.html" rel="prev">❮ 이전</a></span>
+                <span class="next"><a href="02_ko.html" rel="next">다음 ❯</a></span>
+            </div>
+            </div>
+            <div class="code">
+            <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=fn%20main()%20%7B%0A%20%20%20%20%2F%2F%20%EC%83%81%ED%99%A9%3A%20%EB%B9%8C%EB%A6%B0%20%EB%8F%99%EC%95%88%20%EA%B0%92%20%EC%9D%B4%EB%8F%99%ED%95%98%EA%B8%B0%0A%20%20%20%20let%20mut%20x%20%3D%205%3B%0A%20%20%20%20let%20y%20%3D%20%26mut%20x%3B%20%2F%2F%20y%EB%8A%94%20x%EB%A5%BC%20%EA%B0%80%EB%B3%80%EC%9C%BC%EB%A1%9C%20%EB%B9%8C%EB%A6%B0%EB%8B%A4%0A%20%20%20%20let%20z%20%3D%20x%3B%20%2F%2F%20%EC%98%A4%EB%A5%98%3A%20%60x%60%EA%B0%80%20mutable%20%EB%8C%80%EC%97%AC%20%EC%A4%91%EC%9D%B4%EA%B8%B0%20%EB%95%8C%EB%AC%B8%EC%97%90%20%EC%9D%B4%EB%8F%99%ED%95%A0%20%EC%88%98%20%EC%97%86%EC%9D%8C%0A%0A%20%20%20%20%2F%2F%20%EC%83%81%ED%99%A9%3A%20%EA%B0%80%EB%B3%80%20%EB%8C%80%EC%97%AC%20%EC%A4%91%EC%9D%B8%20%EA%B3%B3%EC%97%90%20%EC%A0%91%EA%B7%BC%ED%95%98%EA%B8%B0%0A%20%20%20%20let%20mut%20v%20%3D%20vec!%5B1%2C%202%2C%203%5D%3B%0A%20%20%20%20for%20i%20in%20%26v%20%7B%0A%20%20%20%20%20%20%20%20%2F%2F%20i%EB%8A%94%20v%EB%A5%BC%20%EB%B6%88%EB%B3%80%20%EC%83%81%ED%83%9C%EB%A1%9C%20%EB%B9%8C%EB%A6%B0%EB%8B%A4%0A%20%20%20%20%20%20%20%20v.push(34)%3B%20%2F%2F%20%EC%98%A4%EB%A5%98%3A%20%60v%60%EA%B0%80%20immutable%EC%9C%BC%EB%A1%9C%20%EB%8C%80%EC%97%AC%20%EC%A4%91%EC%9D%B4%EB%AF%80%EB%A1%9C%20%EA%B0%80%EB%B3%80%EC%9C%BC%EB%A1%9C%20%EB%8C%80%EC%97%AC%ED%95%A0%20%EC%88%98%20%EC%97%86%EC%9D%8C%0A%20%20%20%20%20%20%20%20println!(%22%7B%7D%22%2C%20i)%3B%0A%20%20%20%20%7D%0A%7D%0A" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
+            </div>
+        </div>
+        <!-- <script>
+          document.addEventListener("DOMContentLoaded", function() {
+            // Select the widget's text element using its XPath
+            const xpath = '/html/body/main/div/div/div[1]/div[1]/div/button[1]/div';
+            const widgetText = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+
+            // Change the text content of the element
+            widgetText.textContent = "New Text";
+          });
+        </script> -->
+    </body>
+</html>
