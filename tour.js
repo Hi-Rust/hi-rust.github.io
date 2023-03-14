@@ -19,14 +19,7 @@ const setupKeys = () => {
     const xDiff = xDown - xUp;
     const yDiff = yDown - yUp;
 
-    const distance = Math.sqrt(xDiff ** 2 + yDiff ** 2);
-    const time = e.timeStamp - e.touches[0].timeStamp;
-    const velocity = distance / time;
-
-    // Set the minimum velocity threshold (in pixels/ms)
-    const minVelocityThreshold = 0.2;
-
-    if (Math.abs(xDiff) > Math.abs(yDiff) && velocity > minVelocityThreshold) {
+    if (Math.abs(xDiff) > Math.abs(yDiff) && Math.abs(xDiff) > 30) {
       if (xDiff > 0) {
         const link = document.querySelector(".next a");
         if (link) {
