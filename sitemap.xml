@@ -7,98 +7,98 @@
 
 
   <url>
-    <loc>http://rust-tutorial.site/</loc>
-    <lastmod>2023-03-09T14:17:29+00:00</lastmod>
+    <loc>http://rust-study.ajousw.kr/</loc>
+    <lastmod>2023-03-14T12:29:30+00:00</lastmod>
     <priority>1.00</priority>
   </url>
   <url>
-    <loc>http://rust-tutorial.site/index.html</loc>
-    <lastmod>2023-03-09T14:17:29+00:00</lastmod>
+    <loc>http://rust-study.ajousw.kr/index.html</loc>
+    <lastmod>2023-03-14T12:29:30+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>http://rust-tutorial.site/TOC_en.html</loc>
-    <lastmod>2023-03-09T14:17:29+00:00</lastmod>
+    <loc>http://rust-study.ajousw.kr/TOC_ko.html</loc>
+    <lastmod>2023-03-14T12:20:24+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>http://rust-tutorial.site/01.html</loc>
-    <lastmod>2023-03-09T14:17:29+00:00</lastmod>
+    <loc>http://rust-study.ajousw.kr/01_ko.html</loc>
+    <lastmod>2023-03-14T12:20:24+00:00</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>http://rust-tutorial.site/02.html</loc>
-    <lastmod>2023-03-09T14:17:29+00:00</lastmod>
+    <loc>http://rust-study.ajousw.kr/02_ko.html</loc>
+    <lastmod>2023-03-14T12:20:24+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://rust-tutorial.site/03.html</loc>
-    <lastmod>2023-03-09T14:17:29+00:00</lastmod>
+    <loc>http://rust-study.ajousw.kr/03_ko.html</loc>
+    <lastmod>2023-03-14T12:20:24+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://rust-tutorial.site/04.html</loc>
-    <lastmod>2023-03-09T14:17:29+00:00</lastmod>
+    <loc>http://rust-study.ajousw.kr/04_ko.html</loc>
+    <lastmod>2023-03-14T12:20:24+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://rust-tutorial.site/chapter_1.html</loc>
-    <lastmod>2023-03-09T14:17:29+00:00</lastmod>
+    <loc>http://rust-study.ajousw.kr/chapter_1_ko.html</loc>
+    <lastmod>2023-03-14T12:20:24+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://rust-tutorial.site/06.html</loc>
-    <lastmod>2023-03-09T14:17:29+00:00</lastmod>
+    <loc>http://rust-study.ajousw.kr/06_ko.html</loc>
+    <lastmod>2023-03-14T12:20:24+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://rust-tutorial.site/07.html</loc>
-    <lastmod>2023-03-09T14:17:29+00:00</lastmod>
+    <loc>http://rust-study.ajousw.kr/07_ko.html</loc>
+    <lastmod>2023-03-14T12:20:24+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://rust-tutorial.site/08.html</loc>
-    <lastmod>2023-03-09T14:17:29+00:00</lastmod>
+    <loc>http://rust-study.ajousw.kr/08_ko.html</loc>
+    <lastmod>2023-03-14T12:20:24+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://rust-tutorial.site/09.html</loc>
-    <lastmod>2023-03-09T14:17:29+00:00</lastmod>
+    <loc>http://rust-study.ajousw.kr/09_ko.html</loc>
+    <lastmod>2023-03-14T12:20:24+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://rust-tutorial.site/10.html</loc>
-    <lastmod>2023-03-09T14:17:29+00:00</lastmod>
+    <loc>http://rust-study.ajousw.kr/10_ko.html</loc>
+    <lastmod>2023-03-14T12:20:24+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://rust-tutorial.site/11.html</loc>
-    <lastmod>2023-03-09T14:17:29+00:00</lastmod>
+    <loc>http://rust-study.ajousw.kr/11_ko.html</loc>
+    <lastmod>2023-03-14T12:20:24+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://rust-tutorial.site/12.html</loc>
-    <lastmod>2023-03-09T14:17:29+00:00</lastmod>
+    <loc>http://rust-study.ajousw.kr/12_ko.html</loc>
+    <lastmod>2023-03-14T12:20:24+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://rust-tutorial.site/13.html</loc>
-    <lastmod>2023-03-09T14:17:29+00:00</lastmod>
+    <loc>http://rust-study.ajousw.kr/13_ko.html</loc>
+    <lastmod>2023-03-14T12:20:24+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://rust-tutorial.site/14.html</loc>
-    <lastmod>2023-03-09T14:17:29+00:00</lastmod>
+    <loc>http://rust-study.ajousw.kr/14_ko.html</loc>
+    <lastmod>2023-03-14T12:20:24+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://rust-tutorial.site/15.html</loc>
-    <lastmod>2023-03-09T14:17:29+00:00</lastmod>
+    <loc>http://rust-study.ajousw.kr/15_ko.html</loc>
+    <lastmod>2023-03-14T12:20:24+00:00</lastmod>
     <priority>0.64</priority>
   </url>
   <url>
-    <loc>http://rust-tutorial.site/16.html</loc>
-    <lastmod>2023-03-09T14:17:29+00:00</lastmod>
+    <loc>http://rust-study.ajousw.kr/16_ko.html</loc>
+    <lastmod>2023-03-14T12:20:24+00:00</lastmod>
     <priority>0.64</priority>
   </url>
 
