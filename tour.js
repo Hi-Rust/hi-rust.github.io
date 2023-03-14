@@ -19,7 +19,7 @@ const setupKeys = () => {
     const xDiff = xDown - xUp;
     const yDiff = yDown - yUp;
 
-    if (Math.abs(xDiff) > Math.abs(yDiff) && Math.abs(xDiff) > 30) {
+    if (Math.abs(xDiff) > Math.abs(yDiff)) {
       if (xDiff > 0) {
         const link = document.querySelector(".next a");
         if (link) {
@@ -57,6 +57,25 @@ const setupKeys = () => {
     }
   });
 };
+
+// in code block, should not be same
+const codeElement = document.querySelector("iframe");
+if (codeElement) {
+  setupKeys();
+  codeElement.addEventListener("load", () => {
+    setTimeout(() => {
+      document.querySelector("a").focus();
+      setupKeys();
+    }, 100);
+    setTimeout(() => {
+      document.querySelector("a").focus();
+      setupKeys();
+    }, 1000);
+    setupKeys();
+  });
+} else {
+  setupKeys();
+}
 
 // in iframe, should not be same
 const iframeElement = document.querySelector("iframe");

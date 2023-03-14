@@ -91,7 +91,7 @@ pre {
 .page p,
 .page pre {
   font-size: 22px;
-  line-height: 30px;
+  line-height: 40px;
 }
 
 .header {
@@ -398,7 +398,7 @@ iframe {
   .page p,
   .page pre {
     font-size: 22px;
-    line-height: 30px;
+    line-height: 40px;
   }
 
   .page {
