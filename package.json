@@ -4,11 +4,11 @@
   "version": "1.0.0",
   "scripts": {
     "lint:lessons": "prettier --write ./frontend/lessons/*/*.yaml",
-    "lint": "npm run lint:lessons && npm run lint:webassembly && eslint --fix generate.js public/",
+    "lint": "npm run lint:lessons && npm run lint:webassembly && eslint --fix generate.js docs/",
     "prebuild": "npm run clean",
-    "build": "node ./frontend/generate.js ./frontend/lessons public",
+    "build": "node ./frontend/generate.js ./frontend/lessons docs",
     "serve": "npm run build && python fast.py",
-    "clean": "rimraf --glob ./public/*.html",
+    "clean": "rimraf --glob ./docs/*.html",
     "watch": "nodemon -w ./frontend/lessons/**/* -e yaml --exec npm run serve",
     "tauri": "tauri"
   },
