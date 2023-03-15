@@ -1,0 +1,28 @@
+{
+  "name": "rust",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "lint:lessons": "prettier --write ./frontend/lessons/*/*.yaml",
+    "lint": "npm run lint:lessons && npm run lint:webassembly && eslint --fix generate.js public/",
+    "prebuild": "npm run clean",
+    "build": "node ./frontend/generate.js ./frontend/lessons public",
+    "serve": "npm run build && python fast.py",
+    "clean": "rimraf --glob ./public/*.html",
+    "watch": "nodemon -w ./frontend/lessons/**/* -e yaml --exec npm run serve",
+    "tauri": "tauri"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.0",
+    "showdown": "^2.1.0"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^1.2.3",
+    "eslint": "^8.35.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "nodemon": "^2.0.21",
+    "prettier": "^2.8.4",
+    "rimraf": "^4.4.0"
+  }
+}

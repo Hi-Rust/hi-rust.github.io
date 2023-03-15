@@ -1,0 +1,5 @@
+lessons.json
+docs/*.html
+node_modules
+.vscode
+node_modules

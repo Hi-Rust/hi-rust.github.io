@@ -2,6 +2,7 @@ const setupKeys = () => {
   // Mobile swipe left/right
   let xDown = null;
   let yDown = null;
+  const swipeThreshold = 10; // swipe sensitivity
 
   const handleTouchStart = e => {
     xDown = e.touches[0].clientX;
@@ -13,28 +14,25 @@ const setupKeys = () => {
       return;
     }
 
-    const xUp = e.touches[0].clientX;
-    const yUp = e.touches[0].clientY;
+    const xDiff = xDown - e.touches[0].clientX;
+    const yDiff = yDown - e.touches[0].clientY;
 
-    const xDiff = xDown - xUp;
-    const yDiff = yDown - yUp;
+    // alert(Math.abs(xDiff));
 
-    if (Math.abs(xDiff) > Math.abs(yDiff)) {
-      if (xDiff > 0) {
-        const link = document.querySelector(".next a");
-        if (link) {
-          link.click();
-        }
-      } else {
-        const link = document.querySelector(".back a");
-        if (link) {
-          link.click();
-        }
-      }
+    if (Math.abs(xDiff) > swipeThreshold && Math.abs(xDiff) > Math.abs(yDiff)) {
+      const direction = xDiff > 0 ? "next" : "back";
+      triggerLinkClick(direction);
     }
 
     xDown = null;
     yDown = null;
+  };
+
+  const triggerLinkClick = direction => {
+    const link = document.querySelector(`.${direction} a`);
+    if (link) {
+      link.click();
+    }
   };
 
   document.addEventListener("touchstart", handleTouchStart, false);
@@ -45,21 +43,17 @@ const setupKeys = () => {
     if (e.ctrlKey || e.altKey || e.metaKey || e.shiftKey) {
       return;
     }
-    let link;
     if (e.key === "Right" || e.key === "ArrowRight") {
-      link = document.querySelector(".next a");
+      triggerLinkClick("next");
     }
     if (e.key === "Left" || e.key === "ArrowLeft") {
-      link = document.querySelector(".back a");
-    }
-    if (link) {
-      link.click();
+      triggerLinkClick("back");
     }
   });
 };
 
 // in code block, should not be same
-const codeElement = document.querySelector("iframe");
+const codeElement = document.querySelector("code");
 if (codeElement) {
   setupKeys();
   codeElement.addEventListener("load", () => {

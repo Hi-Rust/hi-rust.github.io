@@ -1,0 +1,168 @@
+- title: >-
+    Hello World!
+  code: >-
+    https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=%2F%2F%20C-family%20%EC%96%B8%EC%96%B4%2C%20%EB%A9%94%EC%9D%B8%20%ED%95%A8%EC%88%98%EC%97%90%EC%84%9C%20%EC%8B%9C%EC%9E%91%ED%95%A8%0Afn%20main()%20%7B%0A%20%20%20%20println!(%22Hello%20%EB%9F%AC%EC%8A%A4%ED%8A%B8%F0%9F%A6%80%22)%3B%20%2F%2F%20%EC%A3%BC%EC%84%9D%0A%7D%0A
+  content_markdown: |
+    <img src="/intro.webp" alt="Welcome to Rust" style="width: 100%; margin-bottom: 20px; border-radius: 10px;">
+
+    Mirror 1: [http://rust-study.ajousw.kr/](http://rust-study.ajousw.kr/index.html)
+
+    Mirror 2: [https://hi-rust.github.io/](https://hi-rust.github.io/index.html)
+
+    Binary: [Windows](https://github.com/Alfex4936/Rust-Tutorial/releases/download/v1.0.0/Rust.Tutorial_1.0.0_x64_Windows.msi) | [Mac](https://) | [Linux](https://) - TODO
+
+
+    **자기주도프로젝트 🎉**
+
+    안녕하세요. 자기주도프로젝트 Rust 튜토리얼 영상을 위한 웹사이트입니다.
+
+    `프로그래밍 기초 지식이 있는 분들을 타겟`으로 만들었습니다. (C & Python)
+
+    키보드 <span class="emoji">⬅️</span>/<span class="emoji">➡️</span> 버튼으로 페이지를 이동할 수 있습니다.
+
+    질문이 있다면 <code>ikr@kakao.com</code> 로 메일 남겨주세요.
+
+    - Rust 언어 소개
+    - Rust 언어 기본 문법
+    - Rust 언어 고급 (비동기, Unsafe, 매크로 등)
+    - Rust 언어 간단한 유저 라이브러리 제작 및 업로드
+    - Rust 언어로 Python 언어 라이브러리 제작
+    - Rust 언어 웹 프레임워크를 이용한 카카오톡 챗봇 서버 제작
+- title: >-
+    Rust 언어 소개
+  code: >-
+    https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=fn+main%28%29+%7B%0A++++%2F%2F+%EC%83%81%ED%99%A9%3A+%EC%86%8C%EC%9C%A0%EA%B6%8C+%EC%9D%B4%EC%A0%84%ED%95%98%EA%B8%B0%0A++++let+mut+x+%3D+String%3A%3Afrom%28%22hello%22%29%3B%0A++++let+y+%3D+x%3B+%2F%2F+x%EC%9D%98+%EC%86%8C%EC%9C%A0%EA%B6%8C%EC%9D%B4+y%EB%A1%9C+%EC%9D%B4%EC%A0%84%EB%90%A8%0A++++println%21%28%22%7B%7D%22%2C+y%29%3B+%2F%2F+%EA%B2%B0%EA%B3%BC%3A+hello%0A+++++++++++++++++++++++%2F%2F+println%21%28%22%7B%7D%22%2C+x%29%3B+%2F%2F+%EC%98%A4%EB%A5%98%3A+%60x%60%EC%9D%98+%EC%86%8C%EC%9C%A0%EA%B6%8C%EC%9D%B4+y%EB%A1%9C+%EC%9D%B4%EC%A0%84%EB%90%98%EC%96%B4+%EB%8D%94+%EC%9D%B4%EC%83%81+%EC%82%AC%EC%9A%A9%ED%95%A0+%EC%88%98+%EC%97%86%EC%9D%8C%0A%0A++++%2F%2F+%EC%83%81%ED%99%A9%3A+%EB%8C%80%EC%97%AC%ED%95%98%EA%B8%B0%0A++++let+v+%3D+vec%21%5B1%2C+2%2C+3%5D%3B%0A++++let+s+%3D+sum%28%26v%29%3B+%2F%2F+v%EB%A5%BC+%EB%B6%88%EB%B3%80%EC%9C%BC%EB%A1%9C+%EB%8C%80%EC%97%AC%ED%95%98%EA%B3%A0+%ED%95%A9%EA%B3%84%EB%A5%BC+%EA%B5%AC%ED%95%9C%EB%8B%A4.%0A++++println%21%28%22%7B%7D%22%2C+s%29%3B+%2F%2F+%EA%B2%B0%EA%B3%BC%3A+6%0A%0A++++let+k+%3D+v%3B%0A++++%2F%2F+println%21%28%22%7B%3A%23%3F%7D%22%2C+v%29%3B+%2F%2F+error%5BE0382%5D%3A+borrow+of+moved+value%3A+%60v%60%0A%7D%0A%0Afn+sum%28v%3A+%26Vec%3Ci32%3E%29+-%3E+i32+%7B%0A++++let+mut+result+%3D+0%3B%0A++++for+i+in+v+%7B%0A++++++++result+%2B%3D+*i%3B%0A++++%7D%0A++++result%0A%7D%0A
+  content_markdown: |
+    <div align="center">
+    <p>
+        <img src="https://user-images.githubusercontent.com/2356749/223437049-ef50db6b-1ba4-4087-b67f-efeca5569201.png" alt="Rust logo" style="width: 20%; margin-bottom: 20px; border-radius: 10px;">
+    </p>
+    <h3>Rust official logo</h3>
+    </div>
+
+    > I burnt out; ran out of emotional energy to be effective in my role as technical lead for the project mid way through 2013 (at the tail end of my divorce, and while recovering from a surgery -- not a great time in my life), so I took a break, switched off the Rust team - Graydon Hoare
+
+    Rust는 Firefox 브라우저로 유명한 Mozilla의 개발자 [Graydon Hoare에 의해 2006년](https://arxiv.org/pdf/2206.05503&ved=2ahUKEwjT9o-23NX9AhVw5XMBHYQQB74QFnoECBwQAQ&usg=AOvVaw1uVD6znXuafpUqPN3jkm9C)에 첫 시작된 <s>지금은 Swift 언어 기여자</s>
+
+    안전하고 빠른 시스템 개발을 위한 언어로, 다음과 같은 이유에서 다양한 분야에서 점점 더 많이 사용:
+
+    <div align="center">
+    <p>
+        <img src="https://user-images.githubusercontent.com/2356749/224587883-afa83e65-f531-46d4-9580-c341052a0981.png">
+    </p>
+    <h3>소유권 및 빌리기 예제</h3>
+    </div>
+
+    - <b>안전성</b>: 메모리 안정성과 스레드 안전성을 강조하는 언어, Rust 컴파일러는 실행 시간 오류를 줄이기 위해 메모리 오류를 검출하고, 이를 방지하기 위해 안전한 코드를 작성할 수 있도록 도움
+    - <b>높은 성능</b>: 꽤 많은 경우에서 C와 비슷한 수준의 성능을 낼 수도 있음, LLVM을 사용하여 코드를 컴파일하고 최적화하여 빠른 실행 속도를 제공
+    - <b>확장성</b>: 다양한 운영 체제와 아키텍처를 지원, 크로스 플랫폼 개발에 적합하며, 다양한 분야에서 사용
+    - <b>생산성</b>: 코드의 가독성을 강조하며, 표준 라이브러리와 함께 제공되는 Cargo를 통해 의존성 관리와 빌드 자동화를 지원
+    - <b>지속 가능성</b>: 대형 기업들이 개발하고 사용하고 있으며, 다양한 커뮤니티와 생태계가 활발하게 운영
+
+    <div align="center">
+    <p>
+        <img src="https://user-images.githubusercontent.com/2356749/224588206-b98317ef-be24-450e-b825-cc98bf7984bb.png">
+    </p>
+    <h3>CPU time 벤치마크</h3>
+    </div>
+- title: >-
+    Rust 언어 소개 cont'd
+  code: >-
+    https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=%23!%5Ballow(dead_code)%5D%0A%0A%2F%2F%20%EC%84%9C%EB%A1%9C%20%EB%8B%A4%EB%A5%B8%20%EB%9D%BC%EC%9D%B4%ED%94%84%ED%83%80%EC%9E%84%EC%9D%84%20%EA%B0%80%EC%A7%84%20%EB%91%90%20%EA%B0%9C%EC%9D%98%20%EC%B0%B8%EC%A1%B0%EB%A5%BC%20%ED%8F%AC%ED%95%A8%ED%95%98%EB%8A%94%20%EA%B5%AC%EC%A1%B0%EC%B2%B4%0Astruct%20Foo%3C'a%2C%20'b%3E%20%7B%0A%20%20%20%20x%3A%20%26'a%20i32%2C%0A%20%20%20%20y%3A%20%26'b%20i32%2C%0A%7D%0A%0A%2F%2F%20Foo%20%EA%B5%AC%EC%A1%B0%EC%B2%B4%EB%A5%BC%20%EA%B0%80%EC%A0%B8%EC%99%80%EC%84%9C%20x%EC%99%80%20%EB%8F%99%EC%9D%BC%ED%95%9C%20%EB%9D%BC%EC%9D%B4%ED%94%84%20%ED%83%80%EC%9E%84%EC%9D%84%20%EA%B0%80%EC%A7%84%20%EC%B0%B8%EC%A1%B0%EB%A5%BC%20%EB%B0%98%ED%99%98%ED%95%98%EB%8A%94%20%ED%95%A8%EC%88%98%0Afn%20get_x%3C'a%2C%20'b%3E(foo%3A%20%26Foo%3C'a%2C%20'b%3E)%20-%3E%20%26'a%20i32%20%7B%0A%20%20%20%20foo.x%0A%7D%0A%0A%2F%2F%20%EC%9B%90%EC%8B%9C%20%ED%8F%AC%EC%9D%B8%ED%84%B0%EB%A5%BC%20%EA%B0%80%EC%A0%B8%EC%99%80%20%EC%9E%84%EC%9D%98%EC%9D%98%20%EB%9D%BC%EC%9D%B4%ED%94%84%ED%83%80%EC%9E%84%EC%9D%84%20%EA%B0%80%EC%A7%84%20%EC%B0%B8%EC%A1%B0%EB%A5%BC%20%EB%B0%98%ED%99%98%ED%95%98%EB%8A%94%20unsafe%20%ED%95%A8%EC%88%98%0Aunsafe%20fn%20deref_raw%3C'a%3E(ptr%3A%20*const%20i32)%20-%3E%20%26'a%20i32%20%7B%0A%20%20%20%20%26*ptr%20%2F%2F%20dereference%20raw%20pointer%0A%7D%0A%0Afn%20main()%20%7B%0A%20%20%20%20let%20x%20%3D%2010%3B%0A%20%20%20%20let%20y%20%3D%2020%3B%0A%0A%20%20%20%20%2F%2F%20x%EC%99%80%20y%EC%97%90%20%EB%8C%80%ED%95%9C%20%EC%B0%B8%EC%A1%B0%EB%A5%BC%20%ED%8F%AC%ED%95%A8%ED%95%98%EB%8A%94%20Foo%20%EA%B5%AC%EC%A1%B0%EC%B2%B4%20%EB%A7%8C%EB%93%A4%EA%B8%B0%0A%20%20%20%20let%20foo%20%3D%20Foo%20%7B%20x%3A%20%26x%2C%20y%3A%20%26y%20%7D%3B%0A%0A%20%20%20%20%2F%2F%20get_x%20%ED%98%B8%EC%B6%9C%ED%95%98%EB%A9%B4%EC%84%9C%20foo.x%EC%99%80%20%EB%8F%99%EC%9D%BC%ED%95%9C%20%EB%9D%BC%EC%9D%B4%ED%94%84%ED%83%80%EC%9E%84%EC%9D%84%20%EA%B0%80%EC%A7%84%20x%EC%97%90%20%EB%8C%80%ED%95%9C%20%EC%B0%B8%EC%A1%B0%20%EA%B0%80%EC%A0%B8%EC%98%A4%EA%B8%B0%0A%20%20%20%20let%20r1%20%3D%20get_x(%26foo)%3B%0A%0A%20%20%20%20%2F%2F%20r1%EC%97%90%EC%84%9C%20%EC%9B%90%EC%8B%9C(raw)%20%ED%8F%AC%EC%9D%B8%ED%84%B0%20%EB%A7%8C%EB%93%A4%EA%B8%B0%0A%20%20%20%20let%20ptr%20%3D%20r1%20as%20*const%20i32%3B%0A%0A%20%20%20%20%2F%2F%20deref_raw%20%ED%98%B8%EC%B6%9C%ED%95%B4%EC%84%9C%20%EC%9E%84%EC%9D%98%EC%9D%98%20%EB%9D%BC%EC%9D%B4%ED%94%84%ED%83%80%EC%9E%84%20'a%EB%A5%BC%20%EA%B0%80%EC%A7%84%20r1%EC%97%90%20%EB%8C%80%ED%95%9C%20%EC%B0%B8%EC%A1%B0%20%EA%B0%80%EC%A0%B8%EC%98%A4%EA%B8%B0%0A%20%20%20%20let%20r2%20%3D%20unsafe%20%7B%20deref_raw(ptr)%20%7D%3B%0A%0A%20%20%20%20%2F%2F%20r1%EA%B3%BC%20r2%EC%9D%98%20%EA%B0%92%EC%9D%84%20%EC%B6%9C%EB%A0%A5%ED%95%98%EA%B8%B0%0A%20%20%20%20println!(%22r1%20%3D%20%7B%7D%2C%20r2%20%3D%20%7B%7D%22%2C%20r1%2C%20r2)%3B%20%20%2F%2F%20r1%20%3D%2010%2C%20r2%20%3D%2010%0A%7D%0A
+  content_markdown: |
+    <div align="center">
+    <p>
+        <img src="https://user-images.githubusercontent.com/2356749/223428889-67c3ad26-41e4-4469-b008-ec2c0b493e42.png">
+    </p>
+    <h3>Stackoverflow survey @ 2022</h3>
+    </div>
+
+    2022년 Stack Overflow 개발자 설문조사 기준으로 Rust는 "가장 사랑받는 언어" 부문에서 `7년 연속`으로 1위를 차지할 정도입니다.
+
+    실제 예로 IT 대기업들 Facebook, Google, Mozilla 등이 Rust를 사용하고 있습니다.
+
+    - `Facebook`은 Rust를 기반으로 하는 Libra, 디지털 자산을 위한 글로벌 금융 시스템을 구축하는 것을 목표 블록체인 프로젝트를 진행, HHVM, API etc
+    - `Google`은 안드로이드 운영 체제의 새로운 버전에 Rust를 도입, crosvm, Fuchsia OS, etc
+    - `Discord`, Discord의 크로스 플랫폼 클라이언트 애플리케이션인 Discord Desktop은 Rust로 작성된 인터페이스 레이어로 구성, Discord Desktop의 인터페이스 레이어는 Chromium Embedded Framework (CEF)을 사용하며, Rust 코드는 CEF의 C++ 래퍼에서 호출됨. 또한 대규모 분산 시스템 처리에 쓰임
+    - `Mozilla`는 Firefox 브라우저의 일부를 Rust로 작성하여 메모리 안정성을 강화했으며, Rust를 사용하여 Servo라는 웹 렌더링 엔진을 개발, 또한 Rust로 작성된 Cranelift 프로젝트를 통해 LLVM 대체를 위한 컴파일러 및 라이브러리를 제공, 또한 Mozilla의 모바일 운영 체제인 Firefox OS에서 Rust를 사용하는 것도 고려
+    - `Linux`, C언어만 좋아하는 linus torvald가 linux kernel 6.1부터 공식 지원 언어로 추가
+    - `Amazon`, Bottlerocket 운영 체제와 AWS 니트로 시스템, etc 
+    - `Dropbox`, 클라우드 스토리지 회사인 드롭박스는 Rust를 사용하여 안전하고 효율적인 파일 검색 및 동기화 엔진을 구축 (exa byte storage)
+
+    <div align="center">
+    <p>
+        <img src="https://user-images.githubusercontent.com/2356749/223660836-5a3dd239-4ddb-432b-9a4a-2e6ac90816ee.png">
+    </p>
+    </div>
+
+    이제 Rust 팬처럼만 이야기 하지 말고 Rust 언어가 전체적으로 어떻게 작동하는지 자세히 알아보겠습니다.
+
+    ---
+
+    `Rust`는 메모리 안정성, 스레드 안전성, 코드 가독성 등을 강조하는 언어입니다.
+
+    `가비지 컬렉션이나 런타임 오버헤드 없이` 메모리를 안전하게 보호할 수 있어 최신 컴퓨팅에서 매우 유용합니다.
+
+    이러한 기능 덕분에 Rust는 빠르고 안정적이며 효율적인 소프트웨어를 작성하는 데 완벽한 언어입니다.
+
+    객체 지향 프로그래밍을 지원하지만, 이를 구현하는 방식이 다릅니다.
+
+    "트레잇(trait)"이라는 개념을 사용하여 `객체 지향 프로그래밍`을 구현하고 `연산자 오버로딩을 지원`하며, 이를 통해 객체 지향적인 코드를 작성할 수 있습니다.
+
+    `암묵적인 타입 변환`을 지원하지 않습니다. Rust에서는 `C와 직접적으로 상호작용`할 수 있는 Foreign Function Interface(FFI)가 제공됩니다.
+
+    Rust는 LLVM(컴파일러 인프라스트럭처) 프로젝트의 일부로 개발되어 `LLVM`을 사용하여 코드를 컴파일하고 최적화하여 빠른 실행 속도를 제공합니다.
+
+    Rust는 또한 npm처럼 `패키지 매니저 Cargo`를 내장해 의존성 관리와 빌드 자동화를 지원합니다.
+
+    <div align="center">
+    <p>
+        <img src="https://doc.rust-lang.org/cargo/images/Cargo-Logo-Small.png">
+    </p>
+    </div>
+- title: >-
+    Rust 언어 설치
+  code: >-
+    https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=curl%20--proto%20'%3Dhttps'%20--tlsv1.2%20-sSf%20https%3A%2F%2Fsh.rustup.rs%20%7C%20sh
+  content_markdown: |
+    [https://rustup.rs/](https://rustup.rs/)
+
+    [`Microsoft C++ Build Tools`](https://visualstudio.microsoft.com/ko/visual-cpp-build-tools/)
+
+    [@Link](https://www.rust-lang.org/tools/install)
+
+    <div align="center">
+    <p>
+        <img src="https://user-images.githubusercontent.com/2356749/223654372-637cbfd5-06f3-4c20-b97c-aefcdbbdafe6.png">
+    </p>
+    </div>
+
+    <div align="center">
+    <p>
+        <img src="https://user-images.githubusercontent.com/2356749/223654483-ba1db2fa-cc6b-4104-93ca-456852d2b4e5.png">
+    </p>
+    </div>
+- title: >-
+    Chapter 0 - 마무리
+  content_markdown: |
+    Rust 소스코드는 `.rs` 확장자를 가집니다.
+
+    ```rust
+    fn main() {
+        println!("Hello, world!");
+    }
+    ```
+
+    위 코드는 가장 간단한 Rust 프로그램입니다.
+
+    main 함수를 정의하고, println! 매크로를 사용하여 "Hello, world!"를 출력하도록 되어 있습니다.
+
+    위 코드를 hello.rs라는 이름으로 저장한 뒤, 터미널에서 다음과 같은 명령어를 입력해보세요.
+
+    ```bash
+    $ rustc hello.rs
+    $ ./hello
+    $ Hello, world! (stdout)
+    ```
+
+    `Google evcxr` - [Rust REPL](https://github.com/evcxr/evcxr)

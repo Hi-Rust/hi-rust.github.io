@@ -1,0 +1,224 @@
+- title: Chapter 1 - The Basics
+  content_markdown: >
+    무슨 언어를 배우든 똑같이 기본부터 살펴보겠습니다. (변수, 함수, 클래스 등)
+
+
+    Rust 언어 비공식이지만 거의 흔하게 쓰이는 마스코트, 게(crab)의 이름은 **Ferris** 입니다.
+
+
+    <pre><code>let ferris = crab!()</code></pre>
+
+
+    또한 Rust를 사용하거나, 기여하거나 관심이 있는 사람들을 **Rustacean**[러스테이션] 라고 부릅니다.
+- title: The Rust Playground
+  code: >-
+    https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&code=fn%20main()%20%7B%0A%20%20%20%20println!(%22Welcome%20to%20the%20playground!%20You%20can%20modify%20the%20code%20in%20here.%22)%3B%0A%7D%0A
+  content_markdown: >
+    이 웹사이트에서는 [Rust
+    Playground](https://play.rust-lang.org) 를 사용하여 온라인에서 직접 실행해 볼 수 있습니다.
+
+
+    우측에서 보다시피 <code>println()</code>도 아닌 <code>println!()</code> 와 같은 코드를 사용하여 stdout에 출력하는 것을 볼 수 있습니다.
+
+
+    `!` 이것은 매크로 (Macro)라는 Rust 언어의 특별한 기능 중 하나인데 우선은 생김새만 알고 나중에 뭔지 알아보겠습니다.
+
+
+    Rust 언어는 쉽게 작성할 수 있도록 (syntactic sugar) 도와주지만 사실은 컴파일러가 아래처럼 처리합니다.
+
+
+    (`cargo inspect` 명령어)
+
+
+    <pre><code class="rust">#![feature(prelude_import)]
+
+
+    #[prelude_import]
+
+    use std::prelude::rust_2018::*;
+
+
+    #[macro_use]
+
+    extern crate std;
+
+
+    fn main() {
+        {
+            ::std::io::_print(format_args!("Welcome to the playground! You can modify the code in here.\n"));
+        };
+    }
+    </code></pre>
+
+- title: 변수
+  code: >-
+    https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=fn%20main()%20%7B%0A%20%20%20%20%2F%2F%20let%20%ED%82%A4%EC%9B%8C%EB%93%9C%EB%A5%BC%20%EC%82%AC%EC%9A%A9%ED%95%98%EC%97%AC%20%EB%B3%80%EC%88%98%EB%A5%BC%20%EC%84%A0%EC%96%B8%ED%95%A9%EB%8B%88%EB%8B%A4.%0A%20%20%20%20let%20x%20%3D%205%3B%20%2F%2F%20x%EC%97%90%205%EB%9D%BC%EB%8A%94%20%EA%B0%92%EC%9D%84%20%ED%95%A0%EB%8B%B9%ED%95%A9%EB%8B%88%EB%8B%A4.%0A%20%20%20%20let%20y%3A%20f32%20%3D%203.14%3B%20%2F%2F%20y%EC%97%90%203.14%EB%9D%BC%EB%8A%94%20%EA%B0%92%EC%9D%84%20%ED%95%A0%EB%8B%B9%ED%95%98%EB%A9%B0%2C%20f32%20%ED%83%80%EC%9E%85%EC%9D%84%20%EB%AA%85%EC%8B%9C%EC%A0%81%EC%9C%BC%EB%A1%9C%20%EC%A7%80%EC%A0%95%ED%95%A9%EB%8B%88%EB%8B%A4.%0A%0A%20%20%20%20%2F%2F%20Rust%EB%8A%94%20%EB%8C%80%EB%B6%80%EB%B6%84%EC%9D%98%20%EA%B2%BD%EC%9A%B0%20%EB%B3%80%EC%88%98%EC%9D%98%20%ED%83%80%EC%9E%85%EC%9D%84%20%EC%B6%94%EB%A1%A0%ED%95%A0%20%EC%88%98%20%EC%9E%88%EC%8A%B5%EB%8B%88%EB%8B%A4.%0A%20%20%20%20%2F%2F%20%EB%A7%8C%EC%95%BD%20%ED%83%80%EC%9E%85%EC%9D%84%20%EB%AA%85%EC%8B%9C%EC%A0%81%EC%9C%BC%EB%A1%9C%20%EC%A7%80%EC%A0%95%ED%95%98%EA%B3%A0%20%EC%8B%B6%EB%8B%A4%EB%A9%B4%20%EB%8B%A4%EC%9D%8C%EA%B3%BC%20%EA%B0%99%EC%9D%B4%20%EC%9E%91%EC%84%B1%ED%95%A9%EB%8B%88%EB%8B%A4.%0A%20%20%20%20let%20z%3A%20i64%20%3D%20100%3B%0A%0A%20%20%20%20%2F%2F%20%EB%B3%80%EC%88%98%EC%9D%98%20%EC%9D%B4%EB%A6%84%EC%9D%84%20%EC%97%AC%EB%9F%AC%20%EB%B2%88%20%EC%82%AC%EC%9A%A9%ED%95%98%EC%97%AC%20%EA%B0%92%EC%9D%84%20%ED%95%A0%EB%8B%B9%ED%95%A0%20%EC%88%98%20%EC%9E%88%EC%8A%B5%EB%8B%88%EB%8B%A4.%0A%20%20%20%20let%20mut%20count%20%3D%200%3B%0A%20%20%20%20count%20%3D%201%3B%0A%20%20%20%20count%20%3D%202%3B%0A%0A%20%20%20%20%2F%2F%20%EB%B3%80%EC%88%98%EC%9D%98%20%ED%83%80%EC%9E%85%EC%9D%84%20%EB%B3%80%EA%B2%BD%ED%95%98%EC%97%AC%20%EC%9E%AC%EC%82%AC%EC%9A%A9%ED%95%A0%20%EC%88%98%20%EC%9E%88%EC%8A%B5%EB%8B%88%EB%8B%A4.%0A%20%20%20%20let%20x%20%3D%20%22hello%22%3B%20%2F%2F%20x%EB%8A%94%20%EB%AC%B8%EC%9E%90%EC%97%B4%20%ED%83%80%EC%9E%85%EC%9E%85%EB%8B%88%EB%8B%A4.%0A%20%20%20%20let%20x%20%3D%205%3B%20%2F%2F%20x%EB%8A%94%20%EC%A0%95%EC%88%98%20%ED%83%80%EC%9E%85%EC%9C%BC%EB%A1%9C%20%EB%B3%80%EA%B2%BD%EB%90%A9%EB%8B%88%EB%8B%A4.%0A%0A%20%20%20%20%2F%2F%20%EB%B3%80%EC%88%98%EC%9D%98%20%EC%9D%B4%EB%A6%84%EC%9D%80%20snake_case%EB%A1%9C%20%EC%9E%91%EC%84%B1%ED%95%A9%EB%8B%88%EB%8B%A4.%0A%20%20%20%20let%20first_name%20%3D%20%22Choi%22%3B%0A%20%20%20%20let%20last_name%20%3D%20%22Blah%22%3B%0A%0A%20%20%20%20%2F%2F%20%EB%B3%80%EC%88%98%EC%9D%98%20%EA%B0%92%EC%9D%84%20%EC%B6%9C%EB%A0%A5%ED%95%A9%EB%8B%88%EB%8B%A4.%0A%20%20%20%20println!(%22x%20is%20%7B%7D%22%2C%20x)%3B%20%2F%2F%20%22x%20is%205%22%EA%B0%80%20%EC%B6%9C%EB%A0%A5%EB%90%A9%EB%8B%88%EB%8B%A4.%0A%7D%0A
+  content_markdown: >
+    Rust에서는 `let` 키워드를 사용하여 변수를 선언합니다.
+
+    <div align="center">
+    <p>
+        <img src="https://user-images.githubusercontent.com/2356749/223641752-4b38e61f-82f4-450d-b778-526cb7ad618c.png">
+    </p>
+    </div>
+
+    값을 할당할 때, Rust는 거의 대부분 변수의 타입을 추론할 수 있습니다.
+
+
+    만약 Rust가 추론하지 못하면 변수의 선언 시 타입을 추가할 수 있습니다.
+
+
+    변수의 이름을 여러 번 사용하여 값을 할당할 수 있습니다.
+
+
+    이를 "shadowing"이라고 하며, 변수의 타입은 재할당될 때마다 변경됩니다.
+
+
+    변수의 이름은 항상 `snake_case`로 작성합니다.
+
+- title: 변수 업데이트
+  code: >-
+    https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&code=fn%20main()%20%7B%0A%20%20%20%20let%20mut%20x%20%3D%2042%3B%0A%20%20%20%20println!(%22%7B%7D%22%2C%20x)%3B%0A%20%20%20%20x%20%3D%2013%3B%0A%20%20%20%20println!(%22%7B%7D%22%2C%20x)%3B%0A%7D%0A
+  content_markdown: >
+    Rust는 변수가 변경 가능한지 여부에 대해 많은 주의를 기울입니다.
+
+    * **mutable (가변)** - 컴파일러는 해당 변수에 대해 `쓰거나 읽을 수` 있도록 허용합니다.
+
+    * **immutable (불변)** - 컴파일러는 해당 변수에 대해서 `읽기만` 가능하도록 허용합니다.
+
+
+    가변 값은 **mut** 키워드로 구분됩니다.
+
+- title: 기본 타입
+  code: >-
+    https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&code=fn%20main()%20%7B%0A%20%20%20%20let%20x%20%3D%2012%3B%20%2F%2F%20by%20default%20this%20is%20i32%0A%20%20%20%20let%20a%20%3D%2012u8%3B%0A%20%20%20%20let%20b%20%3D%204.3%3B%20%2F%2F%20by%20default%20this%20is%20f64%0A%20%20%20%20let%20c%20%3D%204.3f32%3B%0A%20%20%20%20let%20bv%20%3D%20true%3B%0A%20%20%20%20let%20t%20%3D%20(13%2C%20false)%3B%0A%20%20%20%20let%20sentence%20%3D%20%22hello%20world!%22%3B%0A%20%20%20%20println!(%0A%20%20%20%20%20%20%20%20%22%7B%7D%20%7B%7D%20%7B%7D%20%7B%7D%20%7B%7D%20%7B%7D%20%7B%7D%20%7B%7D%22%2C%0A%20%20%20%20%20%20%20%20x%2C%20a%2C%20b%2C%20c%2C%20bv%2C%20t.0%2C%20t.1%2C%20sentence%0A%20%20%20%20)%3B%0A%7D%0A
+  content_markdown: >
+    Rust는 다양한 익숙한 유형을 제공합니다:
+
+
+    * booleans - `bool`로 참/거짓을 나타냅니다.
+
+    * unsigned integers (부호 없는 정수) - 음이 아닌 정수를 나타내는 `u8`, `u16`, `u32`, `u64`, `u128`입니다.
+
+    * signed integers (부호 있는 정수) - 정수를 나타내는 `i8`, `i16`, `i32`, `i64`, `i128`입니다.
+
+    * pointer sized integers - 메모리에서 색인과 항목의 크기를 나타내는 `usize`, `isize`입니다.
+
+    * floating point - `f32` `f64`
+
+    * tuple - 고정된 값의 시퀀스를 스택에 전달하는 `(value, value, ...)` 입니다.
+
+    * arrays - 컴파일 시점에서 크기가 고정되어 있는 비슷한 요소의 집합으로 `[value, value, ...]` 입니다.
+
+    * slices - 런타임에 길이가 알려진 비슷한 요소의 집합입니다.
+
+    * `str`(문자열 슬라이스) - 런타임에 길이가 알려진 텍스트입니다.
+
+
+    다른 언어에서 사용하는 것보다 텍스트는 더 복잡할 수 있습니다.
+    
+    Rust가 시스템 프로그래밍 언어이기 때문에, 기존에 익숙하지 않은 메모리 문제에 대해서도 신경쓰고 있습니다.
+    
+    이에 대해서는 나중에 자세히 다룰 예정입니다.
+
+
+    숫자형은 숫자 끝에 유형을 명시하여 명시적으로 지정할 수 있습니다(예: `13u32`, `2u8`).
+- title: Basic Type Conversion
+  code: >-
+    https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&code=fn%20main()%20%7B%0A%20%20%20%20let%20a%20%3D%2013u8%3B%0A%20%20%20%20let%20b%20%3D%207u32%3B%0A%20%20%20%20let%20c%20%3D%20a%20as%20u32%20%2B%20b%3B%0A%20%20%20%20println!(%22%7B%7D%22%2C%20c)%3B%0A%0A%20%20%20%20let%20t%20%3D%20true%3B%0A%20%20%20%20println!(%22%7B%7D%22%2C%20t%20as%20u8)%3B%0A%7D%0A
+  content_markdown: >
+    Rust는 숫자 변수 타입에 대해 알고 있어야하며, `u8`를 `u32`로 쉽게 사용할 수 없습니다.
+
+
+    다행히 Rust는 **as** 키워드를 사용하여 숫자형을 쉽게 변환할 수 있습니다.
+- title: Constants
+  code: >-
+    https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&code=const%20PI%3A%20f32%20%3D%203.14159%3B%0A%0Afn%20main()%20%7B%0A%20%20%20%20println!(%0A%20%20%20%20%20%20%20%20%22To%20make%20an%20apple%20%7B%7D%20from%20scratch%2C%20you%20must%20first%20create%20a%20universe.%22%2C%0A%20%20%20%20%20%20%20%20PI%0A%20%20%20%20)%3B%0A%7D%0A
+  content_markdown: >
+    상수는 변수와 달리 곳곳에서 사용되는 공통된 값을 효율적으로 지정하는 데 사용됩니다.
+    
+
+    변수와 같은 곳에서 값이 복사되는 대신, 상수는 컴파일 시간에 사용되는 위치에서 직접 값을 대체합니다.
+
+
+    변수와 달리, 상수는 항상 명시적인 유형을 가져야 합니다.
+
+
+    상수 이름은 항상 `SCREAMING_SNAKE_CASE`로 지정됩니다.
+- title: Arrays
+  code: >-
+    https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&code=fn%20main()%20%7B%0A%20%20%20%20let%20nums%3A%20%5Bi32%3B%203%5D%20%3D%20%5B1%2C%202%2C%203%5D%3B%0A%20%20%20%20println!(%22%7B%3A%3F%7D%22%2C%20nums)%3B%0A%20%20%20%20println!(%22%7B%7D%22%2C%20nums%5B1%5D)%3B%0A%7D%0A
+  content_markdown: >
+    *배열*은 동일한 유형의 데이터 요소들의 **고정된 길이 집합**입니다.
+
+
+    *배열*의 데이터 유형은 `[T;N]` 입니다.
+    
+    (T는 요소의 유형이고, N은 컴파일 시간에 알려진 고정 길이)
+
+
+    개별 요소는 `[x]` 연산자를 사용하여 가져올 수 있습니다.
+    
+    여기서 x는 원하는 요소의 *usize* 인덱스(0부터 시작)입니다.
+
+
+    가변 길이의 컬렉션, 즉 가변 배열은 나중에 **Vectors**에 대한 챕터에서 소개됩니다.
+- title: Functions
+  code: >-
+    https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&code=fn%20add(x%3A%20i32%2C%20y%3A%20i32)%20-%3E%20i32%20%7B%0A%20%20%20%20return%20x%20%2B%20y%3B%0A%7D%0A%0Afn%20subtract(x%3A%20i32%2C%20y%3A%20i32)%20-%3E%20i32%20%7B%0A%20%20%20%20x%20-%20y%0A%7D%0A%0Afn%20main()%20%7B%0A%20%20%20%20println!(%2242%20%2B%2013%20%3D%20%7B%7D%22%2C%20add(42%2C%2013))%3B%0A%20%20%20%20println!(%2242%20-%2013%20%3D%20%7B%7D%22%2C%20subtract(42%2C%2013))%3B%0A%7D%0A
+  content_markdown: >
+    함수는 매개변수 (parameter)가 없거나 여러 개일 수 있습니다.
+
+
+    이 예제에서 *add* 함수는 `i32`(32비트 길이의 부호 있는 정수)형 두 개의 인수를 취합니다.
+
+
+    *subtract* 함수에서와 같이 표현식만 반환하려면 `return` 키워드와 세미콜론을 삭제할 수 있습니다.
+
+
+    함수 이름은 항상 `snake_case`로 지정됩니다.
+
+
+    힌트: 함수를 정의하는 경우, 해당 함수가 수신하는 데이터를 매개변수 (parameter)라고합니다.
+    
+    그 함수를 호출하고 데이터를 전달하면 인수(argument)라고합니다.
+- title: Multiple Return Values
+  code: >-
+    https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&code=fn%20swap(x%3A%20i32%2C%20y%3A%20i32)%20-%3E%20(i32%2C%20i32)%20%7B%0A%20%20%20%20return%20(y%2C%20x)%3B%0A%7D%0A%0Afn%20main()%20%7B%0A%20%20%20%20%2F%2F%20return%20a%20tuple%20of%20return%20values%0A%20%20%20%20let%20result%20%3D%20swap(123%2C%20321)%3B%0A%20%20%20%20println!(%22%7B%7D%20%7B%7D%22%2C%20result.0%2C%20result.1)%3B%0A%0A%20%20%20%20%2F%2F%20destructure%20the%20tuple%20into%20two%20variables%20names%0A%20%20%20%20let%20(a%2C%20b)%20%3D%20swap(result.0%2C%20result.1)%3B%0A%20%20%20%20println!(%22%7B%7D%20%7B%7D%22%2C%20a%2C%20b)%3B%0A%7D%0A
+  content_markdown: >
+    함수는 값의 **튜플**을 반환하여 여러 값을 반환할 수 있습니다.
+
+
+    튜플 요소는 인덱스 번호를 사용하여 참조할 수 있습니다.
+
+
+    Rust는 여러 형식의 destructuring을 지원합니다.
+    
+    우리는 더 많은 형태로 볼 것이며, 이를 통해 데이터 구조의 하위 요소를 직관적으로 추출할 수 있습니다.
+- title: Returning Nothing
+  content_markdown: >
+    함수에 대해 반환 유형이 지정되어 있지 않으면, *unit*이라고도 하는 빈 튜플을 반환합니다.
+
+
+    빈 튜플은 `()`로 나타낼 수 있습니다.
+
+
+    `()`을 사용하는 것은 드문 경우이지만 충분히 자주 출현하기 때문에 무슨 일이 일어나는지 알아둘 가치가 있습니다.
+  code: >-
+    https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&code=fn%20make_nothing()%20-%3E%20()%20%7B%0A%20%20%20%20return%20()%3B%0A%7D%0A%0A%2F%2F%20the%20return%20type%20is%20implied%20as%20()%0Afn%20make_nothing2()%20%7B%0A%20%20%20%20%2F%2F%20this%20function%20will%20return%20()%20if%20nothing%20is%20specified%20to%20return%0A%7D%0A%0Afn%20main()%20%7B%0A%20%20%20%20let%20a%20%3D%20make_nothing()%3B%0A%20%20%20%20let%20b%20%3D%20make_nothing2()%3B%0A%0A%20%20%20%20%2F%2F%20Printing%20a%20debug%20string%20for%20a%20and%20b%0A%20%20%20%20%2F%2F%20Because%20it's%20hard%20to%20print%20nothingness%0A%20%20%20%20println!(%22The%20value%20of%20a%3A%20%7B%3A%3F%7D%22%2C%20a)%3B%0A%20%20%20%20println!(%22The%20value%20of%20b%3A%20%7B%3A%3F%7D%22%2C%20b)%3B%0A%7D%0A
+- title: Chapter 1 - 마무리
+  content_markdown: >
+    Rust의 기초는 그렇게 나쁘지 않죠?
+
+    시스템 프로그래밍 언어로서, Rust는 메모리 내 값을 매우 신경쓰며,
+    
+    수정이 가능한지 불가능한지 여부, 그리고 수학 연산이 의도한 대로 수행되는지 확인합니다.
+
+
+    참고:
+
+    * [Youtube: Rust Cast - Rust의 기본 숫자 유형에 대한 더 깊은 이해](https://www.youtube.com/watch?v=n5TRBkbystY)
+
+    * [Website: Rust Book 2018 - 기본 데이터 유형에 대한 자세한 설명](https://doc.rust-lang.org/1.30.0/book/2018-edition/ch03-02-data-types.html)
+
+    * [Website: Rust Cheat Sheet - Data Types](https://cheats.rs/#basic-types)
