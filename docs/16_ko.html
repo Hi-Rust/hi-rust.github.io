@@ -14,15 +14,17 @@
         
         <link rel="stylesheet" href="tour.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/night-owl.min.css">
-        <script src="//unpkg.com/@highlightjs/cdn-assets@11.7.0/highlight.min.js"></script>
-
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
+        
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-        <link rel="manifest" href="./site.webmanifest">
-
+        <link rel="/manifest" href="./site.webmanifest">
+        
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.7.0/highlight.min.js"></script>
         <script src="./tour.js" defer></script>
-        <script>hljs.highlightAll();</script>
+        <!-- <script>hljs.highlightAll();</script> -->
+        <script src="./highlight.badge.min.js"></script>
     </head>
     <body>
         <div class="tour">
@@ -59,5 +61,19 @@
             widgetText.textContent = "New Text";
           });
         </script> -->
+
+        <script>
+        var pres = document.querySelectorAll("pre>code");
+        for (var i = 0; i < pres.length; i++) {
+            hljs.highlightElement(pres[i]);
+        }
+        var options = {
+            loadDelay: 0,
+            copyIconClass: "far fa-clipboard",
+            checkIconClass: "fa fa-check text-success",
+            blogURL: "http://rust-study.ajousw.kr/"
+        };
+        window.highlightJsBadge(options);
+        </script>
     </body>
 </html>

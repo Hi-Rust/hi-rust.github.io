@@ -13,7 +13,7 @@ app.add_middleware(
 )
 
 
-app.mount("/", StaticFiles(directory="public", html=True), name="static")
+app.mount("/", StaticFiles(directory="docs", html=True), name="static")
 
 if __name__ == "__main__":
     # standalone

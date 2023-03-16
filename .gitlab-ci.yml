@@ -1,0 +1,13 @@
+image: alpine:latest
+
+pages:
+  stage: deploy
+  script:
+    - echo 'Hello'
+  artifacts:
+    paths:
+      - docs
+  only:
+    - master
+  tags:
+    - pages
