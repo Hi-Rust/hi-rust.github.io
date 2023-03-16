@@ -1,6 +1,4 @@
 name: Release
-permissions: read-all|write-all
-
 on:
   push:
     tags:
