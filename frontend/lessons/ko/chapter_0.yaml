@@ -144,6 +144,8 @@
     </div>
 - title: >-
     Chapter 0 - 마무리
+  source: >-
+    /ferris_lofi.png
   content_markdown: |
     Rust 소스코드는 `.rs` 확장자를 가집니다.
 

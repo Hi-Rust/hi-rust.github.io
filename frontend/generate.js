@@ -158,6 +158,7 @@ function template(
   title,
   code,
   content,
+  source,
   index,
   isLast,
   words,
@@ -223,7 +224,7 @@ function template(
                 ? `<div class="code">
             <iframe id="rust-playground" width="100%" src="${code}" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
             </div>`
-                : '<div class="code"><center><img src="/ferris_lofi.png" alt="Mascot Ferris" width="300" height="236"></center></div>'
+                : `<div class="code"><center><img src="${source}" alt="Rust Tutorial" width="300" height="100%"></center></div>`
             }
         </div>
         <!-- <script>
@@ -250,6 +251,10 @@ function template(
         };
         window.highlightJsBadge(options);
         </script>
+
+        <footer>
+          <p>아주대학교 Software Tool Time - Rust 튜토리얼 (Basic)</p>
+        </footer>
     </body>
 </html>`;
 }
@@ -260,7 +265,6 @@ languages.forEach(lang => {
   const langLessons = lessons.pages.filter(x => {
     return true;
   });
-  const betaLessons = lessons.pages.filter(() => true);
 
   langLessons.forEach((lesson, i) => {
     let fileName = getFileName(lang, i, false, lesson?.chapter);
@@ -272,6 +276,7 @@ languages.forEach(lang => {
       lesson.ko.title
     }`;
     let lessonContent = converter.makeHtml(lesson.ko.content_markdown);
+    let lessonImage = lesson.ko.source;
     let lessonCode = lesson.ko.code;
     if (lesson[lang]) {
       let targetLang = lang;
@@ -302,6 +307,7 @@ languages.forEach(lang => {
         lessonTitle,
         lessonCode,
         lessonContent,
+        lessonImage,
         c,
         i === langLessons.length - 1,
         words,
