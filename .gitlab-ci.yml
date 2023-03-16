@@ -3,10 +3,11 @@ image: alpine:latest
 pages:
   stage: deploy
   script:
-    - echo 'Hello'
+    - mkdir public
+    - cp -r docs/. public/
   artifacts:
     paths:
-      - docs
+      - public
   only:
     - master
   tags:
