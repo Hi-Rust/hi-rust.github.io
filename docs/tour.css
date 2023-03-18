@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap");
+
 a {
   color: #1e90ff;
   text-decoration: none;
@@ -122,6 +124,7 @@ html,
 body {
   padding: 0px;
   margin: 0px;
+  font-family: "Noto Sans KR", sans-serif;
   /* font-family: "NanumGothic", serif; */
   color: #333;
 }
