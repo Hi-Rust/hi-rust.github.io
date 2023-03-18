@@ -36,77 +36,91 @@
             </div>
             <div class="page">
             <h1>Struct and Enum</h1>
-            <h2 id="struct">구조체 (Struct)</h2>
-<p>구조체는 struct 키워드를 사용하여 정의하며, 이름과 중괄호로 묶인 명명된 필드 집합이 뒤따릅니다.
-다음은 Person 구조체의 예입니다:
-<code>rust struct Person {
+            <p><strong>구조체 (Struct)</strong></p>
+<p>구조체는 struct 키워드를 사용하여 정의하며, 이름과 중괄호로 묶인 명명된 필드 집합이 뒤따릅니다.</p>
+<p>다음은 Person 구조체의 예입니다:</p>
+<pre><code class="rust">struct Person {
   name: String,
   age: u8,
-}</code>
-구조체의 인스턴스를 생성하려면, 구조체 이름 뒤에 중괄호를 사용하고 필드에 값을 할당합니다.
+} </code></pre>
+<p>구조체의 인스턴스를 생성하려면, 구조체 이름 뒤에 중괄호를 사용하고 필드에 값을 할당합니다.
 예를 들면:</p>
-<h2 id="rustletpersonpersonnamestringfromaliceage30"><code>rust let person = Person { name: String::from("Alice"), age: 30 };</code></h2>
-<h2 id="enum">열거형 (Enum)</h2>
-<p>열거형(enum, "enumeration"의 줄임말)은 고정된 명명된 값 집합인 "변종(variants)"을 가진 타입을 나타냅니다.
-열거형을 정의하려면, enum 키워드를 사용하고 이름과 중괄호로 묶인 명명된 변종 집합이 뒤따릅니다.
-다음은 Status 열거형의 예입니다:
-<code>rust enum Status {
+<pre><code class="rust">let person = Person { name: String::from("Alice"), age: 30 }; </code></pre>
+<hr />
+<p><strong>열거형 (Enum)</strong></p>
+<p>열거형(enum, "enumeration"의 줄임말)은 고정된 명명된 값 집합인 "변종(variants)"을 가진 타입을 나타냅니다.</p>
+<p>열거형을 정의하려면, enum 키워드를 사용하고 이름과 중괄호로 묶인 명명된 변종 집합이 뒤따릅니다.</p>
+<p>다음은 Status 열거형의 예입니다:</p>
+<pre><code class="rust">enum Status {
   Active,
   Inactive,
   Pending,
-}</code>
-열거형의 인스턴스를 생성하려면, 열거형 이름 뒤에 두 개의 콜론(<code>::</code>)과 변종 이름을 사용합니다.
-예를 들면:
-<code>rust let status = Status::Active;</code>
-열거형 변종에 따라 다른 작업을 수행하려면 match 표현식을 사용할 수 있습니다:
-<code>rust let user_status = Status::Active;</code>
-열거형을 다루려면, 종종 match 표현식을 사용하며, 이를 통해 열거형 변종에 따라 다른 작업을 수행할 수 있습니다:
-```rust fn print<em>status</em>message(status: Status) {
+} </code></pre>
+<p>열거형의 인스턴스를 생성하려면, 열거형 이름 뒤에 두 개의 콜론(<code>::</code>)과 변종 이름을 사용합니다.</p>
+<p>예를 들면:</p>
+<pre><code class="rust">let status = Status::Active; </code></pre>
+<p>열거형 변종에 따라 다른 작업을 수행하려면 match 표현식을 사용할 수 있습니다:</p>
+<pre><code class="rust">let user_status = Status::Active; </code></pre>
+<p>열거형을 다루려면, 종종 match 표현식을 사용하며, 이를 통해 열거형 변종에 따라 다른 작업을 수행할 수 있습니다:</p>
+<pre><code class="rust">fn print_status_message(status: Status) {
     match status {
-        Status::Active =&gt; println!("사용자가 활성 상태입니다."),
-        Status::Inactive =&gt; println!("사용자가 비활성 상태입니다."),
-        Status::Pending =&gt; println!("사용자가 보류 중입니다."),
+        Status::Active => println!("사용자가 활성 상태입니다."),
+        Status::Inactive => println!("사용자가 비활성 상태입니다."),
+        Status::Pending => println!("사용자가 보류 중입니다."),
     }
 }
 fn main() {
-    let user<em>status = Status::Active;
-    print</em>status<em>message(user</em>status);</p>
-<h2 id="">} ```</h2>
-<h2 id="tuplestructenum">Tuple Struct, Enum</h2>
+    let user_status = Status::Active;
+    print_status_message(user_status);
+} </code></pre>
+<hr />
+<p><strong>Tuple Struct, Enum</strong></p>
 <p>주로 간결한 표현, 타입 안전성 및 논리적 구조를 위해 사용됩니다.</p>
 <ul>
-<li><p>튜플 구조체 (Tuple Struct): 튜플 구조체는 필드에 이름이 없는 구조체로, 간단한 데이터 구조를 표현할 때 유용합니다. 튜플 구조체를 사용하면, 구조체의 의미를 명확하게 나타낼 수 있으며, 일반 튜플보다 더 강력한 타입 안전성을 제공합니다. 예를 들어, 두 개의 float 값을 나타내는 Point2D와 Vector2D를 구별하기 위해 튜플 구조체를 사용할 수 있습니다. 이렇게 하면 코드의 가독성과 정확성이 향상됩니다. - 열거형 (Enum): 열거형은 서로 관련된 값의 집합을 표현하기 위해 사용됩니다. 열거형은 여러 변종(variants)을 가질 수 있으며, 각 변종은 고유한 타입입니다. 열거형은 논리적으로 관련된 여러 값을 그룹화하여 코드의 명확성과 구조를 개선하는 데 도움이 됩니다. 또한 열거형은 패턴 매칭을 사용하여 값에 따라 다양한 작업을 수행할 수 있어, 런타임에 오류가 발생하는 가능성이 줄어듭니다. - 튜플 열거형 변종 (Tuple Enum Variants): 튜플 열거형 변종은 열거형의 각 변종에 데이터를 연관시키는 데 사용됩니다. 튜플 열거형 변종은 각 변종에 서로 다른 타입과 수의 값을 저장할 수 있습니다. 이러한 변종은 열거형의 다양한 경우를 명확하게 구분하고, 관련 데이터를 함께 저장하여 논리적 구조를 제공하는 데 유용합니다. 패턴 매칭을 사용하면 튜플 열거형 변종의 값을 안전하게 추출하고, 해당 값에 따라 다양한 작업을 수행할 수 있습니다.
-```rust // 튜플 구조체 (Tuple Struct) struct Point3D(f32, f32, f32);
-// 열거형에 튜플 변종 (Tuple Enum Variant) 포함 enum Shape {
-Circle(f32),
-Rectangle(f32, f32),
-}
-fn main() {
-let point = Point3D(1.0, 2.0, 3.0);
-let circle = Shape::Circle(5.0);
-let rectangle = Shape::Rectangle(4.0, 6.0);</p>
-<p>// 튜플 구조체의 값에 접근
-println!("x 좌표: {}", point.0);
-println!("y 좌표: {}", point.1);
-println!("z 좌표: {}", point.2);</p>
-<p>// 튜플 열거형 변종의 값에 접근
-match circle {
-    Shape::Circle(radius) =&gt; println!("원의 반지름: {}", radius),
-    _ =&gt; (),
-}</p></li>
+<li>튜플 구조체 (Tuple Struct): 튜플 구조체는 필드에 이름이 없는 구조체로, 간단한 데이터 구조를 표현할 때 유용합니다. 튜플 구조체를 사용하면, 구조체의 의미를 명확하게 나타낼 수 있으며, 일반 튜플보다 더 강력한 타입 안전성을 제공합니다. 예를 들어, 두 개의 float 값을 나타내는 Point2D와 Vector2D를 구별하기 위해 튜플 구조체를 사용할 수 있습니다. 이렇게 하면 코드의 가독성과 정확성이 향상됩니다.</li>
+<li>열거형 (Enum): 열거형은 서로 관련된 값의 집합을 표현하기 위해 사용됩니다. 열거형은 여러 변종(variants)을 가질 수 있으며, 각 변종은 고유한 타입입니다. 열거형은 논리적으로 관련된 여러 값을 그룹화하여 코드의 명확성과 구조를 개선하는 데 도움이 됩니다. 또한 열거형은 패턴 매칭을 사용하여 값에 따라 다양한 작업을 수행할 수 있어, 런타임에 오류가 발생하는 가능성이 줄어듭니다.</li>
+<li>튜플 열거형 변종 (Tuple Enum Variants): 튜플 열거형 변종은 열거형의 각 변종에 데이터를 연관시키는 데 사용됩니다. 튜플 열거형 변종은 각 변종에 서로 다른 타입과 수의 값을 저장할 수 있습니다. 이러한 변종은 열거형의 다양한 경우를 명확하게 구분하고, 관련 데이터를 함께 저장하여 논리적 구조를 제공하는 데 유용합니다. 패턴 매칭을 사용하면 튜플 열거형 변종의 값을 안전하게 추출하고, 해당 값에 따라 다양한 작업을 수행할 수 있습니다.</li>
 </ul>
-<h2 id="-1">} ```</h2>
-<h2 id="nested">Nested</h2>
-<p>중첩된 Struct과 Enum을 만들고 싶다면?
-<code>rust // 중첩된 구조체 (Nested Struct) struct Address {
+<pre><code class="rust">// 튜플 구조체 (Tuple Struct)
+struct Point3D(f32, f32, f32);
+
+// 열거형에 튜플 변종 (Tuple Enum Variant) 포함
+enum Shape {
+    Circle(f32),
+    Rectangle(f32, f32),
+}
+
+fn main() {
+    let point = Point3D(1.0, 2.0, 3.0);
+    let circle = Shape::Circle(5.0);
+    let rectangle = Shape::Rectangle(4.0, 6.0);
+
+    // 튜플 구조체의 값에 접근
+    println!("x 좌표: {}", point.0);
+    println!("y 좌표: {}", point.1);
+    println!("z 좌표: {}", point.2);
+
+    // 튜플 열거형 변종의 값에 접근
+    match circle {
+        Shape::Circle(radius) => println!("원의 반지름: {}", radius),
+        _ => (),
+    }
+} </code></pre>
+<hr />
+<p><strong>Nested</strong>
+중첩된 Struct과 Enum을 만들고 싶다면?</p>
+<pre><code class="rust">// 중첩된 구조체 (Nested Struct)
+struct Address {
     street: String,
     city: String,
 }
+
 struct Person {
     name: String,
     address: Address,
 }
-// 중첩된 열거형 (Nested Enum) enum Animal {
+// 중첩된 열거형 (Nested Enum)
+enum Animal {
     Mammal {
         species: String,
         is_domestic: bool,
@@ -116,6 +130,7 @@ struct Person {
         is_poisonous: bool,
     },
 }
+
 fn main() {
     let person = Person {
         name: String::from("지훈"),
@@ -128,7 +143,7 @@ fn main() {
         species: String::from("개"),
         is_domestic: true,
     };
-}</code></p>
+} </code></pre>
             <div class="bottomnav">
                 <span class="back"><a href="15_ko.html" rel="prev">❮ 이전</a></span>
                 <span class="next"><a href="17_ko.html" rel="next">다음 ❯</a></span>
