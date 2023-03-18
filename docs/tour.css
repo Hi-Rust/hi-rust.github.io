@@ -144,6 +144,10 @@ body {
   padding-right: 10px;
 }
 
+h3 {
+  font-size: 2em;
+}
+
 iframe {
   border-radius: 10px;
 }
