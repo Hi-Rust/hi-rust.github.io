@@ -34,15 +34,41 @@
                 <span class="toc"><a href="TOC_ko.html">목차</a></span>
             </div>
             <div class="page">
-            <h1>Struct and Enum</h1>
-            <p>Struct, Enum</p>
+            <h1>match</h1>
+            <p>The match keyword in Rust is used for pattern matching.</p>
+<p>It allows you to compare a value against a series of patterns</p>
+<p>and execute a block of code corresponding to the first matching pattern.
+```rust fn main() {
+    let number = 42;</p>
+<pre><code>match number {
+    0 =&gt; println!("The number is zero"),
+    1 =&gt; println!("The number is one"),
+    42 =&gt; println!("The answer to life, the universe, and everything"),
+    _ =&gt; println!("The number is something else"),
+}
+</code></pre>
+<p>} <code>
+we match the value of the number variable against several patterns. The _ pattern is a catch-all pattern that matches any value not explicitly covered by previous patterns.
+</code>rust fn classify_age(age: u8) {
+    match age {
+        0..=12 =&gt; println!("Child"),
+        13..=19 =&gt; println!("Teenager"),
+        20..=64 =&gt; println!("Adult"),
+        _ =&gt; println!("Senior"),
+    }
+}
+fn main() {
+    let age = 25;
+    classify_age(age);
+} ```
+we use a match expression to classify ages into groups. We use ranges as patterns to match against the age variable.</p>
             <div class="bottomnav">
                 <span class="back"><a href="14_ko.html" rel="prev">❮ 이전</a></span>
                 <span class="next"><a href="16_ko.html" rel="next">다음 ❯</a></span>
             </div>
             </div>
             <div class="code">
-            <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&code=fn%20swap(x%3A%20i32%2C%20y%3A%20i32)%20-%3E%20(i32%2C%20i32)%20%7B%0A%20%20%20%20return%20(y%2C%20x)%3B%0A%7D%0A%0Afn%20main()%20%7B%0A%20%20%20%20%2F%2F%20return%20a%20tuple%20of%20return%20values%0A%20%20%20%20let%20result%20%3D%20swap(123%2C%20321)%3B%0A%20%20%20%20println!(%22%7B%7D%20%7B%7D%22%2C%20result.0%2C%20result.1)%3B%0A%0A%20%20%20%20%2F%2F%20destructure%20the%20tuple%20into%20two%20variables%20names%0A%20%20%20%20let%20(a%2C%20b)%20%3D%20swap(result.0%2C%20result.1)%3B%0A%20%20%20%20println!(%22%7B%7D%20%7B%7D%22%2C%20a%2C%20b)%3B%0A%7D%0A" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
+            <iframe id="rust-playground" width="100%" src="https://" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
             </div>
         </div>
         <!-- <script>

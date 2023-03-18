@@ -34,17 +34,47 @@
                 <span class="toc"><a href="TOC_ko.html">목차</a></span>
             </div>
             <div class="page">
-            <h1>Returning Nothing</h1>
-            <p>함수에 대해 반환 유형이 지정되어 있지 않으면, <em>unit</em>이라고도 하는 빈 튜플을 반환합니다.</p>
-<p>빈 튜플은 <code>()</code>로 나타낼 수 있습니다.</p>
-<p><code>()</code>을 사용하는 것은 드문 경우이지만 충분히 자주 출현하기 때문에 무슨 일이 일어나는지 알아둘 가치가 있습니다.</p>
+            <h1>Struct and Enum</h1>
+            <p>In Rust, struct and enum are two ways to define custom data types. A struct (short for "structure") is a composite data type that groups related values together. An enum (short for "enumeration") is a data type that consists of a fixed set of named values, called "variants."</p>
+<h2 id="struct">Struct</h2>
+<p>A struct is defined using the struct keyword, followed by a name and a set of named fields enclosed in curly braces. Here's an example of a Person struct:
+<code>rust struct Person {
+  name: String,
+  age: u8,
+}</code>
+To create an instance of a struct, use the struct name followed by curly braces and assign values to its fields. For example:</p>
+<h2 id="rustletpersonpersonnamestringfromaliceage30"><code>rust let person = Person { name: String::from("Alice"), age: 30 };</code></h2>
+<h2 id="enum">Enum</h2>
+<p>An enum (short for "enumeration") represents a type that has a fixed set of named values, called "variants". To define an enum, use the enum keyword followed by a name and a set of named variants enclosed in curly braces.
+Here's an example of a Status enum:
+<code>rust enum Status {
+  Active,
+  Inactive,
+  Pending,
+}</code>
+To create an instance of an enum, use the enum name followed by two colons (::) and the variant name. For example:
+<code>rust let status = Status::Active;</code>
+You can use match expressions to perform different actions based on the enum variant:
+<code>rust let user_status = Status::Active;</code>
+To work with enums, we often use match expressions, which allow us to perform different actions depending on the enum variant:
+<code>rust fn print_status_message(status: Status) {
+    match status {
+        Status::Active =&gt; println!("User is active."),
+        Status::Inactive =&gt; println!("User is inactive."),
+        Status::Pending =&gt; println!("User is pending."),
+    }
+}
+fn main() {
+    let user_status = Status::Active;
+    print_status_message(user_status);
+}</code></p>
             <div class="bottomnav">
                 <span class="back"><a href="15_ko.html" rel="prev">❮ 이전</a></span>
                 <span class="next"><a href="17_ko.html" rel="next">다음 ❯</a></span>
             </div>
             </div>
             <div class="code">
-            <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&code=fn%20make_nothing()%20-%3E%20()%20%7B%0A%20%20%20%20return%20()%3B%0A%7D%0A%0A%2F%2F%20the%20return%20type%20is%20implied%20as%20()%0Afn%20make_nothing2()%20%7B%0A%20%20%20%20%2F%2F%20this%20function%20will%20return%20()%20if%20nothing%20is%20specified%20to%20return%0A%7D%0A%0Afn%20main()%20%7B%0A%20%20%20%20let%20a%20%3D%20make_nothing()%3B%0A%20%20%20%20let%20b%20%3D%20make_nothing2()%3B%0A%0A%20%20%20%20%2F%2F%20Printing%20a%20debug%20string%20for%20a%20and%20b%0A%20%20%20%20%2F%2F%20Because%20it's%20hard%20to%20print%20nothingness%0A%20%20%20%20println!(%22The%20value%20of%20a%3A%20%7B%3A%3F%7D%22%2C%20a)%3B%0A%20%20%20%20println!(%22The%20value%20of%20b%3A%20%7B%3A%3F%7D%22%2C%20b)%3B%0A%7D%0A" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
+            <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=struct+Person+%7B%0A++++name%3A+String%2C%0A++++age%3A+u8%2C%0A%7D%0A%0Aenum+Vehicle+%7B%0A++++Car%2C%0A++++Bike%2C%0A++++Truck%2C%0A%7D%0A%0Afn+main%28%29+%7B%0A++++let+person+%3D+Person+%7B+name%3A+String%3A%3Afrom%28%22Alice%22%29%2C+age%3A+30+%7D%3B%0A++++let+vehicle+%3D+Vehicle%3A%3ACar%3B%0A%0A++++match+vehicle+%7B%0A++++++++Vehicle%3A%3ACar+%3D%3E+println%21%28%22Car%22%29%2C%0A++++++++Vehicle%3A%3ABike+%3D%3E+println%21%28%22Bike%22%29%2C%0A++++++++Vehicle%3A%3ATruck+%3D%3E+println%21%28%22Truck%22%29%2C%0A++++%7D%0A%7D%0A" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
             </div>
         </div>
         <!-- <script>

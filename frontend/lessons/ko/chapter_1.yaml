@@ -197,11 +197,124 @@
     Rust는 여러 형식의 destructuring을 지원합니다.
 
     우리는 더 많은 형태로 볼 것이며, 이를 통해 데이터 구조의 하위 요소를 직관적으로 추출할 수 있습니다.
+- title: match
+  code: >-
+    https://
+  content_markdown: >
+    The match keyword in Rust is used for pattern matching.
+    
+    
+    It allows you to compare a value against a series of patterns
+    
+    
+    and execute a block of code corresponding to the first matching pattern.
+
+    ```rust
+    fn main() {
+        let number = 42;
+
+        match number {
+            0 => println!("The number is zero"),
+            1 => println!("The number is one"),
+            42 => println!("The answer to life, the universe, and everything"),
+            _ => println!("The number is something else"),
+        }
+    }
+    ```
+
+    we match the value of the number variable against several patterns. The _ pattern is a catch-all pattern that matches any value not explicitly covered by previous patterns.
+    
+    ```rust
+    fn classify_age(age: u8) {
+        match age {
+            0..=12 => println!("Child"),
+            13..=19 => println!("Teenager"),
+            20..=64 => println!("Adult"),
+            _ => println!("Senior"),
+        }
+    }
+
+    fn main() {
+        let age = 25;
+        classify_age(age);
+    }
+    ```
+
+    we use a match expression to classify ages into groups. We use ranges as patterns to match against the age variable.
 - title: Struct and Enum
   code: >-
-    https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&code=fn%20swap(x%3A%20i32%2C%20y%3A%20i32)%20-%3E%20(i32%2C%20i32)%20%7B%0A%20%20%20%20return%20(y%2C%20x)%3B%0A%7D%0A%0Afn%20main()%20%7B%0A%20%20%20%20%2F%2F%20return%20a%20tuple%20of%20return%20values%0A%20%20%20%20let%20result%20%3D%20swap(123%2C%20321)%3B%0A%20%20%20%20println!(%22%7B%7D%20%7B%7D%22%2C%20result.0%2C%20result.1)%3B%0A%0A%20%20%20%20%2F%2F%20destructure%20the%20tuple%20into%20two%20variables%20names%0A%20%20%20%20let%20(a%2C%20b)%20%3D%20swap(result.0%2C%20result.1)%3B%0A%20%20%20%20println!(%22%7B%7D%20%7B%7D%22%2C%20a%2C%20b)%3B%0A%7D%0A
+    https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=struct+Person+%7B%0A++++name%3A+String%2C%0A++++age%3A+u8%2C%0A%7D%0A%0Aenum+Vehicle+%7B%0A++++Car%2C%0A++++Bike%2C%0A++++Truck%2C%0A%7D%0A%0Afn+main%28%29+%7B%0A++++let+person+%3D+Person+%7B+name%3A+String%3A%3Afrom%28%22Alice%22%29%2C+age%3A+30+%7D%3B%0A++++let+vehicle+%3D+Vehicle%3A%3ACar%3B%0A%0A++++match+vehicle+%7B%0A++++++++Vehicle%3A%3ACar+%3D%3E+println%21%28%22Car%22%29%2C%0A++++++++Vehicle%3A%3ABike+%3D%3E+println%21%28%22Bike%22%29%2C%0A++++++++Vehicle%3A%3ATruck+%3D%3E+println%21%28%22Truck%22%29%2C%0A++++%7D%0A%7D%0A
   content_markdown: >
-    Struct, Enum
+    In Rust, struct and enum are two ways to define custom data types. A struct (short for "structure") is a composite data type that groups related values together. An enum (short for "enumeration") is a data type that consists of a fixed set of named values, called "variants."
+
+
+    ## Struct
+
+
+    A struct is defined using the struct keyword, followed by a name and a set of named fields enclosed in curly braces. Here's an example of a Person struct:
+
+    ```rust
+    struct Person {
+      name: String,
+      age: u8,
+    }
+    ```
+
+    To create an instance of a struct, use the struct name followed by curly braces and assign values to its fields. For example:
+
+    ```rust
+    let person = Person { name: String::from("Alice"), age: 30 };
+    ```
+
+    ---
+
+    ## Enum
+
+    An enum (short for "enumeration") represents a type that has a fixed set of named values, called "variants". To define an enum, use the enum keyword followed by a name and a set of named variants enclosed in curly braces.
+
+    Here's an example of a Status enum:
+
+    ```rust
+    enum Status {
+      Active,
+      Inactive,
+      Pending,
+    }
+    ```
+
+    To create an instance of an enum, use the enum name followed by two colons (::) and the variant name. For example:
+
+    ```rust
+    let status = Status::Active;
+    ```
+
+    You can use match expressions to perform different actions based on the enum variant:
+
+    ```rust
+    let user_status = Status::Active;
+    ```
+
+    To work with enums, we often use match expressions, which allow us to perform different actions depending on the enum variant:
+
+    ```rust
+    fn print_status_message(status: Status) {
+        match status {
+            Status::Active => println!("User is active."),
+            Status::Inactive => println!("User is inactive."),
+            Status::Pending => println!("User is pending."),
+        }
+    }
+
+    fn main() {
+        let user_status = Status::Active;
+        print_status_message(user_status);
+    }
+    ```
+
+
+
+    
+
 - title: Returning Nothing
   code: >-
     https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&code=fn%20make_nothing()%20-%3E%20()%20%7B%0A%20%20%20%20return%20()%3B%0A%7D%0A%0A%2F%2F%20the%20return%20type%20is%20implied%20as%20()%0Afn%20make_nothing2()%20%7B%0A%20%20%20%20%2F%2F%20this%20function%20will%20return%20()%20if%20nothing%20is%20specified%20to%20return%0A%7D%0A%0Afn%20main()%20%7B%0A%20%20%20%20let%20a%20%3D%20make_nothing()%3B%0A%20%20%20%20let%20b%20%3D%20make_nothing2()%3B%0A%0A%20%20%20%20%2F%2F%20Printing%20a%20debug%20string%20for%20a%20and%20b%0A%20%20%20%20%2F%2F%20Because%20it's%20hard%20to%20print%20nothingness%0A%20%20%20%20println!(%22The%20value%20of%20a%3A%20%7B%3A%3F%7D%22%2C%20a)%3B%0A%20%20%20%20println!(%22The%20value%20of%20b%3A%20%7B%3A%3F%7D%22%2C%20b)%3B%0A%7D%0A

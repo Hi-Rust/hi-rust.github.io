@@ -90,7 +90,16 @@ const lessons = {
   pages,
 };
 
-const converter = new showdown.Converter();
+const a_binder = [{
+  type: 'output',
+  regex: /(<a [^>]*)(>.*<\/a>)/g,
+  replace: '$1 target="_blank" rel="noopener"$2'
+}];
+
+
+const converter = new showdown.Converter({
+  extensions: [...a_binder]
+});
 
 /**
  * @param {string[]} words
@@ -169,11 +178,11 @@ function template(
         <div class="tour">
             <div class="header">
                 <span class="title"><a href="${getFileName(
-                  lang,
-                  0,
-                  isBeta,
-                  lessonsData[0]?.chapter
-                )}">${getWord(words, lang, "tor")}</a></span>
+    lang,
+    0,
+    isBeta,
+    lessonsData[0]?.chapter
+  )}">${getWord(words, lang, "tor")}</a></span>
                 <span class="nav">
                 <span class="toc"><a href="TOC_${lang}.html">${getWord(
     words,
@@ -185,47 +194,42 @@ function template(
             <h1>${title}</h1>
             ${content}
             <div class="bottomnav">
-                ${
-                  index !== 0
-                    ? `<span class="back"><a href="${
-                        isBeta ? "beta_" : ""
-                      }${getFileName(
-                        lang,
-                        index - 1,
-                        isBeta,
-                        lessonsData[index - 1]?.chapter
-                      )}" rel="prev">❮ ${getWord(
-                        words,
-                        lang,
-                        "previous"
-                      )}</a></span>`
-                    : ""
-                }
-                ${
-                  isLast
-                    ? ""
-                    : `<span class="next"><a href="${
-                        isBeta ? "beta_" : ""
-                      }${getFileName(
-                        lang,
-                        index + 1,
-                        isBeta,
-                        lessonsData[index + 1]?.chapter
-                      )}" rel="next">${getWord(
-                        words,
-                        lang,
-                        "next"
-                      )} ❯</a></span>`
-                }
+                ${index !== 0
+      ? `<span class="back"><a href="${isBeta ? "beta_" : ""
+      }${getFileName(
+        lang,
+        index - 1,
+        isBeta,
+        lessonsData[index - 1]?.chapter
+      )}" rel="prev">❮ ${getWord(
+        words,
+        lang,
+        "previous"
+      )}</a></span>`
+      : ""
+    }
+                ${isLast
+      ? ""
+      : `<span class="next"><a href="${isBeta ? "beta_" : ""
+      }${getFileName(
+        lang,
+        index + 1,
+        isBeta,
+        lessonsData[index + 1]?.chapter
+      )}" rel="next">${getWord(
+        words,
+        lang,
+        "next"
+      )} ❯</a></span>`
+    }
             </div>
             </div>
-            ${
-              code
-                ? `<div class="code">
+            ${code
+      ? `<div class="code">
             <iframe id="rust-playground" width="100%" src="${code}" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
             </div>`
-                : `<div class="code"><center><img src="${source}" alt="Rust Tutorial" width="300" height="100%"></center></div>`
-            }
+      : `<div class="code"><center><img src="${source}" alt="Rust Tutorial" width="300" height="100%"></center></div>`
+    }
         </div>
         <!-- <script>
           document.addEventListener("DOMContentLoaded", function() {
@@ -272,9 +276,8 @@ languages.forEach(lang => {
       fileName = "index.html";
     }
 
-    let lessonTitle = `[${getWord(words, lang, "untranslated")}] ${
-      lesson.ko.title
-    }`;
+    let lessonTitle = `[${getWord(words, lang, "untranslated")}] ${lesson.ko.title
+      }`;
     let lessonContent = converter.makeHtml(lesson.ko.content_markdown);
     let lessonImage = lesson.ko.source;
     let lessonCode = lesson.ko.code;
@@ -336,35 +339,31 @@ languages.forEach(lang => {
             <h1>${getWord(words, lang, "lessons")}</h1>
             <ul>
         ${langLessons
-          .map((x, i) => {
-            let targetLang = lang;
-            if (x[lang] && x[lang].clone) {
-              targetLang = x[lang].clone;
-            }
-            let s = `<li><a href="${getFileName(lang, i, false, x.chapter)}">${
-              x[targetLang]
-                ? x[targetLang].title
-                : `[${getWord(words, targetLang, "untranslated")}] ${
-                    x.ko.title
-                  }`
-            }</a></li>`;
-            if (x.chapter !== undefined) {
-              s = `</ul><h3><a href="${getFileName(
-                lang,
-                i,
-                false,
-                x.chapter
-              )}">${
-                x[targetLang]
-                  ? x[targetLang].title
-                  : `[${getWord(words, targetLang, "untranslated")}] ${
-                      x.ko.title
-                    }`
-              }</a></h3><ul>`;
-            }
-            return s;
-          })
-          .join("\n")}
+      .map((x, i) => {
+        let targetLang = lang;
+        if (x[lang] && x[lang].clone) {
+          targetLang = x[lang].clone;
+        }
+        let s = `<li><a href="${getFileName(lang, i, false, x.chapter)}">${x[targetLang]
+          ? x[targetLang].title
+          : `[${getWord(words, targetLang, "untranslated")}] ${x.ko.title
+          }`
+          }</a></li>`;
+        if (x.chapter !== undefined) {
+          s = `</ul><h3><a href="${getFileName(
+            lang,
+            i,
+            false,
+            x.chapter
+          )}">${x[targetLang]
+            ? x[targetLang].title
+            : `[${getWord(words, targetLang, "untranslated")}] ${x.ko.title
+            }`
+            }</a></h3><ul>`;
+        }
+        return s;
+      })
+      .join("\n")}
             </ul>
             </div>
         </div>
