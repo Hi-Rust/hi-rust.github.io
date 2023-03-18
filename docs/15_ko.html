@@ -36,33 +36,35 @@
             </div>
             <div class="page">
             <h1>match</h1>
-            <p>The match keyword in Rust is used for pattern matching.</p>
-<p>It allows you to compare a value against a series of patterns</p>
-<p>and execute a block of code corresponding to the first matching pattern.
+            <p>Rust에서 match 키워드는 패턴 매칭을 위해 사용하고
+값과 일련의 패턴을 비교할 수 있게 해줍니다.
+그리고 첫 번째 일치하는 패턴에 해당하는 코드 블록을 실행합니다.
 ```rust fn main() {
     let number = 42;</p>
 <pre><code>match number {
-    0 =&gt; println!("The number is zero"),
-    1 =&gt; println!("The number is one"),
-    42 =&gt; println!("The answer to life, the universe, and everything"),
-    _ =&gt; println!("The number is something else"),
+    0 =&gt; println!("숫자는 영입니다"),
+    1 =&gt; println!("숫자는 일입니다"),
+    42 =&gt; println!("인생, 우주, 그리고 모든 것에 대한 답"),
+    _ =&gt; println!("숫자는 다른 것입니다"),
 }
 </code></pre>
 <p>} <code>
-we match the value of the number variable against several patterns. The _ pattern is a catch-all pattern that matches any value not explicitly covered by previous patterns.
+여기서는 number 변수의 값을 여러 패턴과 비교합니다.
+`_` 패턴은 이전 패턴에서 명시적으로 다루지 않은 모든 값을 매치하는 `catch-all` 패턴입니다.
 </code>rust fn classify_age(age: u8) {
     match age {
-        0..=12 =&gt; println!("Child"),
-        13..=19 =&gt; println!("Teenager"),
-        20..=64 =&gt; println!("Adult"),
-        _ =&gt; println!("Senior"),
+        0..=12 =&gt; println!("어린이"),
+        13..=19 =&gt; println!("청소년"),
+        20..=64 =&gt; println!("성인"),
+        _ =&gt; println!("노인"),
     }
 }
 fn main() {
     let age = 25;
     classify_age(age);
-} ```
-we use a match expression to classify ages into groups. We use ranges as patterns to match against the age variable.</p>
+} ```</p>
+<p>이 예제에서는 match 표현식을 사용하여 나이를 그룹으로 분류합니다.
+나이 변수와 매치하기 위해 범위를 패턴으로 사용합니다.</p>
             <div class="bottomnav">
                 <span class="back"><a href="14_ko.html" rel="prev">❮ 이전</a></span>
                 <span class="next"><a href="16_ko.html" rel="next">다음 ❯</a></span>
