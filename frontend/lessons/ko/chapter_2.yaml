@@ -1,10 +1,278 @@
 - title: Chapter 2 - Ownership
   source: >-
+    /ferris.webp
+  content_markdown: >
+    <div align="center">
+    <p>
+        <img src="https://user-images.githubusercontent.com/2356749/226180667-0a6f5363-ad80-4c35-84f5-fb4341484e0f.png">
+    </p>
+    </div>
+
+
+    메모리 관리 문제 소개:
+
+
+    수동 메모리 관리가 메모리 누수나 세그멘테이션 폴트와 같은 문제를 초래할 수 있는 방법을 설명합니다. 가비지 컬렉터 개념과 그 단점(예: 성능 오버헤드)을 소개합니다.
+
+
+    - 수동 메모리 관리의 문제점 설명:
+
+      - 수동 메모리 관리에서 개발자는 메모리 할당 및 해제를 직접 관리해야 합니다.
+
+      - 메모리를 적절하게 해제하지 않으면 메모리 누수가 발생하고, 이미 해제된 메모리에 접근하려고 하면 세그멘테이션 폴트가 발생할 수 있습니다.
+
+      - 이러한 문제는 프로그램의 안정성과 성능에 심각한 영향을 미칩니다.
+
+    - 가비지 컬렉터 소개:
+
+      - 가비지 컬렉터는 메모리 관리를 자동화하여 개발자가 메모리 할당 및 해제를 신경 쓰지 않아도 되게 하는 기술입니다.
+
+      - 사용하지 않는 메모리를 자동으로 회수하여 메모리 누수를 방지할 수 있습니다.
+
+    - 가비지 컬렉터의 단점:
+
+      - 가비지 컬렉터의 주요 단점은 성능 오버헤드입니다.
+
+      - 가비지 컬렉터가 메모리를 추적하고 회수하는 과정에서 시스템 리소스가 소모됩니다.
+      
+      - 가비지 컬렉션 동작 중에는 프로그램 실행이 일시 중단되거나 느려질 수 있어, 실시간 처리가 중요한 시스템에서는 문제가 될 수 있습니다.
+
+
+    이러한 문제들에 대한 해결책으로 Rust는 소유권, 빌림, 그리고 수명을 기반으로 한 메모리 관리 시스템을 도입하였습니다.
+
+    이를 통해 컴파일 시간에 메모리 안전성을 보장하며, 가비지 컬렉터의 성능 오버헤드를 피할 수 있습니다.
+- title: 소유권과 빌림 검사기
+  code: >-
+    https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=%2F*%0A%EC%9D%B4+%EC%BD%94%EB%93%9C%EC%97%90%EC%84%9C%2C+%EB%A8%BC%EC%A0%80+%22hello%22+%EA%B0%92%EC%9D%84+%EA%B0%96%EB%8A%94+%EA%B0%80%EB%B3%80+String+%EB%B3%80%EC%88%98+s%EB%A5%BC+%EC%84%A0%EC%96%B8%ED%95%A9%EB%8B%88%EB%8B%A4.%0A%0A%EA%B7%B8%EB%9F%B0+%EB%8B%A4%EC%9D%8C+%26+%EC%97%B0%EC%82%B0%EC%9E%90%EB%A5%BC+%EC%82%AC%EC%9A%A9%ED%95%98%EC%97%AC+s%EC%97%90+%EB%8C%80%ED%95%9C+%EB%B6%88%EB%B3%80+%EC%B0%B8%EC%A1%B0+r1%EC%9D%84+%EB%A7%8C%EB%93%AD%EB%8B%88%EB%8B%A4.%0A%0Ar1%EC%9D%80+%EB%B9%8C%EB%A6%BC%28borrowing%29%EC%9D%98+%EC%98%88%EC%8B%9C%EB%A1%9C%2C+s%EC%9D%98+%EC%86%8C%EC%9C%A0%EA%B6%8C%EC%9D%84+%EA%B0%80%EC%A0%B8%EA%B0%80%EC%A7%80+%EC%95%8A%EA%B3%A0+%EA%B7%B8+%EA%B0%92%EC%9D%84+%EC%9D%BD%EC%9D%84+%EC%88%98+%EC%9E%88%EC%A7%80%EB%A7%8C+%EC%88%98%EC%A0%95%ED%95%A0+%EC%88%98%EB%8A%94+%EC%97%86%EC%8A%B5%EB%8B%88%EB%8B%A4.%0A%0Ar1%EC%9D%98+%EA%B0%92%EC%9D%84+%EC%B6%9C%EB%A0%A5%ED%95%9C+%ED%9B%84%2C+r1%EC%9D%B4+%EC%8A%A4%EC%BD%94%ED%94%84%EB%A5%BC+%EB%B2%97%EC%96%B4%EB%82%98+%EB%8D%94+%EC%9D%B4%EC%83%81+%EB%B9%8C%EB%A0%A4%EC%A7%80%EC%A7%80+%EC%95%8A%EA%B2%8C+%EB%90%A9%EB%8B%88%EB%8B%A4.%0A%0A%EA%B7%B8%EB%9F%B0+%EB%8B%A4%EC%9D%8C+%26mut+%EC%97%B0%EC%82%B0%EC%9E%90%EB%A5%BC+%EC%82%AC%EC%9A%A9%ED%95%98%EC%97%AC+s%EC%97%90+%EB%8C%80%ED%95%9C+%EA%B0%80%EB%B3%80+%EC%B0%B8%EC%A1%B0+r2%EB%A5%BC+%EB%A7%8C%EB%93%AD%EB%8B%88%EB%8B%A4.%0A%0Ar2%EC%9D%80+%EB%98%90+%EB%8B%A4%EB%A5%B8+%EB%B9%8C%EB%A6%BC%EC%9D%98+%EC%98%88%EC%8B%9C%EC%9E%85%EB%8B%88%EB%8B%A4.+%EC%9D%B4%EB%B2%88%EC%97%90%EB%8A%94+s%EB%A5%BC+%EA%B0%80%EB%B3%80%EC%9C%BC%EB%A1%9C+%EB%B9%8C%EB%A0%A4%EC%99%80%EC%84%9C+%EA%B0%92%EC%9D%84+%EC%88%98%EC%A0%95%ED%95%A0+%EC%88%98+%EC%9E%88%EA%B2%8C+%EB%90%A9%EB%8B%88%EB%8B%A4.%0A%0A%EC%9A%B0%EB%A6%AC%EB%8A%94+push_str%28%29+%EB%A9%94%EC%86%8C%EB%93%9C%EB%A5%BC+%ED%86%B5%ED%95%B4+r2%EB%A5%BC+%ED%86%B5%ED%95%B4+%EB%AC%B8%EC%9E%90%EC%97%B4+%22%2C+world%21%22%EB%A5%BC+s%EC%97%90+%EC%B6%94%EA%B0%80%ED%95%98%EA%B3%A0%2C+r2%EC%9D%98+%EA%B0%92%EC%9D%84+%EC%B6%9C%EB%A0%A5%ED%95%A9%EB%8B%88%EB%8B%A4.%0A%0A%EB%A7%88%EC%A7%80%EB%A7%89%EC%9C%BC%EB%A1%9C+r2%EA%B0%80+%EC%8A%A4%EC%BD%94%ED%94%84%EB%A5%BC+%EB%B2%97%EC%96%B4%EB%82%98+%EB%8D%94+%EC%9D%B4%EC%83%81+%EB%B9%8C%EB%A0%A4%EC%A7%80%EC%A7%80+%EC%95%8A%EA%B2%8C+%EB%90%98%EB%A9%B4%2C+s%EB%8A%94+%EB%8B%A4%EC%8B%9C+%EC%9E%90%EC%9C%A0%EB%A1%AD%EA%B2%8C+%EC%82%AC%EC%9A%A9%ED%95%A0+%EC%88%98+%EC%9E%88%EC%8A%B5%EB%8B%88%EB%8B%A4.%0A%0A%EC%9D%B4+%EC%BD%94%EB%93%9C+%EC%8A%A4%EB%8B%88%ED%8E%AB%EC%9D%80+Rust%EC%9D%98+%EC%86%8C%EC%9C%A0%EA%B6%8C%EA%B3%BC+%EB%B9%8C%EB%A6%BC+%EC%8B%9C%EC%8A%A4%ED%85%9C%EC%9D%B4+%EA%B0%80%EB%B9%84%EC%A7%80+%EC%BB%AC%EB%A0%89%ED%84%B0+%EC%97%86%EC%9D%B4+%EC%95%88%EC%A0%84%ED%95%98%EA%B3%A0+%ED%9A%A8%EC%9C%A8%EC%A0%81%EC%9D%B8+%EB%A9%94%EB%AA%A8%EB%A6%AC+%EA%B4%80%EB%A6%AC%EB%A5%BC+%EA%B0%80%EB%8A%A5%ED%95%98%EA%B2%8C+%ED%95%98%EB%8A%94+%EB%B0%A9%EC%8B%9D%EC%9D%84+%EB%B3%B4%EC%97%AC%EC%A4%8D%EB%8B%88%EB%8B%A4.%0A%0ARust%EB%8A%94+%EC%BB%B4%ED%8C%8C%EC%9D%BC+%EC%8B%9C%EA%B0%84%EC%97%90+%EC%86%8C%EC%9C%A0%EA%B6%8C%EA%B3%BC+%EB%B9%8C%EB%A6%BC+%EA%B7%9C%EC%B9%99%EC%9D%84+%EA%B0%95%EC%A0%9C%ED%95%A8%EC%9C%BC%EB%A1%9C%EC%8D%A8%0A%0A%EB%A9%94%EB%AA%A8%EB%A6%AC+%EB%88%84%EC%88%98%EB%82%98+%EC%84%B8%EA%B7%B8%EB%A9%98%ED%85%8C%EC%9D%B4%EC%85%98+%ED%8F%B4%ED%8A%B8%EC%99%80+%EA%B0%99%EC%9D%80+%EB%9F%B0%ED%83%80%EC%9E%84+%EC%98%A4%EB%A5%98%EB%A5%BC+%EB%B0%A9%EC%A7%80%ED%95%98%EB%AF%80%EB%A1%9C+Rust+%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%A8%EC%9D%80+%EC%95%88%EC%A0%95%EC%A0%81%EC%9D%B4%EB%A9%B4%EC%84%9C%EB%8F%84+%EB%86%92%EC%9D%80+%EC%84%B1%EB%8A%A5%EC%9D%84+%EB%B3%B4%EC%9E%A5%ED%95%A9%EB%8B%88%EB%8B%A4.%0A*%2F%0A%0Afn+main%28%29+%7B%0A++++let+mut+s+%3D+String%3A%3Afrom%28%22Hello%22%29%3B%0A%0A++++%7B%0A++++++++let+r1+%3D+%26s%3B+%2F%2F+%EB%B6%88%EB%B3%80+%EB%B9%8C%EB%A6%BC%0A++++++++println%21%28%22%7B%7D%22%2C+r1%29%3B%0A++++%7D+%2F%2F+r1%EC%9D%B4+%EC%8A%A4%EC%BD%94%ED%94%84%EB%A5%BC+%EB%B2%97%EC%96%B4%EB%82%A8%0A%0A++++let+r2+%3D+%26mut+s%3B+%2F%2F+%EA%B0%80%EB%B3%80+%EB%B9%8C%EB%A6%BC%0A++++r2.push_str%28%22%2C+world%21%22%29%3B%0A++++println%21%28%22%7B%7D%22%2C+r2%29%3B%0A%7D+%2F%2F+r2%EA%B0%80+%EC%8A%A4%EC%BD%94%ED%94%84%EB%A5%BC+%EB%B2%97%EC%96%B4%EB%82%A8%2C+s%EB%8A%94+%EB%8D%94+%EC%9D%B4%EC%83%81+%EB%B9%8C%EB%A0%A4%EC%A7%80%EC%A7%80+%EC%95%8A%EC%9D%8C%0A
+  content_markdown: >
+    Rust의 메모리 관리가 소유권, 빌림, 그리고 수명의 개념에 기반한다는 것을 설명합니다.
+
+
+    Rust의 시스템은 가비지 컬렉터가 필요 없이 컴파일 시간에 메모리 관리 문제를 방지하도록 설계되어 있다는 것을 강조합니다.
+
+
+    1.  Rust의 메모리 관리 방식 소개:
+        1. Rust는 소유권, 빌림, 그리고 수명을 기반으로 한 메모리 관리 시스템을 도입하여 메모리 안전성을 보장합니다.
+        2. 이 시스템은 컴파일 시간에 메모리 관리 문제를 확인하고 방지하므로, 런타임 시 메모리 누수나 `세그멘테이션 폴트`와 같은 문제가 발생하지 않습니다.
+    2. 가비지 컬렉터 없이 메모리 관리 문제 방지:
+        1.  Rust의 메모리 관리 시스템은 가비지 컬렉터가 필요 없이 메모리를 안전하게 관리할 수 있게 해줍니다.
+        2. 소유권과 빌림 규칙을 통해 컴파일러가 메모리 사용에 대한 제약 조건을 검사하고, 문제가 있는 경우 컴파일 오류를 발생시킵니다.
+        3. 이를 통해 런타임 시 메모리 관리 문제가 발생할 여지가 없도록 합니다.
+
+
+    이렇게 Rust는 소유권, 빌림, 그리고 수명을 기반으로 하는 메모리 관리 시스템을 통해 가비지 컬렉터 없이도 메모리 안전성을 보장하며,
+
+
+    컴파일 시간에 메모리 관리 문제를 방지하는 방식으로 문제를 해결합니다.
+
+
+    이 시스템은 런타임에 발생할 수 있는 메모리 관련 문제를 최소화하여 성능과 안정성을 높입니다.
+- title: 소유권
+  code: >-
+    https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=%2F%2F+%60drop%60+%ED%95%A8%EC%88%98+%EC%86%8C%EA%B0%9C%3A%0A%2F%2F+Rust%EC%97%90%EC%84%9C%EB%8A%94+%EA%B0%92%EC%9D%B4+%EB%B2%94%EC%9C%84%EB%A5%BC+%EB%B2%97%EC%96%B4%EB%82%A0+%EB%95%8C+%EC%9E%90%EB%8F%99%EC%9C%BC%EB%A1%9C+drop+%ED%95%A8%EC%88%98%EA%B0%80+%ED%98%B8%EC%B6%9C%EB%90%A9%EB%8B%88%EB%8B%A4.%0A%2F%2F+drop+%ED%95%A8%EC%88%98%EB%8A%94+%EB%A9%94%EB%AA%A8%EB%A6%AC%EB%A5%BC+%EC%95%88%EC%A0%84%ED%95%98%EA%B2%8C+%ED%95%B4%EC%A0%9C%ED%95%98%EB%8A%94+%EC%97%AD%ED%95%A0%EC%9D%84+%ED%95%A9%EB%8B%88%EB%8B%A4.%0A%2F%2F+%EC%9D%B4%EB%A5%BC+%ED%86%B5%ED%95%B4+%EA%B0%9C%EB%B0%9C%EC%9E%90%EA%B0%80+%EC%A7%81%EC%A0%91+%EB%A9%94%EB%AA%A8%EB%A6%AC+%ED%95%B4%EC%A0%9C%EB%A5%BC+%EA%B4%80%EB%A6%AC%ED%95%A0+%ED%95%84%EC%9A%94%EA%B0%80+%EC%97%86%EC%8A%B5%EB%8B%88%EB%8B%A4.%0Astruct+CustomStruct+%7B%0A++++data%3A+String%2C%0A%7D%0A%0Aimpl+Drop+for+CustomStruct+%7B%0A++++fn+drop%28%26mut+self%29+%7B%0A++++++++println%21%28%22Dropping+CustomStruct+with+data%3A+%7B%7D%22%2C+self.data%29%3B%0A++++%7D%0A%7D%0A%0Afn+main%28%29+%7B%0A++++let+custom+%3D+CustomStruct+%7B%0A++++++++data%3A+String%3A%3Afrom%28%22hello%22%29%2C%0A++++%7D%3B%0A++++println%21%28%22Created+CustomStruct+with+data%3A+%7B%7D%22%2C+custom.data%29%3B%0A++++%2F%2F+custom%EC%9D%80+%EC%9D%B4+%EC%8A%A4%EC%BD%94%ED%94%84%EB%A5%BC+%EB%B2%97%EC%96%B4%EB%82%98%EB%A9%B4%EC%84%9C+drop+%ED%95%A8%EC%88%98%EA%B0%80+%ED%98%B8%EC%B6%9C%EB%90%98%EC%96%B4+%EB%A9%94%EB%AA%A8%EB%A6%AC%EA%B0%80+%EC%95%88%EC%A0%84%ED%95%98%EA%B2%8C+%ED%95%B4%EC%A0%9C%EB%90%A9%EB%8B%88%EB%8B%A4.%0A%7D%0A
+  content_markdown: >
+    **Ownership**
+
+
+    소유권 정의: Rust에서 각 값은 하나의 소유자를 가지며, 소유자가 범위를 벗어나면 값이 할당 해제됩니다.
+
+
+    소유권 이전 방법을 예제를 통해 설명합니다 (예: 값을 새 변수에 할당하거나 함수에 전달할 때).
+
+
+    값이 범위를 벗어날 때 자동으로 호출되는 drop 함수를 소개합니다.
+
+
+    소유권 정의:
+
+
+    Rust에서는 각 값에 대해 하나의 소유자가 존재하며, 소유자가 해당 값을 관리합니다.
+
+
+    소유자가 범위를 벗어나면 Rust는 자동으로 해당 값의 메모리를 해제합니다.
+
+
+    소유권 이전 예제:
+
+
+    예제 1: 값을 새 변수에 할당할 때
+
+
+    s1이 가리키는 값의 소유권이 s2로 이전되어 s1은 사용할 수 없습니다.
+
+    %rust%
+    let s1 = String::from("hello");
+
+    let s2 = s1;
+    %end%
+
+
+    예제 2: 함수에 값을 전달할 때
+
+
+    s가 takes_ownership 함수에 전달되면서 소유권이 이전되고 함수 내에서 값의 메모리가 해제됩니다.
+
+    %rust%
+    fn takes_ownership(s: String) {
+        println!("{}", s);
+    }
+
+
+    fn main() {
+        let s = String::from("hello");
+        takes_ownership(s);
+        // 여기에서 s는 사용할 수 없습니다.
+    }
+    %end%
+
+
+    `drop` 함수 소개:
+
+
+    Rust에서는 값이 범위를 벗어날 때 자동으로 drop 함수가 호출됩니다.
+
+
+    drop 함수는 메모리를 안전하게 해제하는 역할을 합니다.
+
+
+    이를 통해 개발자가 직접 메모리 해제를 관리할 필요가 없습니다.
+
+
+    소유권, 소유권 이전 방법, 그리고 drop 함수를 통해 Rust는 메모리 관리를 단순화하고 안전하게 할 수 있습니다.
+
+
+    이로 인해 메모리 누수나 세그멘테이션 폴트와 같은 문제를 효과적으로 방지할 수 있습니다.
+- title: 빌림
+  source: >-
     /ajou.webp
   content_markdown: >
-    소유권, 빌리기, borrow checker
-- title: Hey
-  source: >-
-    /ferris_lofi.png
+    **Borrowing**
+- title: 수명
+  code: >-
+    https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=%2F%2F+%EA%B5%AC%EC%A1%B0%EC%B2%B4+%EC%A0%95%EC%9D%98%0A%2F%2F+%EB%91%90+%EA%B0%9C%EC%9D%98+%EC%B0%B8%EC%A1%B0%EB%A5%BC+%EA%B0%80%EC%A7%80%EB%8A%94+%EA%B5%AC%EC%A1%B0%EC%B2%B4%EB%A5%BC+%EB%A7%8C%EB%93%AD%EB%8B%88%EB%8B%A4.+%EA%B0%81+%EC%B0%B8%EC%A1%B0%EB%8A%94+%EB%8B%A4%EB%A5%B8+%EB%9D%BC%EC%9D%B4%ED%94%84%ED%83%80%EC%9E%84%EC%9D%84+%EA%B0%80%EC%A7%91%EB%8B%88%EB%8B%A4.%0Astruct+TwoRefs%3C%27a%2C+%27b%3E+%7B%0A++++ref_a%3A+%26%27a+str%2C%0A++++ref_b%3A+%26%27b+str%2C%0A%7D%0A%0A%2F%2F+%ED%95%A8%EC%88%98+%EC%A0%95%EC%9D%98%0A%2F%2F+%EB%91%90+%EA%B0%9C%EC%9D%98+%EB%9D%BC%EC%9D%B4%ED%94%84%ED%83%80%EC%9E%84%EC%9D%84+%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94+%ED%95%A8%EC%88%98%EC%9E%85%EB%8B%88%EB%8B%A4.%0A%2F%2F+%EC%9E%85%EB%A0%A5+%EB%AC%B8%EC%9E%90%EC%97%B4%EC%9D%98+%EA%B8%B8%EC%9D%B4%EC%97%90+%EB%94%B0%EB%9D%BC+%EB%91%90+%EB%AC%B8%EC%9E%90%EC%97%B4+%EC%A4%91+%ED%95%98%EB%82%98%EB%A5%BC+%EB%B0%98%ED%99%98%ED%95%A9%EB%8B%88%EB%8B%A4.%0A%2F%2F+%27b%3A+%27a%EB%A1%9C+%EB%91%90+%EB%9D%BC%EC%9D%B4%ED%94%84%ED%83%80%EC%9E%84+%EA%B0%84%EC%9D%98+%EA%B4%80%EA%B3%84%EB%A5%BC+%EC%84%A4%EC%A0%95%ED%95%B4%EC%84%9C%0A%2F%2F+%27b+%EB%9D%BC%EC%9D%B4%ED%94%84%ED%83%80%EC%9E%84%EC%9D%80+%27a+%EB%9D%BC%EC%9D%B4%ED%94%84%ED%83%80%EC%9E%84%EB%B3%B4%EB%8B%A4+%EA%B8%B8%EA%B1%B0%EB%82%98+%EA%B0%99%EC%95%84%EC%95%BC+%ED%95%A9%EB%8B%88%EB%8B%A4.%0Afn+choose_str%3C%27a%2C+%27b%3A+%27a%3E%28str_a%3A+%26%27a+str%2C+str_b%3A+%26%27b+str%29+-%3E+%26%27a+str+%7B%0A++++if+str_a.len%28%29+%3E+str_b.len%28%29+%7B%0A++++++++str_a%0A++++%7D+else+%7B%0A++++++++str_b%0A++++%7D%0A%7D%0A%0Afn+main%28%29+%7B%0A++++%2F%2F+%EB%AC%B8%EC%9E%90%EC%97%B4+%EC%83%9D%EC%84%B1%0A++++let+a+%3D+String%3A%3Afrom%28%22%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94.%22%29%3B%0A++++let+b+%3D+String%3A%3Afrom%28%22%EB%B0%98%EA%B0%91%EC%8A%B5%EB%8B%88%EB%8B%A4.%22%29%3B%0A%0A++++%7B%0A++++++++%2F%2F+%EB%91%90+%EA%B0%9C%EC%9D%98+%EC%84%9C%EB%A1%9C+%EB%8B%A4%EB%A5%B8+%EB%9D%BC%EC%9D%B4%ED%94%84%ED%83%80%EC%9E%84%EC%9D%84+%EA%B0%80%EC%A7%84+%EA%B5%AC%EC%A1%B0%EC%B2%B4+%EC%83%9D%EC%84%B1%0A++++++++let+c+%3D+%22%EC%97%AC%EA%B8%B0%EC%84%9C+%EB%A7%8C%EB%82%98%EC%84%9C+%EB%B0%98%EA%B0%80%EC%9B%8C%EC%9A%94%21%22%3B%0A++++++++let+two_refs+%3D+TwoRefs+%7B%0A++++++++++++ref_a%3A+%26a%2C%0A++++++++++++ref_b%3A+%26c%2C%0A++++++++%7D%3B%0A%0A++++++++%2F%2F+%ED%95%A8%EC%88%98+%ED%98%B8%EC%B6%9C%0A++++++++let+longest_str+%3D+choose_str%28two_refs.ref_a%2C+two_refs.ref_b%29%3B%0A++++++++println%21%28%22%EA%B0%80%EC%9E%A5+%EA%B8%B4+%EB%AC%B8%EC%9E%90%EC%97%B4%3A+%7B%7D%22%2C+longest_str%29%3B%0A++++%7D%0A%0A++++%2F%2F+%EC%97%AC%EA%B8%B0%EC%84%9C+two_refs%EB%8A%94+%EC%82%AC%EB%9D%BC%EC%A7%80%EA%B3%A0%2C+%EB%9D%BC%EC%9D%B4%ED%94%84%ED%83%80%EC%9E%84+%27a%EC%99%80+%27b%EB%8A%94+%EB%8D%94+%EC%9D%B4%EC%83%81+%EC%A1%B4%EC%9E%AC%ED%95%98%EC%A7%80+%EC%95%8A%EC%8A%B5%EB%8B%88%EB%8B%A4.%0A%7D%0A
   content_markdown: >
-    CSW
+    **Lifetime**
+
+
+    참조와 그들이 빌리는 값 사이의 관계를 나타내기 위해 수명이 사용됩니다.
+
+
+    여기선 함수 시그니처와 구조체에서 수명을 어떻게 표시하는지 보여줍니다.
+
+
+    수명은 주로 빌림 검사기가 메모리 안전성을 보장하기 위한 도구로 사용되며, 컴파일러에 의해 자주 자동으로 추론된다는 것을 강조합니다.
+
+
+    수명이란 무엇인가:
+
+
+    수명은 참조와 빌려진 값 사이의 관계를 표현하는데 사용됩니다.
+
+
+    수명은 참조가 유효한 기간 동안 해당 값이 메모리에서 해제되지 않도록 보장합니다.
+
+
+    함수 시그니처와 구조체에서의 수명 표시:
+
+
+    예제 1: 함수 시그니처에서 수명 표시
+
+    %rust%
+    // 여기에서 사용된 'a는 수명을 나타내는 표시입니다.
+
+    // 이를 통해 입력과 출력의 참조들이 동일한 수명을 가지도록 합니다.
+
+    fn longest<'a>(s1: &'a str, s2: &'a str) -> &'a str {
+        if s1.len() > s2.len() {
+            s1
+        } else {
+            s2
+        }
+    }
+    %end%
+
+
+    예제 2: 구조체에서 수명 표시
+
+
+    %rust%
+    // Person 구조체는 이름을 문자열 슬라이스로 저장합니다.
+
+    // 여기에서 사용된 'a는 구조체의 이름 필드가 참조하는 문자열 슬라이스의 수명을 나타냅니다.
+
+    struct Person<'a> {
+        name: &'a str,
+    }
+    %end%
+
+
+    수명과 빌림 검사기:
+
+
+    수명은 빌림 검사기가 참조가 유효한 기간 동안 값이 메모리에서 해제되지 않도록 보장하는 데 사용됩니다.
+
+
+    대부분의 경우, 컴파일러는 수명을 자동으로 추론할 수 있습니다.
+
+
+    그러나 복잡한 상황에서는 개발자가 수명을 명시해야 할 수도 있습니다.
+
+
+    수명을 이해하고 올바르게 사용함으로써 Rust의 빌림 검사기가 메모리 관리를 안전하게 수행할 수 있도록 지원할 수 있습니다.
+
+
+    이는 Rust 프로그램의 성능과 안정성에 크게 기여합니다.
+- title: 빌림
+  source: >-
+    /ajou.webp
+  content_markdown: >
+    **Borrow checker**
+
+
+    빌림 검사기가 컴파일 시간에 빌림 규칙을 적용하여 메모리 안전성을 보장하는 방법을 설명합니다.
+
+
+    빌림 검사기는 코드 내 참조의 수명을 분석함으로써 작동한다는 것을 설명합니다.
+
+
+    빌림 검사기가 컴파일 시간에 메모리 관리 오류를 포착하는 방법을 예제를 통해 보여줍니다.
+
+
+    빌림 검사기가 컴파일 시간에 빌림 규칙을 적용하는 방법 설명:
+
+
+    Rust의 빌림 검사기는 컴파일 시간에 참조 규칙을 적용하여 메모리 안전성을 보장합니다.
+
+
+    이를 통해 런타임에 발생할 수 있는 메모리 누수, 데이터 경쟁 등의 문제를 사전에 방지할 수 있습니다.
+
+
+    빌림 검사기가 코드 내 참조의 수명을 분석하는 방법 설명:
+
+
+    빌림 검사기는 함수, 구조체 및 코드 내에서 참조의 수명을 추적하고 분석합니다.
+
+
+    이를 통해, 참조의 수명이 끝난 이후에도 사용되거나, 다른 참조가 유효하지 않은 상태에서 접근하는 것을 방지합니다.
+
+
+    빌림 검사기가 컴파일 시간에 메모리 관리 오류를 포착하는 예제:
+
+
+    %rust%
+    fn main() {
+        let mut x = 5;
+        let y = &mut x;
+        let z = &x;
+        println!("x: {}, y: {}, z: {}", x, y, z);
+    }
+    %end%
+
+    - 위 코드는 컴파일 시간에 오류를 발생시킵니다.
+    - 빌림 검사기는 x가 변경 가능한 참조와 불변 참조가 동시에 존재하는 것을 감지합니다.
+    - 빌림 검사기의 오류 메시지를 통해 개발자는 문제가 발생한 원인을 파악하고 코드를 수정할 수 있습니다.
+- title: 소유권
+  source: >-
+    /ajou.webp
+  content_markdown: >
+    gff

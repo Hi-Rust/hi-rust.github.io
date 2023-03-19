@@ -341,6 +341,7 @@ body.welcome-cover {
   text-decoration: underline;
 }
 
+ol,
 ul {
   font-size: 22px;
   line-height: 36px;

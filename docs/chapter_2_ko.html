@@ -36,13 +36,32 @@
             </div>
             <div class="page">
             <h1>Chapter 2 - Ownership</h1>
-            <p>소유권, 빌리기, borrow checker</p>
+            <div align="center"> <p>
+    <img src="https://user-images.githubusercontent.com/2356749/226180667-0a6f5363-ad80-4c35-84f5-fb4341484e0f.png">
+</p> </div>
+<p>메모리 관리 문제 소개:</p>
+<p>수동 메모리 관리가 메모리 누수나 세그멘테이션 폴트와 같은 문제를 초래할 수 있는 방법을 설명합니다. 가비지 컬렉터 개념과 그 단점(예: 성능 오버헤드)을 소개합니다.</p>
+<ul>
+<li><p>수동 메모리 관리의 문제점 설명:</p></li>
+<li><p>수동 메모리 관리에서 개발자는 메모리 할당 및 해제를 직접 관리해야 합니다.</p></li>
+<li><p>메모리를 적절하게 해제하지 않으면 메모리 누수가 발생하고, 이미 해제된 메모리에 접근하려고 하면 세그멘테이션 폴트가 발생할 수 있습니다.</p></li>
+<li><p>이러한 문제는 프로그램의 안정성과 성능에 심각한 영향을 미칩니다.</p></li>
+<li><p>가비지 컬렉터 소개:</p></li>
+<li><p>가비지 컬렉터는 메모리 관리를 자동화하여 개발자가 메모리 할당 및 해제를 신경 쓰지 않아도 되게 하는 기술입니다.</p></li>
+<li><p>사용하지 않는 메모리를 자동으로 회수하여 메모리 누수를 방지할 수 있습니다.</p></li>
+<li><p>가비지 컬렉터의 단점:</p></li>
+<li><p>가비지 컬렉터의 주요 단점은 성능 오버헤드입니다.</p></li>
+<li><p>가비지 컬렉터가 메모리를 추적하고 회수하는 과정에서 시스템 리소스가 소모됩니다.</p></li>
+<li><p>가비지 컬렉션 동작 중에는 프로그램 실행이 일시 중단되거나 느려질 수 있어, 실시간 처리가 중요한 시스템에서는 문제가 될 수 있습니다.</p></li>
+</ul>
+<p>이러한 문제들에 대한 해결책으로 Rust는 소유권, 빌림, 그리고 수명을 기반으로 한 메모리 관리 시스템을 도입하였습니다.
+이를 통해 컴파일 시간에 메모리 안전성을 보장하며, 가비지 컬렉터의 성능 오버헤드를 피할 수 있습니다.</p>
             <div class="bottomnav">
                 <span class="back"><a href="19_ko.html" rel="prev">❮ 이전</a></span>
                 <span class="next"><a href="21_ko.html" rel="next">다음 ❯</a></span>
             </div>
             </div>
-            <div class="code"><center><img src="/ajou.webp" alt="Rust Tutorial" width="300" height="100%"></center></div>
+            <div class="code"><center><img src="/ferris.webp" alt="Rust Tutorial" width="300" height="100%"></center></div>
         </div>
         <!-- <script>
           document.addEventListener("DOMContentLoaded", function() {
