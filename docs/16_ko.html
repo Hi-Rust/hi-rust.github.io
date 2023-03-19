@@ -42,10 +42,10 @@
 <pre><code class="rust">struct Person {
   name: String,
   age: u8,
-} </code></pre>
-<p>구조체의 인스턴스를 생성하려면, 구조체 이름 뒤에 중괄호를 사용하고 필드에 값을 할당합니다.
-예를 들면:</p>
-<pre><code class="rust">let person = Person { name: String::from("Alice"), age: 30 }; </code></pre>
+} %end
+구조체의 인스턴스를 생성하려면, 구조체 이름 뒤에 중괄호를 사용하고 필드에 값을 할당합니다.
+예를 들면:
+%rust% let person = Person { name: String::from("Alice"), age: 30 };</code></pre>
 <hr />
 <p><strong>열거형 (Enum)</strong></p>
 <p>열거형(enum, "enumeration"의 줄임말)은 고정된 명명된 값 집합인 "변종(variants)"을 가진 타입을 나타냅니다.</p>
@@ -55,12 +55,12 @@
   Active,
   Inactive,
   Pending,
-} </code></pre>
+}</code></pre>
 <p>열거형의 인스턴스를 생성하려면, 열거형 이름 뒤에 두 개의 콜론(<code>::</code>)과 변종 이름을 사용합니다.</p>
 <p>예를 들면:</p>
-<pre><code class="rust">let status = Status::Active; </code></pre>
+<pre><code class="rust">let status = Status::Active;</code></pre>
 <p>열거형 변종에 따라 다른 작업을 수행하려면 match 표현식을 사용할 수 있습니다:</p>
-<pre><code class="rust">let user_status = Status::Active; </code></pre>
+<pre><code class="rust">let user_status = Status::Active;</code></pre>
 <p>열거형을 다루려면, 종종 match 표현식을 사용하며, 이를 통해 열거형 변종에 따라 다른 작업을 수행할 수 있습니다:</p>
 <pre><code class="rust">fn print_status_message(status: Status) {
     match status {
@@ -72,7 +72,7 @@
 fn main() {
     let user_status = Status::Active;
     print_status_message(user_status);
-} </code></pre>
+}</code></pre>
 <hr />
 <p><strong>Tuple Struct, Enum</strong></p>
 <p>주로 간결한 표현, 타입 안전성 및 논리적 구조를 위해 사용됩니다.</p>
@@ -105,7 +105,7 @@ fn main() {
         Shape::Circle(radius) => println!("원의 반지름: {}", radius),
         _ => (),
     }
-} </code></pre>
+}</code></pre>
 <hr />
 <p><strong>Nested</strong>
 중첩된 Struct과 Enum을 만들고 싶다면?</p>
@@ -143,7 +143,7 @@ fn main() {
         species: String::from("개"),
         is_domestic: true,
     };
-} </code></pre>
+}</code></pre>
             <div class="bottomnav">
                 <span class="back"><a href="15_ko.html" rel="prev">❮ 이전</a></span>
                 <span class="next"><a href="17_ko.html" rel="next">다음 ❯</a></span>

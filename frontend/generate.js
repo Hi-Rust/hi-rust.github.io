@@ -5,6 +5,39 @@ const yaml = require("js-yaml");
 const lessonSource = process.argv[2];
 const targetDir = process.argv[3];
 
+showdown.extension("rust", function () {
+  return [
+    {
+      type: "lang",
+      regex: /%rust%([^]+?)%end%/gi,
+      replace: function (s, match) {
+        return '<pre><code class="rust">' + match.trim() + "</code></pre>";
+      },
+    },
+  ];
+});
+
+showdown.extension("centerImage", function () {
+  return [
+    {
+      type: "lang",
+      regex: /%center\s*-\s*([^\s%]+)(?:\s*,\s*([^%\n]+))?\s*%/gi,
+      replace: function (s, src, subtitle) {
+        var html =
+          '<div align="center">' +
+          '<p><img src="' +
+          src +
+          '" alt="NO IMG" style="width: 20%; margin-bottom: 20px; border-radius: 10px;"></p>';
+        if (subtitle) {
+          html += "<h3>" + subtitle.trim() + "</h3>";
+        }
+        html += "</div>";
+        return html;
+      },
+    },
+  ];
+});
+
 /**
  * @param {number} num
  * @returns {string}
@@ -90,7 +123,7 @@ const lessons = {
   pages,
 };
 
-const a_binder = [
+const aBinder = [
   {
     type: "output",
     regex: /(<a [^>]*)(>.*<\/a>)/g,
@@ -99,8 +132,10 @@ const a_binder = [
 ];
 
 const converter = new showdown.Converter({
-  extensions: [...a_binder],
+  extensions: [...aBinder, "rust", "centerImage"],
 });
+
+converter.setOption("parseImgDimensions", true);
 
 /**
  * @param {string[]} words

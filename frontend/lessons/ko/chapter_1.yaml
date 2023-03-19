@@ -8,7 +8,9 @@
     Rust 언어 비공식이지만 거의 흔하게 쓰이는 마스코트, 게(crab)의 이름은 **Ferris** 입니다.
 
 
-    <pre><code class="rust">let ferris = crab!()</code></pre>
+    %rust%
+    let ferris = crab!()
+    %end%
 
 
     또한 Rust를 사용하거나, 기여하거나 관심이 있는 사람들을 **Rustacean**[러스테이션] 라고 부릅니다.
@@ -32,7 +34,8 @@
     (`cargo inspect` 명령어)
 
 
-    <pre><code class="rust">#![feature(prelude_import)]
+    %rust%
+    #![feature(prelude_import)]
 
 
     #[prelude_import]
@@ -50,7 +53,7 @@
             ::std::io::_print(format_args!("Welcome to the playground! You can modify the code in here.\n"));
         };
     }
-    </code></pre>
+    %end%
 
 - title: 변수
   code: >-
@@ -210,7 +213,8 @@
     그리고 첫 번째 일치하는 패턴에 해당하는 코드 블록을 실행합니다.
 
 
-    <pre><code class="rust">fn main() {
+    %rust%
+    fn main() {
         let number = 42;
 
         match number {
@@ -220,7 +224,7 @@
             _ => println!("숫자는 다른 것입니다"),
         }
     }
-    </code></pre>
+    %end%
 
     여기서는 number 변수의 값을 여러 패턴과 비교합니다.
 
@@ -228,7 +232,8 @@
     `_` 패턴은 이전 패턴에서 명시적으로 다루지 않은 모든 값을 매치하는 `catch-all` 패턴입니다.
 
 
-    <pre><code class="rust">fn classify_age(age: u8) {
+    %rust%
+    fn classify_age(age: u8) {
         match age {
             0..=12 => println!("어린이"),
             13..=19 => println!("청소년"),
@@ -241,7 +246,7 @@
         let age = 25;
         classify_age(age);
     }
-    </code></pre>
+    %end%
 
 
     이 예제에서는 match 표현식을 사용하여 나이를 그룹으로 분류하고,
@@ -260,18 +265,20 @@
 
     다음은 Person 구조체의 예입니다:
 
-    <pre><code class="rust">struct Person {
+    %rust%
+    struct Person {
       name: String,
       age: u8,
     }
-    </code></pre>
+    %end
 
     구조체의 인스턴스를 생성하려면, 구조체 이름 뒤에 중괄호를 사용하고 필드에 값을 할당합니다.
 
     예를 들면:
 
-    <pre><code class="rust">let person = Person { name: String::from("Alice"), age: 30 };
-    </code></pre>
+    %rust%
+    let person = Person { name: String::from("Alice"), age: 30 };
+    %end%
 
     ---
 
@@ -286,12 +293,13 @@
 
     다음은 Status 열거형의 예입니다:
 
-    <pre><code class="rust">enum Status {
+    %rust%
+    enum Status {
       Active,
       Inactive,
       Pending,
     }
-    </code></pre>
+    %end%
 
 
     열거형의 인스턴스를 생성하려면, 열거형 이름 뒤에 두 개의 콜론(`::`)과 변종 이름을 사용합니다.
@@ -299,17 +307,20 @@
 
     예를 들면:
 
-    <pre><code class="rust">let status = Status::Active;
-    </code></pre>
+    %rust%
+    let status = Status::Active;
+    %end%
 
     열거형 변종에 따라 다른 작업을 수행하려면 match 표현식을 사용할 수 있습니다:
 
-    <pre><code class="rust">let user_status = Status::Active;
-    </code></pre>
+    %rust%
+    let user_status = Status::Active;
+    %end%
 
     열거형을 다루려면, 종종 match 표현식을 사용하며, 이를 통해 열거형 변종에 따라 다른 작업을 수행할 수 있습니다:
 
-    <pre><code class="rust">fn print_status_message(status: Status) {
+    %rust%
+    fn print_status_message(status: Status) {
         match status {
             Status::Active => println!("사용자가 활성 상태입니다."),
             Status::Inactive => println!("사용자가 비활성 상태입니다."),
@@ -321,7 +332,7 @@
         let user_status = Status::Active;
         print_status_message(user_status);
     }
-    </code></pre>
+    %end%
 
     ---
 
@@ -337,7 +348,8 @@
 
     - 튜플 열거형 변종 (Tuple Enum Variants): 튜플 열거형 변종은 열거형의 각 변종에 데이터를 연관시키는 데 사용됩니다. 튜플 열거형 변종은 각 변종에 서로 다른 타입과 수의 값을 저장할 수 있습니다. 이러한 변종은 열거형의 다양한 경우를 명확하게 구분하고, 관련 데이터를 함께 저장하여 논리적 구조를 제공하는 데 유용합니다. 패턴 매칭을 사용하면 튜플 열거형 변종의 값을 안전하게 추출하고, 해당 값에 따라 다양한 작업을 수행할 수 있습니다.
 
-    <pre><code class="rust">// 튜플 구조체 (Tuple Struct)
+    %rust%
+    // 튜플 구조체 (Tuple Struct)
 
     struct Point3D(f32, f32, f32);
 
@@ -366,7 +378,7 @@
             _ => (),
         }
     }
-    </code></pre>
+    %end%
 
     ---
 
@@ -374,7 +386,8 @@
 
     중첩된 Struct과 Enum을 만들고 싶다면?
 
-    <pre><code class="rust">// 중첩된 구조체 (Nested Struct)
+    %rust%
+    // 중첩된 구조체 (Nested Struct)
 
     struct Address {
         street: String,
@@ -414,7 +427,7 @@
             is_domestic: true,
         };
     }
-    </code></pre>
+    %end%
 
 - title: Returning Nothing
   code: >-
