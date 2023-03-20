@@ -5,18 +5,20 @@
   content_markdown: |
     <img src="/intro.webp" alt="Welcome to Rust" style="width: 100%; margin-bottom: 20px; border-radius: 10px;">
 
+   
+
+    ** 튜토리얼 소개 🎉**
+
+    Rust 튜토리얼 기본편 영상을 위한 웹사이트입니다. 프로그래밍 기초 지식이 있는 분들을 대상으로 만들었습니다. (C, Python, Java 등)
+
+    20분짜리 영상 총 XX 편으로 구성되어 있고, 튜토리얼의 콘텐츠는 미러사이트에서 보실 수 있습니다. 
+
     Mirror 1: [http://rust-study.ajousw.kr/](http://rust-study.ajousw.kr/index.html)
 
     Mirror 2: [https://hi-rust.github.io/](https://hi-rust.github.io/index.html)
 
     Binary: Windows/Mac/Ubuntu22.04 [@다운로드](https://github.com/Hi-Rust/hi-rust.github.io/releases)
 
-
-    **자기주도프로젝트 🎉**
-
-    안녕하세요. 자기주도프로젝트 Rust 튜토리얼 영상을 위한 웹사이트입니다.
-
-    `프로그래밍 기초 지식이 있는 분들을 타겟`으로 만들었습니다. (C & Python)
 
     키보드 <span class="emoji">⬅️</span>/<span class="emoji">➡️</span> 버튼으로 페이지를 이동할 수 있습니다.
 
