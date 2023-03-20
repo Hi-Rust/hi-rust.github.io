@@ -414,6 +414,10 @@ languages.forEach(lang => {
           .join("\n")}
             </ul>
             </div>
+            <div style="display: flex;flex-direction: column;justify-content: center;align-items: center;">
+              <img style="display: block; margin: 0 auto;" src="/ajou.webp"></img><br/>
+              <p>이 컨텐츠는 2022년 과학기술정보통신부 및 정보통신기획평가원의 SW중심대학사업의 연구결과로 제작되었습니다.<br/>(2022-0-01077)</p>
+            </div>
         </div>
     </body>
     </html>`
