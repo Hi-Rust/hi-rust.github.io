@@ -1,18 +1,3 @@
-// var page = document.querySelector("div.tour");
-
-// console.log(page);
-
-// var hammer = new Hammer(document.body);
-
-// hammer.on("swipeleft", function () {
-//   console.log("Left");
-//   triggerLinkClick("next");
-// });
-
-// hammer.on("swiperight", function () {
-//   triggerLinkClick("back");
-// });
-
 const triggerLinkClick = direction => {
   const link = document.querySelector(`.${direction} a`);
   if (link) {
@@ -66,6 +51,15 @@ const handleTouchMove = evt => {
   }
 };
 
+let activeEl = null;
+document.addEventListener(
+  "focus",
+  event => {
+    activeEl = event.target;
+  },
+  true
+);
+
 const setupKeys = () => {
   // PC
   document.body.addEventListener("keyup", e => {
@@ -76,6 +70,20 @@ const setupKeys = () => {
     if (document.activeElement.tagName === "SPAN") {
       // ignore keys on pre > code elements
       return;
+    }
+
+    // check if the active element has a scrollable parent
+    const hasScrollableParent = el => el.scrollWidth > el.clientWidth;
+    let el = document.activeElement;
+    while (el) {
+      if (el === document.body) {
+        break; // stop checking if we reach the body element
+      }
+      if (hasScrollableParent(el) && el.tagName !== "A") {
+        e.preventDefault();
+        return;
+      }
+      el = el.parentElement;
     }
 
     if (e.key === "Right" || e.key === "ArrowRight") {

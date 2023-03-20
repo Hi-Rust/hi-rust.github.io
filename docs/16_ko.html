@@ -42,10 +42,10 @@
 <pre><code class="rust">struct Person {
   name: String,
   age: u8,
-} %end
-구조체의 인스턴스를 생성하려면, 구조체 이름 뒤에 중괄호를 사용하고 필드에 값을 할당합니다.
-예를 들면:
-%rust% let person = Person { name: String::from("Alice"), age: 30 };</code></pre>
+}</code></pre>
+<p>구조체의 인스턴스를 생성하려면, 구조체 이름 뒤에 중괄호를 사용하고 필드에 값을 할당합니다.<br />
+예를 들면:</p>
+<pre><code class="rust">let person = Person { name: String::from("Alice"), age: 30 };</code></pre>
 <hr />
 <p><strong>열거형 (Enum)</strong></p>
 <p>열거형(enum, "enumeration"의 줄임말)은 고정된 명명된 값 집합인 "변종(variants)"을 가진 타입을 나타냅니다.</p>
@@ -107,7 +107,7 @@ fn main() {
     }
 }</code></pre>
 <hr />
-<p><strong>Nested</strong>
+<p><strong>Nested</strong><br />
 중첩된 Struct과 Enum을 만들고 싶다면?</p>
 <pre><code class="rust">// 중첩된 구조체 (Nested Struct)
 struct Address {

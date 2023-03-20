@@ -3,3 +3,4 @@ docs/*.html
 node_modules
 .vscode
 node_modules
+__pycache__

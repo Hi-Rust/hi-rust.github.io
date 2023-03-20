@@ -136,6 +136,7 @@ const converter = new showdown.Converter({
 });
 
 converter.setOption("parseImgDimensions", true);
+converter.setOption("simpleLineBreaks", true);
 
 /**
  * @param {string[]} words

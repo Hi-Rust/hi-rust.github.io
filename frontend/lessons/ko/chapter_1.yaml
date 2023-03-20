@@ -83,7 +83,7 @@
 
 - title: 변수 업데이트
   code: >-
-    https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&code=fn%20main()%20%7B%0A%20%20%20%20let%20mut%20x%20%3D%2042%3B%0A%20%20%20%20println!(%22%7B%7D%22%2C%20x)%3B%0A%20%20%20%20x%20%3D%2013%3B%0A%20%20%20%20println!(%22%7B%7D%22%2C%20x)%3B%0A%7D%0A
+    https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=fn+main%28%29+%7B%0A++++let+mut+x+%3D+42%3B%0A++++println%21%28%22%7B%7D%22%2C+x%29%3B%0A++++x+%3D+13%3B%0A++++println%21%28%22%7B%7D%22%2C+x%29%3B%0A%0A++++let+y+%3D+23%3B%0A++++println%21%28%22%7B%7D%22%2C+y%29%3B%0A++++%2F%2F+y+%3D+9%3B++%2F%2F+%EC%97%90%EB%9F%AC%0A%7D%0A
   content_markdown: >
     Rust는 변수가 변경 가능한지 여부에 대해 많은 주의를 기울입니다.
 
@@ -187,6 +187,24 @@
     힌트: 함수를 정의하는 경우, 해당 함수가 수신하는 데이터를 매개변수 (parameter)라고합니다.
 
     그 함수를 호출하고 데이터를 전달하면 인수(argument)라고합니다.
+
+
+    ```python
+
+    def add(x: int, y: int) -> int:
+        return x + y
+
+    def subtract(x: int, y: int) -> int:
+        return x - y
+
+    def main():
+        print(f"42 + 13 = {add(42, 13)}")
+        print(f"42 - 13 = {subtract(42, 13)}")
+
+
+    if __name__ == "__main__":
+        main()
+    ```
 - title: Multiple Return Values
   code: >-
     https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&code=fn%20swap(x%3A%20i32%2C%20y%3A%20i32)%20-%3E%20(i32%2C%20i32)%20%7B%0A%20%20%20%20return%20(y%2C%20x)%3B%0A%7D%0A%0Afn%20main()%20%7B%0A%20%20%20%20%2F%2F%20return%20a%20tuple%20of%20return%20values%0A%20%20%20%20let%20result%20%3D%20swap(123%2C%20321)%3B%0A%20%20%20%20println!(%22%7B%7D%20%7B%7D%22%2C%20result.0%2C%20result.1)%3B%0A%0A%20%20%20%20%2F%2F%20destructure%20the%20tuple%20into%20two%20variables%20names%0A%20%20%20%20let%20(a%2C%20b)%20%3D%20swap(result.0%2C%20result.1)%3B%0A%20%20%20%20println!(%22%7B%7D%20%7B%7D%22%2C%20a%2C%20b)%3B%0A%7D%0A
@@ -270,7 +288,7 @@
       name: String,
       age: u8,
     }
-    %end
+    %end%
 
     구조체의 인스턴스를 생성하려면, 구조체 이름 뒤에 중괄호를 사용하고 필드에 값을 할당합니다.
 

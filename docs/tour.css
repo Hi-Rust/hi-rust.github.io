@@ -12,7 +12,6 @@ a:focus {
 }
 
 pre > code,
-code,
 .code-badge {
   font-family: "Fira Code", monospace;
 }
@@ -64,7 +63,7 @@ blockquote {
 }
 
 code {
-  /* font-family: Consolas, monospace; */
+  font-family: "Noto Sans KR", sans-serif;
   font-size: 1.1em;
   font-weight: 500;
   padding: 0.3em;
