@@ -10,7 +10,8 @@
     "serve": "npm run build && python fast.py",
     "clean": "rimraf --glob ./docs/*.html",
     "watch": "nodemon -w ./frontend/lessons/**/* -w ./frontend/generate.js -w ./docs/tour.css -w ./docs/tour.js -e yaml --exec npm run serve",
-    "tauri": "tauri"
+    "tauri": "tauri",
+    "ajou": "xcopy .\\docs\\* ..\\rust-study.ajousw.kr\\docs\\ /EXCLUDE:exclude.txt /E /Y >nul 2>&1 && xcopy .\\frontend\\* ..\\rust-study.ajousw.kr\\frontend\\ /EXCLUDE:exclude.txt /E /Y >nul 2>&1"
   },
   "dependencies": {
     "js-yaml": "^4.1.0",
