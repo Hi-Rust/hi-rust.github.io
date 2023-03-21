@@ -1,105 +1,68 @@
 const triggerLinkClick = direction => {
   const link = document.querySelector(`.${direction} a`);
-  if (link) {
-    link.click();
-  }
+  link && link.click();
 };
 
-var xDown = null;
-var yDown = null;
-
-const handleTouchStart = evt => {
-  xDown = evt.touches[0].clientX;
-  yDown = evt.touches[0].clientY;
+const handleTouchStart = ({ touches }) => {
+  [xDown, yDown] = [touches[0].clientX, touches[0].clientY];
 };
 
-const handleTouchMove = evt => {
-  if (!xDown || !yDown) {
-    return;
-  }
+const handleTouchMove = ({ touches, target }) => {
+  if (!xDown || !yDown) return;
 
-  var touchTarget = evt.target;
+  let touchTarget = target;
   while (touchTarget) {
-    if (
-      touchTarget.tagName === "CODE" &&
-      touchTarget.parentElement.tagName === "PRE"
-    ) {
-      // ignore swipe on pre > code elements
-      return;
-    }
-    touchTarget = touchTarget.parentElement;
+    const { tagName, parentElement } = touchTarget;
+    if (tagName === "CODE" && parentElement.tagName === "PRE") return;
+    touchTarget = parentElement;
   }
 
-  var xUp = evt.touches[0].clientX;
-  var yUp = evt.touches[0].clientY;
-
-  var xDiff = xDown - xUp;
-  var yDiff = yDown - yUp;
+  const [xUp, yUp] = [touches[0].clientX, touches[0].clientY];
+  const [xDiff, yDiff] = [xDown - xUp, yDown - yUp];
   if (Math.abs(xDiff) + Math.abs(yDiff) > 100) {
     if (Math.abs(xDiff) > Math.abs(yDiff)) {
-      if (xDiff > 0) {
-        /* left swipe */
-        triggerLinkClick("next");
-      } else {
-        /* right swipe */
-        triggerLinkClick("back");
-      }
+      triggerLinkClick(xDiff > 0 ? "next" : "back");
     }
-    /* reset values */
-    xDown = null;
-    yDown = null;
+    [xDown, yDown] = [null, null];
   }
 };
 
-let activeEl = null;
-document.addEventListener(
-  "focus",
-  event => {
-    activeEl = event.target;
-  },
-  true
-);
+const onKeyUp = e => {
+  if (e.ctrlKey || e.altKey || e.metaKey || e.shiftKey) return;
+
+  // const { tagName } = document.activeElement;
+  // if (tagName === "SPAN") return;
+
+  const hasScrollableParent = el => el.scrollWidth > el.clientWidth;
+  let el = document.activeElement;
+  while (el && el !== document.body) {
+    if (hasScrollableParent(el) && el.tagName !== "A") {
+      e.preventDefault();
+      return;
+    }
+    el = el.parentElement;
+  }
+
+  const { key } = e;
+  if (key === "Right" || key === "ArrowRight") {
+    triggerLinkClick("next");
+  } else if (key === "Left" || key === "ArrowLeft") {
+    triggerLinkClick("back");
+  }
+};
 
 const setupKeys = () => {
-  // PC
-  document.body.addEventListener("keyup", e => {
-    if (e.ctrlKey || e.altKey || e.metaKey || e.shiftKey) {
-      return;
-    }
-
-    if (document.activeElement.tagName === "SPAN") {
-      // ignore keys on pre > code elements
-      return;
-    }
-
-    // check if the active element has a scrollable parent
-    const hasScrollableParent = el => el.scrollWidth > el.clientWidth;
-    let el = document.activeElement;
-    while (el) {
-      if (el === document.body) {
-        break; // stop checking if we reach the body element
-      }
-      if (hasScrollableParent(el) && el.tagName !== "A") {
-        e.preventDefault();
-        return;
-      }
-      el = el.parentElement;
-    }
-
-    if (e.key === "Right" || e.key === "ArrowRight") {
-      triggerLinkClick("next");
-    }
-    if (e.key === "Left" || e.key === "ArrowLeft") {
-      triggerLinkClick("back");
-    }
-  });
+  document.body.addEventListener("keyup", onKeyUp);
 };
+
+// document.addEventListener("focus", ({ target }) => {
+//   activeEl = target;
+// }, true);
 
 document.addEventListener("touchstart", handleTouchStart, false);
 document.addEventListener("touchmove", handleTouchMove, false);
 setupKeys();
 
-// in iframe, should not be same
 const iframeElement = document.querySelector("iframe");
 if (iframeElement) {
   setupKeys();
