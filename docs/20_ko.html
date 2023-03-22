@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+    <html lang="ko">
+    <head>
+        <title>Rust 튜토리얼 - 자기주도프로젝트</title>
+
+        <meta charset="UTF-8">
+        <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+        <meta content="utf-8" http-equiv="encoding">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+        <meta name="keywords" content="Rust, Programming, Learning">
+        <meta name="description" content="Rust tutorial website based on tour_of_rust">
+        <meta name="theme-color" content="#ff6801"/>
+        <meta http-equiv="Cache-Control" content="max-age=3600">
+        
+        <link rel="stylesheet" href="tour.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/night-owl.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
+        
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="/manifest" href="./site.webmanifest">
+        
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.7.0/highlight.min.js"></script>
+
+        <script src="./tour.js" defer></script>
+        <!-- <script>hljs.highlightAll();</script> -->
+        <script src="./highlight.badge.min.js"></script>
+    </head>
+    <body>
+        <div class="tour">
+            <div class="header">
+                <span class="title"><a href="index.html">Rust 튜토리얼</a></span>
+                <span class="nav">
+                <span class="toc"><a href="TOC_ko.html">목차</a></span>
+            </div>
+            <div class="page">
+            <h1>Chapter 1 - 마무리</h1>
+            <p>Rust의 기초는 그렇게 나쁘지 않죠?</p>
+<p>시스템 프로그래밍 언어로서, Rust는 메모리 내 값을 매우 신경쓰며,</p>
+<p>수정이 가능한지 불가능한지 여부, 그리고 수학 연산이 의도한 대로 수행되는지 확인합니다.</p>
+<p>참고:</p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=n5TRBkbystY" target="_blank" rel="noopener">Youtube: Rust Cast - Rust의 기본 숫자 유형에 대한 더 깊은 이해</a></li>
+<li><a href="https://doc.rust-lang.org/1.30.0/book/2018-edition/ch03-02-data-types.html" target="_blank" rel="noopener">Website: Rust Book 2018 - 기본 데이터 유형에 대한 자세한 설명</a></li>
+<li><a href="https://cheats.rs/#basic-types" target="_blank" rel="noopener">Website: Rust Cheat Sheet - Data Types</a></li>
+</ul>
+            <div class="bottomnav">
+                <span class="back"><a href="19_ko.html" rel="prev">❮ 이전</a></span>
+                <span class="next"><a href="chapter_2_ko.html" rel="next">다음 ❯</a></span>
+            </div>
+            </div>
+            <div class="code">
+            <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=%2F%2F+%EC%86%8C%EC%9C%A0%EA%B6%8C%2C+%EB%B9%8C%EB%A6%BC%2C+%EC%B0%B8%EC%A1%B0%2C+%EB%B2%94%EC%9C%84+%EB%93%B1%EC%9D%98+%EA%B8%B0%EB%8A%A5%EC%9D%84+%ED%95%9C+%EB%B2%88%EC%97%90+%EC%82%AC%EC%9A%A9%0D%0A%23%5Bderive%28Debug%29%5D%0D%0Astruct+MyStruct+%7B%0D%0A++++data%3A+String%2C%0D%0A%7D%0D%0A%0D%0Afn+print_and_modify%28s%3A+%26mut+MyStruct%29+%7B%0D%0A++++println%21%28%22%5Ct%3E+MyStruct%EB%A5%BC+%EC%B0%B8%EC%A1%B0%3A+%7B%3A%3F%7D%22%2C+s%29%3B%0D%0A++++s.data.push_str%28%22+%EC%88%98%EC%A0%95%EB%90%A8%22%29%3B%0D%0A%7D%0D%0A%0D%0Afn+main%28%29+%7B%0D%0A++++let+mut+my_struct1+%3D+MyStruct+%7B%0D%0A++++++++data%3A+String%3A%3Afrom%28%22MyStruct1%22%29%2C%0D%0A++++%7D%3B%0D%0A%0D%0A++++let+mut+my_struct2+%3D+MyStruct+%7B%0D%0A++++++++data%3A+String%3A%3Afrom%28%22MyStruct2%22%29%2C%0D%0A++++%7D%3B%0D%0A%0D%0A++++%2F%2F+%EB%B6%88%EB%B3%80+%EC%B0%B8%EC%A1%B0%EB%A5%BC+%EC%82%AC%EC%9A%A9%ED%95%98%EC%97%AC+%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%A5%BC+%EC%B6%9C%EB%A0%A5%ED%95%A9%EB%8B%88%EB%8B%A4.%0D%0A++++println%21%28%22%EB%B6%88%EB%B3%80+%EC%B0%B8%EC%A1%B0%3A+%7B%3A%3F%7D%22%2C+%26my_struct1%29%3B%0D%0A%0D%0A++++%2F%2F+%EA%B0%80%EB%B3%80+%EC%B0%B8%EC%A1%B0%EB%A5%BC+%EC%82%AC%EC%9A%A9%ED%95%98%EC%97%AC+%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%A5%BC+%EC%88%98%EC%A0%95%ED%95%A9%EB%8B%88%EB%8B%A4.%0D%0A++++print_and_modify%28%26mut+my_struct1%29%3B%0D%0A++++println%21%28%22%EC%88%98%EC%A0%95%EB%90%9C+MyStruct1%3A+%7B%3A%3F%7D%22%2C+my_struct1%29%3B%0D%0A%0D%0A++++%2F%2F+%EB%B2%94%EC%9C%84%EB%A5%BC+%EC%82%AC%EC%9A%A9%ED%95%98%EC%97%AC+%EB%B9%8C%EB%A6%BC%EC%9D%98+%EA%B7%9C%EC%B9%99%EC%9D%84+%EB%B3%B4%EC%97%AC%EC%A4%8D%EB%8B%88%EB%8B%A4.%0D%0A++++%7B%0D%0A++++++++let+mut_ref+%3D+%26mut+my_struct2%3B+%2F%2F+%EA%B0%80%EB%B3%80+%EC%B0%B8%EC%A1%B0%EB%A5%BC+%EC%83%9D%EC%84%B1%ED%95%A9%EB%8B%88%EB%8B%A4.%0D%0A++++++++print_and_modify%28mut_ref%29%3B+%2F%2F+%EA%B0%80%EB%B3%80+%EC%B0%B8%EC%A1%B0%EB%A5%BC+%ED%95%A8%EC%88%98%EC%97%90+%EC%A0%84%EB%8B%AC%ED%95%A9%EB%8B%88%EB%8B%A4.%0D%0A++++++++%2F%2F+%EC%9D%B4+%EC%A7%80%EC%A0%90%EC%97%90%EC%84%9C+mut_ref%EB%A5%BC+%EB%8D%94+%EC%9D%B4%EC%83%81+%EC%82%AC%EC%9A%A9%ED%95%A0+%EC%88%98+%EC%97%86%EC%8A%B5%EB%8B%88%EB%8B%A4.%0D%0A++++%7D%0D%0A%0D%0A++++%2F%2F+%EB%B2%94%EC%9C%84%EB%A5%BC+%EB%B2%97%EC%96%B4%EB%82%9C+%ED%9B%84%EC%97%90%EB%8A%94+%EC%9B%90%EB%9E%98+%EB%B3%80%EC%88%98%EB%A5%BC+%EB%8B%A4%EC%8B%9C+%EC%82%AC%EC%9A%A9%ED%95%A0+%EC%88%98+%EC%9E%88%EC%8A%B5%EB%8B%88%EB%8B%A4.%0D%0A++++println%21%28%22%EC%88%98%EC%A0%95%EB%90%9C+MyStruct2%3A+%7B%3A%3F%7D%22%2C+my_struct2%29%3B%0D%0A%0D%0A++++%2F%2F+%EC%86%8C%EC%9C%A0%EA%B6%8C%EC%9D%84+%EC%9D%B4%EB%8F%99%EC%8B%9C%ED%82%B5%EB%8B%88%EB%8B%A4.%0D%0A++++let+my_struct3+%3D+MyStruct+%7B%0D%0A++++++++data%3A+String%3A%3Afrom%28%22MyStruct3%22%29%2C%0D%0A++++%7D%3B%0D%0A++++let+my_struct4+%3D+my_struct3%3B+%2F%2F+%EC%86%8C%EC%9C%A0%EA%B6%8C%EC%9D%84+%EC%9D%B4%EB%8F%99%EC%8B%9C%ED%82%B5%EB%8B%88%EB%8B%A4.%0D%0A++++%2F%2F+%EC%9D%B4%EC%A0%9C+my_struct3%EC%9D%80+%EC%82%AC%EC%9A%A9%ED%95%A0+%EC%88%98+%EC%97%86%EC%8A%B5%EB%8B%88%EB%8B%A4.%0D%0A++++println%21%28%22%EC%86%8C%EC%9C%A0%EA%B6%8C%EC%9D%B4+%EC%9D%B4%EB%8F%99%EB%90%9C+MyStruct4%3A+%7B%3A%3F%7D%22%2C+my_struct4%29%3B%0D%0A%7D%0D%0A" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
+            </div>
+        </div>
+        <!-- <script>
+          document.addEventListener("DOMContentLoaded", function() {
+            // Select the widget's text element using its XPath
+            const xpath = '/html/body/main/div/div/div[1]/div[1]/div/button[1]/div';
+            const widgetText = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+
+            // Change the text content of the element
+            widgetText.textContent = "New Text";
+          });
+        </script> -->
+
+        <script>
+        var pres = document.querySelectorAll("pre>code");
+        for (var i = 0; i < pres.length; i++) {
+            hljs.highlightElement(pres[i]);
+        }
+        var options = {
+            loadDelay: 0,
+            copyIconClass: "far fa-clipboard",
+            checkIconClass: "fa fa-check text-success",
+            blogURL: "http://rust-study.ajousw.kr/"
+        };
+        window.highlightJsBadge(options);
+        </script>
+
+        <footer>
+          <p>아주대학교 Software Tool Time - Rust 튜토리얼 (Basic)</p>
+        </footer>
+    </body>
+</html>

@@ -6,7 +6,7 @@
         <meta charset="UTF-8">
         <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
         <meta content="utf-8" http-equiv="encoding">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
         <meta name="keywords" content="Rust, Programming, Learning">
         <meta name="description" content="Rust tutorial website based on tour_of_rust">
         <meta name="theme-color" content="#ff6801"/>
@@ -35,11 +35,30 @@
                 <span class="toc"><a href="TOC_ko.html">목차</a></span>
             </div>
             <div class="page">
-            <h1>소유권</h1>
-            <p>gff</p>
+            <h1>빌림</h1>
+            <p><strong>Borrow checker</strong></p>
+<p>빌림 검사기가 컴파일 시간에 빌림 규칙을 적용하여 메모리 안전성을 보장하는 방법을 설명합니다.</p>
+<p>빌림 검사기는 코드 내 참조의 수명을 분석함으로써 작동한다는 것을 설명합니다.</p>
+<p>빌림 검사기가 컴파일 시간에 메모리 관리 오류를 포착하는 방법을 예제를 통해 보여줍니다.</p>
+<p>빌림 검사기가 컴파일 시간에 빌림 규칙을 적용하는 방법 설명:</p>
+<p>Rust의 빌림 검사기는 컴파일 시간에 참조 규칙을 적용하여 메모리 안전성을 보장합니다.</p>
+<p>이를 통해 런타임에 발생할 수 있는 메모리 누수, 데이터 경쟁 등의 문제를 사전에 방지할 수 있습니다.</p>
+<p>빌림 검사기가 코드 내 참조의 수명을 분석하는 방법 설명:</p>
+<p>빌림 검사기는 함수, 구조체 및 코드 내에서 참조의 수명을 추적하고 분석합니다.</p>
+<p>이를 통해, 참조의 수명이 끝난 이후에도 사용되거나, 다른 참조가 유효하지 않은 상태에서 접근하는 것을 방지합니다.</p>
+<p>빌림 검사기가 컴파일 시간에 메모리 관리 오류를 포착하는 예제:</p>
+<pre><code class="rust">fn main() {
+    let mut x = 5;
+    let y = &mut x;
+    let z = &x;
+    println!("x: {}, y: {}, z: {}", x, y, z);
+}</code></pre>
+<ul>
+<li>위 코드는 컴파일 시간에 오류를 발생시킵니다. - 빌림 검사기는 x가 변경 가능한 참조와 불변 참조가 동시에 존재하는 것을 감지합니다. - 빌림 검사기의 오류 메시지를 통해 개발자는 문제가 발생한 원인을 파악하고 코드를 수정할 수 있습니다.</li>
+</ul>
             <div class="bottomnav">
                 <span class="back"><a href="25_ko.html" rel="prev">❮ 이전</a></span>
-                <span class="next"><a href="chapter_3_ko.html" rel="next">다음 ❯</a></span>
+                <span class="next"><a href="27_ko.html" rel="next">다음 ❯</a></span>
             </div>
             </div>
             <div class="code"><center><img src="/ajou.webp" alt="Rust Tutorial" width="300" height="100%"></center></div>

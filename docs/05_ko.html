@@ -6,7 +6,7 @@
         <meta charset="UTF-8">
         <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
         <meta content="utf-8" http-equiv="encoding">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
         <meta name="keywords" content="Rust, Programming, Learning">
         <meta name="description" content="Rust tutorial website based on tour_of_rust">
         <meta name="theme-color" content="#ff6801"/>
@@ -35,11 +35,23 @@
                 <span class="toc"><a href="TOC_ko.html">목차</a></span>
             </div>
             <div class="page">
-            <h1>Hey</h1>
-            <p>CSW</p>
+            <h1>Chapter 0 - 마무리</h1>
+            <p>Rust 소스코드는 <code>.rs</code> 확장자를 가집니다.</p>
+<pre><code class="rust language-rust">fn main() {
+    println!("Hello, world!");
+}
+</code></pre>
+<p>위 코드는 가장 간단한 Rust 프로그램입니다.</p>
+<p>main 함수를 정의하고, println! 매크로를 사용하여 "Hello, world!"를 출력하도록 되어 있습니다.</p>
+<p>위 코드를 hello.rs라는 이름으로 저장한 뒤, 터미널에서 다음과 같은 명령어를 입력해보세요.</p>
+<pre><code class="bash language-bash">$ rustc hello.rs
+$ ./hello
+$ Hello, world! (stdout)
+</code></pre>
+<p><code>Google evcxr</code> - <a href="https://github.com/evcxr/evcxr" target="_blank" rel="noopener">Rust REPL</a></p>
             <div class="bottomnav">
-                <span class="back"><a href="chapter_4_ko.html" rel="prev">❮ 이전</a></span>
-                <span class="next"><a href="chapter_5_ko.html" rel="next">다음 ❯</a></span>
+                <span class="back"><a href="04_ko.html" rel="prev">❮ 이전</a></span>
+                <span class="next"><a href="chapter_1_ko.html" rel="next">다음 ❯</a></span>
             </div>
             </div>
             <div class="code"><center><img src="/ferris_lofi.png" alt="Rust Tutorial" width="300" height="100%"></center></div>

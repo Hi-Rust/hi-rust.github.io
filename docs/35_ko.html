@@ -6,7 +6,7 @@
         <meta charset="UTF-8">
         <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
         <meta content="utf-8" http-equiv="encoding">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
         <meta name="keywords" content="Rust, Programming, Learning">
         <meta name="description" content="Rust tutorial website based on tour_of_rust">
         <meta name="theme-color" content="#ff6801"/>
@@ -35,33 +35,14 @@
                 <span class="toc"><a href="TOC_ko.html">목차</a></span>
             </div>
             <div class="page">
-            <h1>The Rust Playground</h1>
-            <p>이 웹사이트에서는 <a href="https://play.rust-lang.org" target="_blank" rel="noopener">Rust Playground</a> 를 사용하여 온라인에서 직접 실행해 볼 수 있습니다.</p>
-<p>우측에서 보다시피 <code>println()</code>도 아닌 <code>println!()</code> 와 같은 코드를 사용하여 stdout에 출력하는 것을 볼 수 있습니다.</p>
-<p><code>!</code> 이것은 매크로 (Macro)라는 Rust 언어의 특별한 기능 중 하나인데 우선은 생김새만 알고 나중에 뭔지 알아보겠습니다.</p>
-<p>Rust 언어는 쉽게 작성할 수 있도록 (syntactic sugar) 도와주지만 사실은 컴파일러가 아래처럼 처리합니다.</p>
-<p>(<code>cargo inspect</code> 명령어)</p>
-<pre><code class="rust">#![feature(prelude_import)]
-
-#[prelude_import]
-use std::prelude::rust_2018::*;
-
-#[macro_use]
-extern crate std;
-
-fn main() {
-    {
-        ::std::io::_print(format_args!("Welcome to the playground! You can modify the code in here.\n"));
-    };
-}</code></pre>
+            <h1>Hey</h1>
+            <p>CSW</p>
             <div class="bottomnav">
-                <span class="back"><a href="chapter_1_ko.html" rel="prev">❮ 이전</a></span>
-                <span class="next"><a href="07_ko.html" rel="next">다음 ❯</a></span>
+                <span class="back"><a href="chapter_6_ko.html" rel="prev">❮ 이전</a></span>
+                
             </div>
             </div>
-            <div class="code">
-            <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&code=fn%20main()%20%7B%0A%20%20%20%20println!(%22Welcome%20to%20the%20playground!%20You%20can%20modify%20the%20code%20in%20here.%22)%3B%0A%7D%0A" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
-            </div>
+            <div class="code"><center><img src="/ferris_lofi.png" alt="Rust Tutorial" width="300" height="100%"></center></div>
         </div>
         <!-- <script>
           document.addEventListener("DOMContentLoaded", function() {

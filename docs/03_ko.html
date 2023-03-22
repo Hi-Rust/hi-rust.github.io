@@ -6,7 +6,7 @@
         <meta charset="UTF-8">
         <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
         <meta content="utf-8" http-equiv="encoding">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
         <meta name="keywords" content="Rust, Programming, Learning">
         <meta name="description" content="Rust tutorial website based on tour_of_rust">
         <meta name="theme-color" content="#ff6801"/>
@@ -35,21 +35,25 @@
                 <span class="toc"><a href="TOC_ko.html">목차</a></span>
             </div>
             <div class="page">
-            <h1>Rust 언어 설치</h1>
-            <p><a href="https://rustup.rs/" target="_blank" rel="noopener">https://rustup.rs/</a></p>
-<p><a href="https://visualstudio.microsoft.com/ko/visual-cpp-build-tools/" target="_blank" rel="noopener"><code>Microsoft C++ Build Tools</code></a></p>
-<p><a href="https://www.rust-lang.org/tools/install" target="_blank" rel="noopener">@Rust lang Link</a></p>
-<p><a href="https://static.rust-lang.org/rustup/dist/x86_64-pc-windows-msvc/rustup-init.exe" target="_blank" rel="noopener">@DOWNLOAD RUSTUP-INIT.EXE (64-BIT)</a></p>
-<p><a href="https://static.rust-lang.org/rustup/dist/i686-pc-windows-msvc/rustup-init.exe" target="_blank" rel="noopener">@DOWNLOAD RUSTUP-INIT.EXE (32-BIT)</a></p>
-<pre><code class="bash">curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh</code></pre>
+            <h1>Rust 언어 소개 cont'd 2</h1>
+            <p>Rust는 메모리 안정성, 스레드 안전성, 그리고 코드 가독성을 중요하게 생각하는 프로그래밍 언어입니다.</p>
+<p><code>가비지 컬렉션</code>(GC, 예를 들어 Java ZGC)이나 런타임 오버헤드 없이 메모리를 안전하게 관리할 수 있는 기능을 제공하며,</p>
+<p>이로 인해 최신 컴퓨팅 환경에서 매우 유용한 언어로 각광받고 있습니다.</p>
+<p>Rust의 고유한 메모리 관리 방식 덕분에 빠르고, 안정적이며, 효율적인 소프트웨어를 작성할 수 있습니다.</p>
+<p>Rust는 <code>객체 지향</code> 프로그래밍을 지원하지만, 전통적인 객체 지향 언어와는 다른 방식으로 구현합니다.</p>
+<p>Rust는 <code>"트레잇(trait)"</code>이라는 개념을 도입하여 객체 지향 프로그래밍의 특징을 제공하고 있습니다.</p>
+<p>트레잇을 통해 다형성을 구현할 수 있으며, 연산자 오버로딩을 지원하여 객체 지향적인 코드를 작성할 수 있습니다.</p>
+<p>암묵적인 타입 변환은 지원하지 않아, 코드의 안정성과 명확성을 높입니다.</p>
+<p>또한, Rust는 C와 같은 다른 언어와 직접적으로 상호작용할 수 있는</p>
+<p>Foreign Function Interface(<code>FFI</code>)를 제공하여, 다양한 언어와의 호환성을 높입니다.</p>
+<p>Rust는 <code>LLVM</code> 컴파일러 인프라스트럭처 프로젝트와 연계되어 개발되었습니다.</p>
+<p>LLVM을 사용하여 코드를 컴파일하고 최적화하므로, 빠른 실행 속도를 보장할 수 있습니다.</p>
+<p>더불어, Rust는 npm과 같은 <code>패키지 매니저</code>인 Cargo를 내장하여 의존성 관리와 빌드 자동화를 지원합니다.</p>
+<p>Cargo를 통해 다른 개발자들이 작성한 Rust 라이브러리를 쉽게 사용하고 관리할 수 있습니다.</p>
+<p>이처럼 Rust의 특징들을 이해하고 활용하면, 다양한 상황에서 안전하고 효율적인 소프트웨어 개발이 가능해집니다.</p>
 <div align="center">
 <p>
-    <img src="https://user-images.githubusercontent.com/2356749/223654372-637cbfd5-06f3-4c20-b97c-aefcdbbdafe6.png">
-</p>
-</div>
-<div align="center">
-<p>
-    <img src="https://user-images.githubusercontent.com/2356749/223654483-ba1db2fa-cc6b-4104-93ca-456852d2b4e5.png">
+    <img src="https://doc.rust-lang.org/cargo/images/Cargo-Logo-Small.png">
 </p>
 </div>
             <div class="bottomnav">
@@ -58,7 +62,7 @@
             </div>
             </div>
             <div class="code">
-            <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=curl%20--proto%20'%3Dhttps'%20--tlsv1.2%20-sSf%20https%3A%2F%2Fsh.rustup.rs%20%7C%20sh" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
+            <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=%2F%2F+%EC%99%B8%EB%B6%80+%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC%EB%A5%BC+%EA%B0%80%EC%A0%B8%EC%98%B5%EB%8B%88%EB%8B%A4.%0D%0Aextern+crate+image%3B%0D%0A%0D%0A%2F%2F+%ED%95%84%EC%9A%94%ED%95%9C+%EB%AA%A8%EB%93%88%EC%9D%84+%EA%B0%80%EC%A0%B8%EC%98%B5%EB%8B%88%EB%8B%A4.%0D%0Ause+image%3A%3A%7BGenericImageView%2C+ImageFormat%2C+ImageOutputFormat%7D%3B%0D%0A%0D%0Afn+main%28%29+%7B%0D%0A++++%2F%2F+%EC%9D%B4%EB%AF%B8%EC%A7%80+%ED%8C%8C%EC%9D%BC%EC%9D%84+%EC%97%BD%EB%8B%88%EB%8B%A4.%0D%0A++++let+img+%3D+image%3A%3Aopen%28%22input.jpg%22%29.unwrap%28%29%3B%0D%0A%0D%0A++++%2F%2F+%EC%9D%B4%EB%AF%B8%EC%A7%80%EC%9D%98+%ED%81%AC%EA%B8%B0%EB%A5%BC+%EB%B3%80%EA%B2%BD%ED%95%A9%EB%8B%88%EB%8B%A4.%0D%0A++++let+resized_img+%3D+img.resize%28100%2C+100%2C+image%3A%3Aimageops%3A%3AFilterType%3A%3ANearest%29%3B%0D%0A%0D%0A++++%2F%2F+%EC%83%88+%EC%9D%B4%EB%AF%B8%EC%A7%80+%ED%8C%8C%EC%9D%BC%EC%9D%84+%EC%A0%80%EC%9E%A5%ED%95%A9%EB%8B%88%EB%8B%A4.%0D%0A++++let+mut+output+%3D+std%3A%3Afs%3A%3AFile%3A%3Acreate%28%22output.jpg%22%29.unwrap%28%29%3B%0D%0A++++resized_img%0D%0A++++++++.write_to%28%26mut+output%2C+ImageOutputFormat%3A%3AJpeg%2875%29%29%0D%0A++++++++.unwrap%28%29%3B%0D%0A%0D%0A++++println%21%28%22%EC%9D%B4%EB%AF%B8%EC%A7%80+%ED%81%AC%EA%B8%B0+%EB%B3%80%EA%B2%BD%EC%9D%B4+%EC%99%84%EB%A3%8C%EB%90%98%EC%97%88%EC%8A%B5%EB%8B%88%EB%8B%A4.%22%29%3B%0D%0A%7D%0D%0A" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
             </div>
         </div>
         <!-- <script>

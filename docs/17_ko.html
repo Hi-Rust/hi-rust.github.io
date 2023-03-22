@@ -6,7 +6,7 @@
         <meta charset="UTF-8">
         <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
         <meta content="utf-8" http-equiv="encoding">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
         <meta name="keywords" content="Rust, Programming, Learning">
         <meta name="description" content="Rust tutorial website based on tour_of_rust">
         <meta name="theme-color" content="#ff6801"/>
@@ -35,17 +35,122 @@
                 <span class="toc"><a href="TOC_ko.html">목차</a></span>
             </div>
             <div class="page">
-            <h1>Returning Nothing</h1>
-            <p>함수에 대해 반환 유형이 지정되어 있지 않으면, <em>unit</em>이라고도 하는 빈 튜플을 반환합니다.</p>
-<p>빈 튜플은 <code>()</code>로 나타낼 수 있습니다.</p>
-<p><code>()</code>을 사용하는 것은 드문 경우이지만 충분히 자주 출현하기 때문에 무슨 일이 일어나는지 알아둘 가치가 있습니다.</p>
+            <h1>Struct and Enum</h1>
+            <p><strong>구조체 (Struct)</strong></p>
+<p>구조체는 struct 키워드를 사용하여 정의하며, 이름과 중괄호로 묶인 명명된 필드 집합이 뒤따릅니다.</p>
+<p>다음은 Person 구조체의 예입니다:</p>
+<pre><code class="rust">struct Person {
+  name: String,
+  age: u8,
+}</code></pre>
+<p>구조체의 인스턴스를 생성하려면, 구조체 이름 뒤에 중괄호를 사용하고 필드에 값을 할당합니다.<br />
+예를 들면:</p>
+<pre><code class="rust">let person = Person { name: String::from("Alice"), age: 30 };</code></pre>
+<hr />
+<p><strong>열거형 (Enum)</strong></p>
+<p>열거형(enum, "enumeration"의 줄임말)은 고정된 명명된 값 집합인 "변종(variants)"을 가진 타입을 나타냅니다.</p>
+<p>열거형을 정의하려면, enum 키워드를 사용하고 이름과 중괄호로 묶인 명명된 변종 집합이 뒤따릅니다.</p>
+<p>다음은 Status 열거형의 예입니다:</p>
+<pre><code class="rust">enum Status {
+  Active,
+  Inactive,
+  Pending,
+}</code></pre>
+<p>열거형의 인스턴스를 생성하려면, 열거형 이름 뒤에 두 개의 콜론(<code>::</code>)과 변종 이름을 사용합니다.</p>
+<p>예를 들면:</p>
+<pre><code class="rust">let status = Status::Active;</code></pre>
+<p>열거형 변종에 따라 다른 작업을 수행하려면 match 표현식을 사용할 수 있습니다:</p>
+<pre><code class="rust">let user_status = Status::Active;</code></pre>
+<p>열거형을 다루려면, 종종 match 표현식을 사용하며, 이를 통해 열거형 변종에 따라 다른 작업을 수행할 수 있습니다:</p>
+<pre><code class="rust">fn print_status_message(status: Status) {
+    match status {
+        Status::Active => println!("사용자가 활성 상태입니다."),
+        Status::Inactive => println!("사용자가 비활성 상태입니다."),
+        Status::Pending => println!("사용자가 보류 중입니다."),
+    }
+}
+fn main() {
+    let user_status = Status::Active;
+    print_status_message(user_status);
+}</code></pre>
+<hr />
+<p><strong>Tuple Struct, Enum</strong></p>
+<p>주로 간결한 표현, 타입 안전성 및 논리적 구조를 위해 사용됩니다.</p>
+<ul>
+<li>튜플 구조체 (Tuple Struct): 튜플 구조체는 필드에 이름이 없는 구조체로, 간단한 데이터 구조를 표현할 때 유용합니다. 튜플 구조체를 사용하면, 구조체의 의미를 명확하게 나타낼 수 있으며, 일반 튜플보다 더 강력한 타입 안전성을 제공합니다. 예를 들어, 두 개의 float 값을 나타내는 Point2D와 Vector2D를 구별하기 위해 튜플 구조체를 사용할 수 있습니다. 이렇게 하면 코드의 가독성과 정확성이 향상됩니다.</li>
+<li>열거형 (Enum): 열거형은 서로 관련된 값의 집합을 표현하기 위해 사용됩니다. 열거형은 여러 변종(variants)을 가질 수 있으며, 각 변종은 고유한 타입입니다. 열거형은 논리적으로 관련된 여러 값을 그룹화하여 코드의 명확성과 구조를 개선하는 데 도움이 됩니다. 또한 열거형은 패턴 매칭을 사용하여 값에 따라 다양한 작업을 수행할 수 있어, 런타임에 오류가 발생하는 가능성이 줄어듭니다.</li>
+<li>튜플 열거형 변종 (Tuple Enum Variants): 튜플 열거형 변종은 열거형의 각 변종에 데이터를 연관시키는 데 사용됩니다. 튜플 열거형 변종은 각 변종에 서로 다른 타입과 수의 값을 저장할 수 있습니다. 이러한 변종은 열거형의 다양한 경우를 명확하게 구분하고, 관련 데이터를 함께 저장하여 논리적 구조를 제공하는 데 유용합니다. 패턴 매칭을 사용하면 튜플 열거형 변종의 값을 안전하게 추출하고, 해당 값에 따라 다양한 작업을 수행할 수 있습니다.</li>
+</ul>
+<pre><code class="rust">// 튜플 구조체 (Tuple Struct)
+struct Point3D(f32, f32, f32);
+
+// 열거형에 튜플 변종 (Tuple Enum Variant) 포함
+enum Shape {
+    Circle(f32),
+    Rectangle(f32, f32),
+}
+
+fn main() {
+    let point = Point3D(1.0, 2.0, 3.0);
+    let circle = Shape::Circle(5.0);
+    let rectangle = Shape::Rectangle(4.0, 6.0);
+
+    // 튜플 구조체의 값에 접근
+    println!("x 좌표: {}", point.0);
+    println!("y 좌표: {}", point.1);
+    println!("z 좌표: {}", point.2);
+
+    // 튜플 열거형 변종의 값에 접근
+    match circle {
+        Shape::Circle(radius) => println!("원의 반지름: {}", radius),
+        _ => (),
+    }
+}</code></pre>
+<hr />
+<p><strong>Nested</strong><br />
+중첩된 Struct과 Enum을 만들고 싶다면?</p>
+<pre><code class="rust">// 중첩된 구조체 (Nested Struct)
+struct Address {
+    street: String,
+    city: String,
+}
+
+struct Person {
+    name: String,
+    address: Address,
+}
+// 중첩된 열거형 (Nested Enum)
+enum Animal {
+    Mammal {
+        species: String,
+        is_domestic: bool,
+    },
+    Reptile {
+        species: String,
+        is_poisonous: bool,
+    },
+}
+
+fn main() {
+    let person = Person {
+        name: String::from("지훈"),
+        address: Address {
+            street: String::from("서울로"),
+            city: String::from("서울"),
+        },
+    };
+    let dog = Animal::Mammal {
+        species: String::from("개"),
+        is_domestic: true,
+    };
+}</code></pre>
             <div class="bottomnav">
                 <span class="back"><a href="16_ko.html" rel="prev">❮ 이전</a></span>
                 <span class="next"><a href="18_ko.html" rel="next">다음 ❯</a></span>
             </div>
             </div>
             <div class="code">
-            <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&code=fn%20make_nothing()%20-%3E%20()%20%7B%0A%20%20%20%20return%20()%3B%0A%7D%0A%0A%2F%2F%20the%20return%20type%20is%20implied%20as%20()%0Afn%20make_nothing2()%20%7B%0A%20%20%20%20%2F%2F%20this%20function%20will%20return%20()%20if%20nothing%20is%20specified%20to%20return%0A%7D%0A%0Afn%20main()%20%7B%0A%20%20%20%20let%20a%20%3D%20make_nothing()%3B%0A%20%20%20%20let%20b%20%3D%20make_nothing2()%3B%0A%0A%20%20%20%20%2F%2F%20Printing%20a%20debug%20string%20for%20a%20and%20b%0A%20%20%20%20%2F%2F%20Because%20it's%20hard%20to%20print%20nothingness%0A%20%20%20%20println!(%22The%20value%20of%20a%3A%20%7B%3A%3F%7D%22%2C%20a)%3B%0A%20%20%20%20println!(%22The%20value%20of%20b%3A%20%7B%3A%3F%7D%22%2C%20b)%3B%0A%7D%0A" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
+            <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=%2F%2F+%ED%8A%B9%EC%84%B1+%28Trait%29+%EC%A0%95%EC%9D%98%0D%0Atrait+Greet+%7B%0D%0A++++fn+greet%28%26self%29+-%3E+String%3B%0D%0A%7D%0D%0A%0D%0A%2F%2F+%EA%B5%AC%EC%A1%B0%EC%B2%B4+%28Struct%29+%EC%A0%95%EC%9D%98%0D%0Astruct+Person+%7B%0D%0A++++name%3A+String%2C%0D%0A%7D%0D%0A%0D%0A%2F%2F+%EA%B5%AC%EC%A1%B0%EC%B2%B4%EC%97%90+%EB%8C%80%ED%95%9C+%ED%8A%B9%EC%84%B1+%EA%B5%AC%ED%98%84%0D%0Aimpl+Greet+for+Person+%7B%0D%0A++++fn+greet%28%26self%29+-%3E+String+%7B%0D%0A++++++++format%21%28%22%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94%2C+%7B%7D%EB%8B%98%21%22%2C+self.name%29%0D%0A++++%7D%0D%0A%7D%0D%0A%0D%0A%2F%2F+%EC%97%B4%EA%B1%B0%ED%98%95+%28Enum%29+%EC%A0%95%EC%9D%98%0D%0Aenum+Animal+%7B%0D%0A++++Dog%2C%0D%0A++++Cat%2C%0D%0A%7D%0D%0A%0D%0A%2F%2F+%EC%97%B4%EA%B1%B0%ED%98%95%EC%97%90+%EB%8C%80%ED%95%9C+%ED%8A%B9%EC%84%B1+%EA%B5%AC%ED%98%84%0D%0Aimpl+Greet+for+Animal+%7B%0D%0A++++fn+greet%28%26self%29+-%3E+String+%7B%0D%0A++++++++match+self+%7B%0D%0A++++++++++++Animal%3A%3ADog+%3D%3E+String%3A%3Afrom%28%22%EB%A9%8D%EB%A9%8D%21%22%29%2C%0D%0A++++++++++++Animal%3A%3ACat+%3D%3E+String%3A%3Afrom%28%22%EC%95%BC%EC%98%B9%7E%22%29%2C%0D%0A++++++++%7D%0D%0A++++%7D%0D%0A%7D%0D%0A%0D%0Afn+main%28%29+%7B%0D%0A++++let+person+%3D+Person+%7B%0D%0A++++++++name%3A+String%3A%3Afrom%28%22%EA%B9%80%EC%95%84%EC%A3%BC%22%29%2C%0D%0A++++%7D%3B%0D%0A++++let+dog+%3D+Animal%3A%3ADog%3B%0D%0A%0D%0A++++%2F%2F+%EA%B5%AC%EC%A1%B0%EC%B2%B4%EC%99%80+%EC%97%B4%EA%B1%B0%ED%98%95+%EC%9D%B8%EC%8A%A4%ED%84%B4%EC%8A%A4%EC%97%90+greet+%EB%A9%94%EC%84%9C%EB%93%9C+%EC%82%AC%EC%9A%A9%0D%0A++++println%21%28%22%7B%7D%22%2C+person.greet%28%29%29%3B%0D%0A++++println%21%28%22%7B%7D%22%2C+dog.greet%28%29%29%3B%0D%0A%7D%0D%0A" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
             </div>
         </div>
         <!-- <script>

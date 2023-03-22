@@ -6,7 +6,7 @@
         <meta charset="UTF-8">
         <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
         <meta content="utf-8" http-equiv="encoding">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
         <meta name="keywords" content="Rust, Programming, Learning">
         <meta name="description" content="Rust tutorial website based on tour_of_rust">
         <meta name="theme-color" content="#ff6801"/>
@@ -35,20 +35,18 @@
                 <span class="toc"><a href="TOC_ko.html">목차</a></span>
             </div>
             <div class="page">
-            <h1>Arrays</h1>
-            <p><em>배열</em>은 동일한 유형의 데이터 요소들의 <strong>고정된 길이 집합</strong>입니다.</p>
-<p><em>배열</em>의 데이터 유형은 <code>[T;N]</code> 입니다.<br />
-(T는 요소의 유형이고, N은 컴파일 시간에 알려진 고정 길이)</p>
-<p>개별 요소는 <code>[x]</code> 연산자를 사용하여 가져올 수 있습니다.<br />
-여기서 x는 원하는 요소의 <em>usize</em> 인덱스(0부터 시작)입니다.</p>
-<p>가변 길이의 컬렉션, 즉 가변 배열은 나중에 <strong>Vectors</strong>에 대한 챕터에서 소개됩니다.</p>
+            <h1>Constants</h1>
+            <p>상수는 변수와 달리 곳곳에서 사용되는 공통된 값을 효율적으로 지정하는 데 사용됩니다.</p>
+<p>변수와 같은 곳에서 값이 복사되는 대신, 상수는 컴파일 시간에 사용되는 위치에서 직접 값을 대체합니다.</p>
+<p>변수와 달리, 상수는 항상 명시적인 유형을 가져야 합니다.</p>
+<p>상수 이름은 항상 <code>SCREAMING_SNAKE_CASE</code>로 지정됩니다.</p>
             <div class="bottomnav">
                 <span class="back"><a href="11_ko.html" rel="prev">❮ 이전</a></span>
                 <span class="next"><a href="13_ko.html" rel="next">다음 ❯</a></span>
             </div>
             </div>
             <div class="code">
-            <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&code=fn%20main()%20%7B%0A%20%20%20%20let%20nums%3A%20%5Bi32%3B%203%5D%20%3D%20%5B1%2C%202%2C%203%5D%3B%0A%20%20%20%20println!(%22%7B%3A%3F%7D%22%2C%20nums)%3B%0A%20%20%20%20println!(%22%7B%7D%22%2C%20nums%5B1%5D)%3B%0A%7D%0A" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
+            <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&code=const%20PI%3A%20f32%20%3D%203.14159%3B%0A%0Afn%20main()%20%7B%0A%20%20%20%20println!(%0A%20%20%20%20%20%20%20%20%22To%20make%20an%20apple%20%7B%7D%20from%20scratch%2C%20you%20must%20first%20create%20a%20universe.%22%2C%0A%20%20%20%20%20%20%20%20PI%0A%20%20%20%20)%3B%0A%7D%0A" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
             </div>
         </div>
         <!-- <script>

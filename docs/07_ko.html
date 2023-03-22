@@ -6,7 +6,7 @@
         <meta charset="UTF-8">
         <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
         <meta content="utf-8" http-equiv="encoding">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
         <meta name="keywords" content="Rust, Programming, Learning">
         <meta name="description" content="Rust tutorial website based on tour_of_rust">
         <meta name="theme-color" content="#ff6801"/>
@@ -35,23 +35,32 @@
                 <span class="toc"><a href="TOC_ko.html">목차</a></span>
             </div>
             <div class="page">
-            <h1>변수</h1>
-            <p>Rust에서는 <code>let</code> 키워드를 사용하여 변수를 선언합니다.</p>
-<div align="center"> <p>
-    <img src="https://user-images.githubusercontent.com/2356749/223641752-4b38e61f-82f4-450d-b778-526cb7ad618c.png">
-</p> </div>
-<p>값을 할당할 때, Rust는 거의 대부분 변수의 타입을 추론할 수 있습니다.</p>
-<p>만약 Rust가 추론하지 못하면 변수의 선언 시 타입을 추가할 수 있습니다.</p>
-<p>변수의 이름을 여러 번 사용하여 값을 할당할 수 있습니다.</p>
-<p>이를 "shadowing"이라고 하며, 변수의 타입은 재할당될 때마다 변경됩니다.</p>
-<p>변수의 이름은 항상 <code>snake_case</code>로 작성합니다.</p>
+            <h1>The Rust Playground</h1>
+            <p>이 웹사이트에서는 <a href="https://play.rust-lang.org" target="_blank" rel="noopener">Rust Playground</a> 를 사용하여 온라인에서 직접 실행해 볼 수 있습니다.</p>
+<p>우측에서 보다시피 <code>println()</code>도 아닌 <code>println!()</code> 와 같은 코드를 사용하여 stdout에 출력하는 것을 볼 수 있습니다.</p>
+<p><code>!</code> 이것은 매크로 (Macro)라는 Rust 언어의 특별한 기능 중 하나인데 우선은 생김새만 알고 나중에 뭔지 알아보겠습니다.</p>
+<p>Rust 언어는 쉽게 작성할 수 있도록 (syntactic sugar) 도와주지만 사실은 컴파일러가 아래처럼 처리합니다.</p>
+<p>(<code>cargo inspect</code> 명령어)</p>
+<pre><code class="rust">#![feature(prelude_import)]
+
+#[prelude_import]
+use std::prelude::rust_2018::*;
+
+#[macro_use]
+extern crate std;
+
+fn main() {
+    {
+        ::std::io::_print(format_args!("Welcome to the playground! You can modify the code in here.\n"));
+    };
+}</code></pre>
             <div class="bottomnav">
-                <span class="back"><a href="06_ko.html" rel="prev">❮ 이전</a></span>
+                <span class="back"><a href="chapter_1_ko.html" rel="prev">❮ 이전</a></span>
                 <span class="next"><a href="08_ko.html" rel="next">다음 ❯</a></span>
             </div>
             </div>
             <div class="code">
-            <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=fn%20main()%20%7B%0A%20%20%20%20%2F%2F%20let%20%ED%82%A4%EC%9B%8C%EB%93%9C%EB%A5%BC%20%EC%82%AC%EC%9A%A9%ED%95%98%EC%97%AC%20%EB%B3%80%EC%88%98%EB%A5%BC%20%EC%84%A0%EC%96%B8%ED%95%A9%EB%8B%88%EB%8B%A4.%0A%20%20%20%20let%20x%20%3D%205%3B%20%2F%2F%20x%EC%97%90%205%EB%9D%BC%EB%8A%94%20%EA%B0%92%EC%9D%84%20%ED%95%A0%EB%8B%B9%ED%95%A9%EB%8B%88%EB%8B%A4.%0A%20%20%20%20let%20y%3A%20f32%20%3D%203.14%3B%20%2F%2F%20y%EC%97%90%203.14%EB%9D%BC%EB%8A%94%20%EA%B0%92%EC%9D%84%20%ED%95%A0%EB%8B%B9%ED%95%98%EB%A9%B0%2C%20f32%20%ED%83%80%EC%9E%85%EC%9D%84%20%EB%AA%85%EC%8B%9C%EC%A0%81%EC%9C%BC%EB%A1%9C%20%EC%A7%80%EC%A0%95%ED%95%A9%EB%8B%88%EB%8B%A4.%0A%0A%20%20%20%20%2F%2F%20Rust%EB%8A%94%20%EB%8C%80%EB%B6%80%EB%B6%84%EC%9D%98%20%EA%B2%BD%EC%9A%B0%20%EB%B3%80%EC%88%98%EC%9D%98%20%ED%83%80%EC%9E%85%EC%9D%84%20%EC%B6%94%EB%A1%A0%ED%95%A0%20%EC%88%98%20%EC%9E%88%EC%8A%B5%EB%8B%88%EB%8B%A4.%0A%20%20%20%20%2F%2F%20%EB%A7%8C%EC%95%BD%20%ED%83%80%EC%9E%85%EC%9D%84%20%EB%AA%85%EC%8B%9C%EC%A0%81%EC%9C%BC%EB%A1%9C%20%EC%A7%80%EC%A0%95%ED%95%98%EA%B3%A0%20%EC%8B%B6%EB%8B%A4%EB%A9%B4%20%EB%8B%A4%EC%9D%8C%EA%B3%BC%20%EA%B0%99%EC%9D%B4%20%EC%9E%91%EC%84%B1%ED%95%A9%EB%8B%88%EB%8B%A4.%0A%20%20%20%20let%20z%3A%20i64%20%3D%20100%3B%0A%0A%20%20%20%20%2F%2F%20%EB%B3%80%EC%88%98%EC%9D%98%20%EC%9D%B4%EB%A6%84%EC%9D%84%20%EC%97%AC%EB%9F%AC%20%EB%B2%88%20%EC%82%AC%EC%9A%A9%ED%95%98%EC%97%AC%20%EA%B0%92%EC%9D%84%20%ED%95%A0%EB%8B%B9%ED%95%A0%20%EC%88%98%20%EC%9E%88%EC%8A%B5%EB%8B%88%EB%8B%A4.%0A%20%20%20%20let%20mut%20count%20%3D%200%3B%0A%20%20%20%20count%20%3D%201%3B%0A%20%20%20%20count%20%3D%202%3B%0A%0A%20%20%20%20%2F%2F%20%EB%B3%80%EC%88%98%EC%9D%98%20%ED%83%80%EC%9E%85%EC%9D%84%20%EB%B3%80%EA%B2%BD%ED%95%98%EC%97%AC%20%EC%9E%AC%EC%82%AC%EC%9A%A9%ED%95%A0%20%EC%88%98%20%EC%9E%88%EC%8A%B5%EB%8B%88%EB%8B%A4.%0A%20%20%20%20let%20x%20%3D%20%22hello%22%3B%20%2F%2F%20x%EB%8A%94%20%EB%AC%B8%EC%9E%90%EC%97%B4%20%ED%83%80%EC%9E%85%EC%9E%85%EB%8B%88%EB%8B%A4.%0A%20%20%20%20let%20x%20%3D%205%3B%20%2F%2F%20x%EB%8A%94%20%EC%A0%95%EC%88%98%20%ED%83%80%EC%9E%85%EC%9C%BC%EB%A1%9C%20%EB%B3%80%EA%B2%BD%EB%90%A9%EB%8B%88%EB%8B%A4.%0A%0A%20%20%20%20%2F%2F%20%EB%B3%80%EC%88%98%EC%9D%98%20%EC%9D%B4%EB%A6%84%EC%9D%80%20snake_case%EB%A1%9C%20%EC%9E%91%EC%84%B1%ED%95%A9%EB%8B%88%EB%8B%A4.%0A%20%20%20%20let%20first_name%20%3D%20%22Choi%22%3B%0A%20%20%20%20let%20last_name%20%3D%20%22Blah%22%3B%0A%0A%20%20%20%20%2F%2F%20%EB%B3%80%EC%88%98%EC%9D%98%20%EA%B0%92%EC%9D%84%20%EC%B6%9C%EB%A0%A5%ED%95%A9%EB%8B%88%EB%8B%A4.%0A%20%20%20%20println!(%22x%20is%20%7B%7D%22%2C%20x)%3B%20%2F%2F%20%22x%20is%205%22%EA%B0%80%20%EC%B6%9C%EB%A0%A5%EB%90%A9%EB%8B%88%EB%8B%A4.%0A%7D%0A" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
+            <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&code=fn%20main()%20%7B%0A%20%20%20%20println!(%22Welcome%20to%20the%20playground!%20You%20can%20modify%20the%20code%20in%20here.%22)%3B%0A%7D%0A" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
             </div>
         </div>
         <!-- <script>
