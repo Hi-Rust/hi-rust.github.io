@@ -63,20 +63,22 @@ document.addEventListener("touchstart", handleTouchStart, false);
 document.addEventListener("touchmove", handleTouchMove, false);
 setupKeys();
 
-const iframeElement = document.querySelector("iframe");
-if (iframeElement) {
-  setupKeys();
-  iframeElement.addEventListener("load", () => {
-    setTimeout(() => {
-      document.querySelector("a").focus();
-      setupKeys();
-    }, 100);
-    setTimeout(() => {
-      document.querySelector("a").focus();
-      setupKeys();
-    }, 1000);
+document.addEventListener("DOMContentLoaded", function () {
+  const iframeElement = document.querySelector("iframe");
+  if (iframeElement) {
     setupKeys();
-  });
-} else {
-  setupKeys();
-}
+    iframeElement.addEventListener("load", () => {
+      setTimeout(() => {
+        document.querySelector("a").focus();
+        setupKeys();
+      }, 100);
+      setTimeout(() => {
+        document.querySelector("a").focus();
+        setupKeys();
+      }, 1000);
+      setupKeys();
+    });
+  } else {
+    setupKeys();
+  }
+});

@@ -5,71 +5,33 @@ const yaml = require("js-yaml");
 const lessonSource = process.argv[2];
 const targetDir = process.argv[3];
 
-showdown.extension("rust", function () {
-  return [
-    {
-      type: "lang",
-      regex: /%rust%([^]+?)%end%/gi,
-      replace: function (s, match) {
-        return '<pre><code class="rust">' + match.trim() + "</code></pre>";
-      },
-    },
-  ];
-});
+const rustExtension = {
+  type: "lang",
+  regex: /%rust%([^]+?)%end%/gi,
+  replace: (s, match) => `<pre><code class="rust">${match.trim()}</code></pre>`,
+};
 
-showdown.extension("centerImage", function () {
-  return [
-    {
-      type: "lang",
-      regex: /%center\s*-\s*([^\s%]+)(?:\s*,\s*([^%\n]+))?\s*%/gi,
-      replace: function (s, src, subtitle) {
-        var html =
-          '<div align="center">' +
-          '<p><img src="' +
-          src +
-          '" alt="NO IMG" style="width: 20%; margin-bottom: 20px; border-radius: 10px;"></p>';
-        if (subtitle) {
-          html += "<h3>" + subtitle.trim() + "</h3>";
-        }
-        html += "</div>";
-        return html;
-      },
-    },
-  ];
-});
+const centerImageExtension = {
+  type: "lang",
+  regex: /%center\s*-\s*([^\s%]+)(?:\s*,\s*([^%\n]+))?\s*%/gi,
+  replace: (s, src, subtitle) => {
+    const baseHtml = `<div align="center"><p><img src="${src}" alt="NO IMG" style="width: 20%; margin-bottom: 20px; border-radius: 10px;"></p>`;
+    return subtitle
+      ? baseHtml + `<h3>${subtitle.trim()}</h3></div>`
+      : baseHtml + "</div>";
+  },
+};
 
-/**
- * @param {number} num
- * @returns {string}
- */
-function pad(num) {
-  const s = `${num}`;
-  return s.padStart(2, "0");
-}
+const pad = num => String(num).padStart(2, "0");
+const getWord = (words, lang, w) => words[lang][w] || words.ko[w];
 
-/**
- * @param {string} lang
- * @param {number} i
- * @param {boolean} isBeta currently unused
- * @param {string} chapter
- * @returns {string}
- */
-function getFileName(lang, i, isBeta, chapter) {
-  if (i === 0 && lang === "ko") {
-    return "index.html";
-  }
-  // let fileName = `${pad(i)}_${lang}.html`;
-  let fileName = `${pad(i)}_${lang}.html`;
-  if (chapter !== undefined && chapter !== null) {
-    fileName = `chapter_${chapter}_${lang}.html`;
-  }
-  return fileName;
-}
+const getFileName = (lang, i, chapter) =>
+  i === 0 && lang === "ko"
+    ? "index.html"
+    : chapter
+    ? `chapter_${chapter}_${lang}.html`
+    : `${pad(i)}_${lang}.html`;
 
-/**
- * @param {string} source
- * @returns {string[]}
- */
 const getDirectories = source =>
   fs
     .readdirSync(source, { withFileTypes: true })
@@ -87,35 +49,31 @@ const commonWords = {};
 const chapters = [];
 
 languages.forEach(lang => {
-  //   const lang = languages[x];
   const langDir = `${lessonSource}/${lang}`;
   commonWords[lang] = getYaml(`${langDir}/common_words.yaml`);
-  const languageFiles = fs
-    .readdirSync(langDir, { withFileTypes: true })
-    .filter(f => f.isFile() && f.name.indexOf("chapter_") === 0)
-    .map(f => f.name);
-  languageFiles.forEach(l => {
-    const chap = parseInt(l.substring(8, l.indexOf(".")), 10);
-    if (chapters[chap] === undefined) {
-      chapters[chap] = {};
-    }
-    chapters[chap][lang] = getYaml(`${langDir}/${l}`);
-  });
+
+  fs.readdirSync(langDir, { withFileTypes: true })
+    .filter(f => f.isFile() && f.name.startsWith("chapter_"))
+    .forEach(f => {
+      const chap = parseInt(f.name.substring(8, f.name.indexOf(".")), 10);
+      chapters[chap] = chapters[chap] || {};
+      chapters[chap][lang] = getYaml(`${langDir}/${f.name}`);
+    });
 });
 
 const pages = [];
 
 chapters.forEach((c, x) => {
-  for (let i = 0; i < c.ko.length; i += 1) {
+  c.ko.forEach((_, i) => {
     const page = {};
     if (i === 0 && x !== 0) {
       page.chapter = x;
     }
-    Object.keys(c).forEach(lang => {
-      page[lang] = c[lang][i];
+    Object.entries(c).forEach(([lang, content]) => {
+      page[lang] = content[i];
     });
     pages.push(page);
-  }
+  });
 });
 
 const lessons = {
@@ -132,24 +90,10 @@ const aBinder = [
 ];
 
 const converter = new showdown.Converter({
-  extensions: [...aBinder, "rust", "centerImage"],
+  extensions: [...aBinder, rustExtension, centerImageExtension],
 });
-
 converter.setOption("parseImgDimensions", true);
 converter.setOption("simpleLineBreaks", true);
-
-/**
- * @param {string[]} words
- * @param {string} lang
- * @param {string} w
- * @returns {string}
- */
-function getWord(words, lang, w) {
-  if (words[lang][w]) {
-    return words[lang][w];
-  }
-  return words.ko[w];
-}
 
 /**
  *
@@ -165,7 +109,7 @@ const getHead = (words, lang) => `<!DOCTYPE html>
         <meta charset="UTF-8">
         <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
         <meta content="utf-8" http-equiv="encoding">
-        <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1"
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <meta name="keywords" content="Rust, Programming, Learning">
         <meta name="description" content="Rust tutorial website based on tour_of_rust">
         <meta name="theme-color" content="#ff6801"/>
@@ -196,7 +140,6 @@ const getHead = (words, lang) => `<!DOCTYPE html>
  * @param {number} index
  * @param {boolean} isLast
  * @param {string[]} words
- * @param {boolean} isBeta
  * @returns
  */
 function template(
@@ -208,8 +151,7 @@ function template(
   source,
   index,
   isLast,
-  words,
-  isBeta
+  words
 ) {
   return `${getHead(words, lang)}
     <body>
@@ -218,7 +160,6 @@ function template(
                 <span class="title"><a href="${getFileName(
                   lang,
                   0,
-                  isBeta,
                   lessonsData[0]?.chapter
                 )}">${getWord(words, lang, "tor")}</a></span>
                 <span class="nav">
@@ -234,12 +175,9 @@ function template(
             <div class="bottomnav">
                 ${
                   index !== 0
-                    ? `<span class="back"><a href="${
-                        isBeta ? "beta_" : ""
-                      }${getFileName(
+                    ? `<span class="back"><a href="${getFileName(
                         lang,
                         index - 1,
-                        isBeta,
                         lessonsData[index - 1]?.chapter
                       )}" rel="prev">❮ ${getWord(
                         words,
@@ -251,12 +189,9 @@ function template(
                 ${
                   isLast
                     ? ""
-                    : `<span class="next"><a href="${
-                        isBeta ? "beta_" : ""
-                      }${getFileName(
+                    : `<span class="next"><a href="${getFileName(
                         lang,
                         index + 1,
-                        isBeta,
                         lessonsData[index + 1]?.chapter
                       )}" rel="next">${getWord(
                         words,
@@ -314,7 +249,7 @@ languages.forEach(lang => {
   });
 
   langLessons.forEach((lesson, i) => {
-    let fileName = getFileName(lang, i, false, lesson?.chapter);
+    let fileName = getFileName(lang, i, lesson?.chapter);
     if (i === 0 && lang === "ko") {
       fileName = "index.html";
     }
@@ -388,7 +323,7 @@ languages.forEach(lang => {
             if (x[lang] && x[lang].clone) {
               targetLang = x[lang].clone;
             }
-            let s = `<li><a href="${getFileName(lang, i, false, x.chapter)}">${
+            let s = `<li><a href="${getFileName(lang, i, x.chapter)}">${
               x[targetLang]
                 ? x[targetLang].title
                 : `[${getWord(words, targetLang, "untranslated")}] ${
@@ -396,12 +331,7 @@ languages.forEach(lang => {
                   }`
             }</a></li>`;
             if (x.chapter !== undefined) {
-              s = `</ul><h3><a href="${getFileName(
-                lang,
-                i,
-                false,
-                x.chapter
-              )}">${
+              s = `</ul><h3><a href="${getFileName(lang, i, x.chapter)}">${
                 x[targetLang]
                   ? x[targetLang].title
                   : `[${getWord(words, targetLang, "untranslated")}] ${
