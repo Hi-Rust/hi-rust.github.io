@@ -1,7 +1,7 @@
 {
   "name": "rust",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "scripts": {
     "lint:lessons": "prettier --write ./frontend/lessons/*/*.yaml",
     "lint": "npm run lint:lessons && npm run lint:webassembly && eslint --fix generate.js docs/",

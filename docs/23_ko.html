@@ -35,43 +35,28 @@
                 <span class="toc"><a href="TOC_ko.html">목차</a></span>
             </div>
             <div class="page">
-            <h1>소유권</h1>
-            <p><strong>Ownership</strong></p>
-<p>소유권 정의: Rust에서 각 값은 하나의 소유자를 가지며, 소유자가 범위를 벗어나면 값이 할당 해제됩니다.</p>
-<p>소유권 이전 방법을 예제를 통해 설명합니다 (예: 값을 새 변수에 할당하거나 함수에 전달할 때).</p>
-<p>값이 범위를 벗어날 때 자동으로 호출되는 drop 함수를 소개합니다.</p>
-<p>소유권 정의:</p>
-<p>Rust에서는 각 값에 대해 하나의 소유자가 존재하며, 소유자가 해당 값을 관리합니다.</p>
-<p>소유자가 범위를 벗어나면 Rust는 자동으로 해당 값의 메모리를 해제합니다.</p>
-<p>소유권 이전 예제:</p>
-<p>예제 1: 값을 새 변수에 할당할 때</p>
-<p>s1이 가리키는 값의 소유권이 s2로 이전되어 s1은 사용할 수 없습니다.</p>
-<pre><code class="rust">let s1 = String::from("hello");
-let s2 = s1;</code></pre>
-<p>예제 2: 함수에 값을 전달할 때</p>
-<p>s가 takes_ownership 함수에 전달되면서 소유권이 이전되고 함수 내에서 값의 메모리가 해제됩니다.</p>
-<pre><code class="rust">fn takes_ownership(s: String) {
-    println!("{}", s);
-}
-
-fn main() {
-    let s = String::from("hello");
-    takes_ownership(s);
-    // 여기에서 s는 사용할 수 없습니다.
-}</code></pre>
-<p><code>drop</code> 함수 소개:</p>
-<p>Rust에서는 값이 범위를 벗어날 때 자동으로 drop 함수가 호출됩니다.</p>
-<p>drop 함수는 메모리를 안전하게 해제하는 역할을 합니다.</p>
-<p>이를 통해 개발자가 직접 메모리 해제를 관리할 필요가 없습니다.</p>
-<p>소유권, 소유권 이전 방법, 그리고 drop 함수를 통해 Rust는 메모리 관리를 단순화하고 안전하게 할 수 있습니다.</p>
-<p>이로 인해 메모리 누수나 세그멘테이션 폴트와 같은 문제를 효과적으로 방지할 수 있습니다.</p>
+            <h1>소유권과 빌림 검사기</h1>
+            <p>Rust의 메모리 관리가 소유권, 빌림, 그리고 수명의 개념에 기반한다는 것을 설명합니다.</p>
+<p>Rust의 시스템은 가비지 컬렉터가 필요 없이 컴파일 시간에 메모리 관리 문제를 방지하도록 설계되어 있다는 것을 강조합니다.</p>
+<ol>
+<li>Rust의 메모리 관리 방식 소개:<ol>
+<li>Rust는 소유권, 빌림, 그리고 수명을 기반으로 한 메모리 관리 시스템을 도입하여 메모리 안전성을 보장합니다.</li>
+<li>이 시스템은 컴파일 시간에 메모리 관리 문제를 확인하고 방지하므로, 런타임 시 메모리 누수나 <code>세그멘테이션 폴트</code>와 같은 문제가 발생하지 않습니다.</li></ol></li>
+<li>가비지 컬렉터 없이 메모리 관리 문제 방지:<ol>
+<li>Rust의 메모리 관리 시스템은 가비지 컬렉터가 필요 없이 메모리를 안전하게 관리할 수 있게 해줍니다.</li>
+<li>소유권과 빌림 규칙을 통해 컴파일러가 메모리 사용에 대한 제약 조건을 검사하고, 문제가 있는 경우 컴파일 오류를 발생시킵니다.</li>
+<li>이를 통해 런타임 시 메모리 관리 문제가 발생할 여지가 없도록 합니다.</li></ol></li>
+</ol>
+<p>이렇게 Rust는 소유권, 빌림, 그리고 수명을 기반으로 하는 메모리 관리 시스템을 통해 가비지 컬렉터 없이도 메모리 안전성을 보장하며,</p>
+<p>컴파일 시간에 메모리 관리 문제를 방지하는 방식으로 문제를 해결합니다.</p>
+<p>이 시스템은 런타임에 발생할 수 있는 메모리 관련 문제를 최소화하여 성능과 안정성을 높입니다.</p>
             <div class="bottomnav">
-                <span class="back"><a href="22_ko.html" rel="prev">❮ 이전</a></span>
+                <span class="back"><a href="chapter_2_ko.html" rel="prev">❮ 이전</a></span>
                 <span class="next"><a href="24_ko.html" rel="next">다음 ❯</a></span>
             </div>
             </div>
             <div class="code">
-            <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=%2F%2F+%60drop%60+%ED%95%A8%EC%88%98+%EC%86%8C%EA%B0%9C%3A%0A%2F%2F+Rust%EC%97%90%EC%84%9C%EB%8A%94+%EA%B0%92%EC%9D%B4+%EB%B2%94%EC%9C%84%EB%A5%BC+%EB%B2%97%EC%96%B4%EB%82%A0+%EB%95%8C+%EC%9E%90%EB%8F%99%EC%9C%BC%EB%A1%9C+drop+%ED%95%A8%EC%88%98%EA%B0%80+%ED%98%B8%EC%B6%9C%EB%90%A9%EB%8B%88%EB%8B%A4.%0A%2F%2F+drop+%ED%95%A8%EC%88%98%EB%8A%94+%EB%A9%94%EB%AA%A8%EB%A6%AC%EB%A5%BC+%EC%95%88%EC%A0%84%ED%95%98%EA%B2%8C+%ED%95%B4%EC%A0%9C%ED%95%98%EB%8A%94+%EC%97%AD%ED%95%A0%EC%9D%84+%ED%95%A9%EB%8B%88%EB%8B%A4.%0A%2F%2F+%EC%9D%B4%EB%A5%BC+%ED%86%B5%ED%95%B4+%EA%B0%9C%EB%B0%9C%EC%9E%90%EA%B0%80+%EC%A7%81%EC%A0%91+%EB%A9%94%EB%AA%A8%EB%A6%AC+%ED%95%B4%EC%A0%9C%EB%A5%BC+%EA%B4%80%EB%A6%AC%ED%95%A0+%ED%95%84%EC%9A%94%EA%B0%80+%EC%97%86%EC%8A%B5%EB%8B%88%EB%8B%A4.%0Astruct+CustomStruct+%7B%0A++++data%3A+String%2C%0A%7D%0A%0Aimpl+Drop+for+CustomStruct+%7B%0A++++fn+drop%28%26mut+self%29+%7B%0A++++++++println%21%28%22Dropping+CustomStruct+with+data%3A+%7B%7D%22%2C+self.data%29%3B%0A++++%7D%0A%7D%0A%0Afn+main%28%29+%7B%0A++++let+custom+%3D+CustomStruct+%7B%0A++++++++data%3A+String%3A%3Afrom%28%22hello%22%29%2C%0A++++%7D%3B%0A++++println%21%28%22Created+CustomStruct+with+data%3A+%7B%7D%22%2C+custom.data%29%3B%0A++++%2F%2F+custom%EC%9D%80+%EC%9D%B4+%EC%8A%A4%EC%BD%94%ED%94%84%EB%A5%BC+%EB%B2%97%EC%96%B4%EB%82%98%EB%A9%B4%EC%84%9C+drop+%ED%95%A8%EC%88%98%EA%B0%80+%ED%98%B8%EC%B6%9C%EB%90%98%EC%96%B4+%EB%A9%94%EB%AA%A8%EB%A6%AC%EA%B0%80+%EC%95%88%EC%A0%84%ED%95%98%EA%B2%8C+%ED%95%B4%EC%A0%9C%EB%90%A9%EB%8B%88%EB%8B%A4.%0A%7D%0A" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
+            <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=%2F*%0A%EC%9D%B4+%EC%BD%94%EB%93%9C%EC%97%90%EC%84%9C%2C+%EB%A8%BC%EC%A0%80+%22hello%22+%EA%B0%92%EC%9D%84+%EA%B0%96%EB%8A%94+%EA%B0%80%EB%B3%80+String+%EB%B3%80%EC%88%98+s%EB%A5%BC+%EC%84%A0%EC%96%B8%ED%95%A9%EB%8B%88%EB%8B%A4.%0A%0A%EA%B7%B8%EB%9F%B0+%EB%8B%A4%EC%9D%8C+%26+%EC%97%B0%EC%82%B0%EC%9E%90%EB%A5%BC+%EC%82%AC%EC%9A%A9%ED%95%98%EC%97%AC+s%EC%97%90+%EB%8C%80%ED%95%9C+%EB%B6%88%EB%B3%80+%EC%B0%B8%EC%A1%B0+r1%EC%9D%84+%EB%A7%8C%EB%93%AD%EB%8B%88%EB%8B%A4.%0A%0Ar1%EC%9D%80+%EB%B9%8C%EB%A6%BC%28borrowing%29%EC%9D%98+%EC%98%88%EC%8B%9C%EB%A1%9C%2C+s%EC%9D%98+%EC%86%8C%EC%9C%A0%EA%B6%8C%EC%9D%84+%EA%B0%80%EC%A0%B8%EA%B0%80%EC%A7%80+%EC%95%8A%EA%B3%A0+%EA%B7%B8+%EA%B0%92%EC%9D%84+%EC%9D%BD%EC%9D%84+%EC%88%98+%EC%9E%88%EC%A7%80%EB%A7%8C+%EC%88%98%EC%A0%95%ED%95%A0+%EC%88%98%EB%8A%94+%EC%97%86%EC%8A%B5%EB%8B%88%EB%8B%A4.%0A%0Ar1%EC%9D%98+%EA%B0%92%EC%9D%84+%EC%B6%9C%EB%A0%A5%ED%95%9C+%ED%9B%84%2C+r1%EC%9D%B4+%EC%8A%A4%EC%BD%94%ED%94%84%EB%A5%BC+%EB%B2%97%EC%96%B4%EB%82%98+%EB%8D%94+%EC%9D%B4%EC%83%81+%EB%B9%8C%EB%A0%A4%EC%A7%80%EC%A7%80+%EC%95%8A%EA%B2%8C+%EB%90%A9%EB%8B%88%EB%8B%A4.%0A%0A%EA%B7%B8%EB%9F%B0+%EB%8B%A4%EC%9D%8C+%26mut+%EC%97%B0%EC%82%B0%EC%9E%90%EB%A5%BC+%EC%82%AC%EC%9A%A9%ED%95%98%EC%97%AC+s%EC%97%90+%EB%8C%80%ED%95%9C+%EA%B0%80%EB%B3%80+%EC%B0%B8%EC%A1%B0+r2%EB%A5%BC+%EB%A7%8C%EB%93%AD%EB%8B%88%EB%8B%A4.%0A%0Ar2%EC%9D%80+%EB%98%90+%EB%8B%A4%EB%A5%B8+%EB%B9%8C%EB%A6%BC%EC%9D%98+%EC%98%88%EC%8B%9C%EC%9E%85%EB%8B%88%EB%8B%A4.+%EC%9D%B4%EB%B2%88%EC%97%90%EB%8A%94+s%EB%A5%BC+%EA%B0%80%EB%B3%80%EC%9C%BC%EB%A1%9C+%EB%B9%8C%EB%A0%A4%EC%99%80%EC%84%9C+%EA%B0%92%EC%9D%84+%EC%88%98%EC%A0%95%ED%95%A0+%EC%88%98+%EC%9E%88%EA%B2%8C+%EB%90%A9%EB%8B%88%EB%8B%A4.%0A%0A%EC%9A%B0%EB%A6%AC%EB%8A%94+push_str%28%29+%EB%A9%94%EC%86%8C%EB%93%9C%EB%A5%BC+%ED%86%B5%ED%95%B4+r2%EB%A5%BC+%ED%86%B5%ED%95%B4+%EB%AC%B8%EC%9E%90%EC%97%B4+%22%2C+world%21%22%EB%A5%BC+s%EC%97%90+%EC%B6%94%EA%B0%80%ED%95%98%EA%B3%A0%2C+r2%EC%9D%98+%EA%B0%92%EC%9D%84+%EC%B6%9C%EB%A0%A5%ED%95%A9%EB%8B%88%EB%8B%A4.%0A%0A%EB%A7%88%EC%A7%80%EB%A7%89%EC%9C%BC%EB%A1%9C+r2%EA%B0%80+%EC%8A%A4%EC%BD%94%ED%94%84%EB%A5%BC+%EB%B2%97%EC%96%B4%EB%82%98+%EB%8D%94+%EC%9D%B4%EC%83%81+%EB%B9%8C%EB%A0%A4%EC%A7%80%EC%A7%80+%EC%95%8A%EA%B2%8C+%EB%90%98%EB%A9%B4%2C+s%EB%8A%94+%EB%8B%A4%EC%8B%9C+%EC%9E%90%EC%9C%A0%EB%A1%AD%EA%B2%8C+%EC%82%AC%EC%9A%A9%ED%95%A0+%EC%88%98+%EC%9E%88%EC%8A%B5%EB%8B%88%EB%8B%A4.%0A%0A%EC%9D%B4+%EC%BD%94%EB%93%9C+%EC%8A%A4%EB%8B%88%ED%8E%AB%EC%9D%80+Rust%EC%9D%98+%EC%86%8C%EC%9C%A0%EA%B6%8C%EA%B3%BC+%EB%B9%8C%EB%A6%BC+%EC%8B%9C%EC%8A%A4%ED%85%9C%EC%9D%B4+%EA%B0%80%EB%B9%84%EC%A7%80+%EC%BB%AC%EB%A0%89%ED%84%B0+%EC%97%86%EC%9D%B4+%EC%95%88%EC%A0%84%ED%95%98%EA%B3%A0+%ED%9A%A8%EC%9C%A8%EC%A0%81%EC%9D%B8+%EB%A9%94%EB%AA%A8%EB%A6%AC+%EA%B4%80%EB%A6%AC%EB%A5%BC+%EA%B0%80%EB%8A%A5%ED%95%98%EA%B2%8C+%ED%95%98%EB%8A%94+%EB%B0%A9%EC%8B%9D%EC%9D%84+%EB%B3%B4%EC%97%AC%EC%A4%8D%EB%8B%88%EB%8B%A4.%0A%0ARust%EB%8A%94+%EC%BB%B4%ED%8C%8C%EC%9D%BC+%EC%8B%9C%EA%B0%84%EC%97%90+%EC%86%8C%EC%9C%A0%EA%B6%8C%EA%B3%BC+%EB%B9%8C%EB%A6%BC+%EA%B7%9C%EC%B9%99%EC%9D%84+%EA%B0%95%EC%A0%9C%ED%95%A8%EC%9C%BC%EB%A1%9C%EC%8D%A8%0A%0A%EB%A9%94%EB%AA%A8%EB%A6%AC+%EB%88%84%EC%88%98%EB%82%98+%EC%84%B8%EA%B7%B8%EB%A9%98%ED%85%8C%EC%9D%B4%EC%85%98+%ED%8F%B4%ED%8A%B8%EC%99%80+%EA%B0%99%EC%9D%80+%EB%9F%B0%ED%83%80%EC%9E%84+%EC%98%A4%EB%A5%98%EB%A5%BC+%EB%B0%A9%EC%A7%80%ED%95%98%EB%AF%80%EB%A1%9C+Rust+%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%A8%EC%9D%80+%EC%95%88%EC%A0%95%EC%A0%81%EC%9D%B4%EB%A9%B4%EC%84%9C%EB%8F%84+%EB%86%92%EC%9D%80+%EC%84%B1%EB%8A%A5%EC%9D%84+%EB%B3%B4%EC%9E%A5%ED%95%A9%EB%8B%88%EB%8B%A4.%0A*%2F%0A%0Afn+main%28%29+%7B%0A++++let+mut+s+%3D+String%3A%3Afrom%28%22Hello%22%29%3B%0A%0A++++%7B%0A++++++++let+r1+%3D+%26s%3B+%2F%2F+%EB%B6%88%EB%B3%80+%EB%B9%8C%EB%A6%BC%0A++++++++println%21%28%22%7B%7D%22%2C+r1%29%3B%0A++++%7D+%2F%2F+r1%EC%9D%B4+%EC%8A%A4%EC%BD%94%ED%94%84%EB%A5%BC+%EB%B2%97%EC%96%B4%EB%82%A8%0A%0A++++let+r2+%3D+%26mut+s%3B+%2F%2F+%EA%B0%80%EB%B3%80+%EB%B9%8C%EB%A6%BC%0A++++r2.push_str%28%22%2C+world%21%22%29%3B%0A++++println%21%28%22%7B%7D%22%2C+r2%29%3B%0A%7D+%2F%2F+r2%EA%B0%80+%EC%8A%A4%EC%BD%94%ED%94%84%EB%A5%BC+%EB%B2%97%EC%96%B4%EB%82%A8%2C+s%EB%8A%94+%EB%8D%94+%EC%9D%B4%EC%83%81+%EB%B9%8C%EB%A0%A4%EC%A7%80%EC%A7%80+%EC%95%8A%EC%9D%8C%0A" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
             </div>
         </div>
         <!-- <script>

@@ -2,3 +2,4 @@ node_modules
 .vscode
 lessons.json
 target
+.hypothesis
