@@ -3,3 +3,4 @@ node_modules
 lessons.json
 target
 .hypothesis
+Cargo.lock
