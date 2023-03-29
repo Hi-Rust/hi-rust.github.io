@@ -8,7 +8,7 @@
         <meta content="utf-8" http-equiv="encoding">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
         <meta name="keywords" content="Rust, Programming, Learning">
-        <meta name="description" content="Rust tutorial website based on tour_of_rust">
+        <meta name="description" content="Rust tutorial website based on tour_of_rust by 최석원">
         <meta name="theme-color" content="#ff6801"/>
         <meta http-equiv="Cache-Control" content="max-age=3600">
         
@@ -87,17 +87,6 @@ let my_number_string = my_number.to_string(); // "42"라는 String 타입으로 
             <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=fn+main%28%29+%7B%0A++++let+my_literal%3A+%26%27static+str+%3D+%22%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94%21%22%3B%0A%0A++++let+full_name+%3D+%22%ED%99%8D%EA%B8%B8%EB%8F%99%22%3B%0A++++let+first_name%3A+%26str+%3D+%26full_name%5B..6%5D%3B+%2F%2F+%22%ED%99%8D%EA%B8%B8%22%EB%A7%8C+%EC%B0%B8%EC%A1%B0%2C+3+per+each+korean+char.%0A++++println%21%28%22%7B%7D%22%2C+first_name%29%3B%0A%0A++++let+mut+my_string+%3D+String%3A%3Afrom%28%22%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94%21%22%29%3B%0A++++my_string.push_str%28%22+%EB%A7%8C%EB%82%98%EC%84%9C+%EB%B0%98%EA%B0%80%EC%9B%8C%EC%9A%94%21%22%29%3B%0A++++println%21%28%22%7B%7D%22%2C+my_string%29%3B%0A%0A++++let+my_str+%3D+%22%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94%21%22%3B%0A++++let+my_string+%3D+my_str.to_owned%28%29%3B+%2F%2F+String+%ED%83%80%EC%9E%85%EC%9C%BC%EB%A1%9C+%EB%B3%80%EA%B2%BD%0A++++println%21%28%22%7B%3A%23%3F%7D%22%2C+my_string%29%3B%0A%0A++++let+my_number+%3D+42%3B%0A++++let+my_number_string+%3D+my_number.to_string%28%29%3B+%2F%2F+%2242%22%EB%9D%BC%EB%8A%94+String+%ED%83%80%EC%9E%85%EC%9C%BC%EB%A1%9C+%EB%B3%80%EA%B2%BD%0A++++println%21%28%22%7B%7D%22%2C+my_number_string%29%3B%0A%7D%0A" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
             </div>
         </div>
-        <!-- <script>
-          document.addEventListener("DOMContentLoaded", function() {
-            // Select the widget's text element using its XPath
-            const xpath = '/html/body/main/div/div/div[1]/div[1]/div/button[1]/div';
-            const widgetText = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-
-            // Change the text content of the element
-            widgetText.textContent = "New Text";
-          });
-        </script> -->
-
         <script>
         var pres = document.querySelectorAll("pre>code");
         for (var i = 0; i < pres.length; i++) {

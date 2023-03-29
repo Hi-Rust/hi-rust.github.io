@@ -8,7 +8,7 @@
         <meta content="utf-8" http-equiv="encoding">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
         <meta name="keywords" content="Rust, Programming, Learning">
-        <meta name="description" content="Rust tutorial website based on tour_of_rust">
+        <meta name="description" content="Rust tutorial website based on tour_of_rust by 최석원">
         <meta name="theme-color" content="#ff6801"/>
         <meta http-equiv="Cache-Control" content="max-age=3600">
         
@@ -153,17 +153,6 @@ fn main() {
             <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=%2F%2F+%ED%8A%B9%EC%84%B1+%28Trait%29+%EC%A0%95%EC%9D%98%0D%0Atrait+Greet+%7B%0D%0A++++fn+greet%28%26self%29+-%3E+String%3B%0D%0A%7D%0D%0A%0D%0A%2F%2F+%EA%B5%AC%EC%A1%B0%EC%B2%B4+%28Struct%29+%EC%A0%95%EC%9D%98%0D%0Astruct+Person+%7B%0D%0A++++name%3A+String%2C%0D%0A%7D%0D%0A%0D%0A%2F%2F+%EA%B5%AC%EC%A1%B0%EC%B2%B4%EC%97%90+%EB%8C%80%ED%95%9C+%ED%8A%B9%EC%84%B1+%EA%B5%AC%ED%98%84%0D%0Aimpl+Greet+for+Person+%7B%0D%0A++++fn+greet%28%26self%29+-%3E+String+%7B%0D%0A++++++++format%21%28%22%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94%2C+%7B%7D%EB%8B%98%21%22%2C+self.name%29%0D%0A++++%7D%0D%0A%7D%0D%0A%0D%0A%2F%2F+%EC%97%B4%EA%B1%B0%ED%98%95+%28Enum%29+%EC%A0%95%EC%9D%98%0D%0Aenum+Animal+%7B%0D%0A++++Dog%2C%0D%0A++++Cat%2C%0D%0A%7D%0D%0A%0D%0A%2F%2F+%EC%97%B4%EA%B1%B0%ED%98%95%EC%97%90+%EB%8C%80%ED%95%9C+%ED%8A%B9%EC%84%B1+%EA%B5%AC%ED%98%84%0D%0Aimpl+Greet+for+Animal+%7B%0D%0A++++fn+greet%28%26self%29+-%3E+String+%7B%0D%0A++++++++match+self+%7B%0D%0A++++++++++++Animal%3A%3ADog+%3D%3E+String%3A%3Afrom%28%22%EB%A9%8D%EB%A9%8D%21%22%29%2C%0D%0A++++++++++++Animal%3A%3ACat+%3D%3E+String%3A%3Afrom%28%22%EC%95%BC%EC%98%B9%7E%22%29%2C%0D%0A++++++++%7D%0D%0A++++%7D%0D%0A%7D%0D%0A%0D%0Afn+main%28%29+%7B%0D%0A++++let+person+%3D+Person+%7B%0D%0A++++++++name%3A+String%3A%3Afrom%28%22%EA%B9%80%EC%95%84%EC%A3%BC%22%29%2C%0D%0A++++%7D%3B%0D%0A++++let+dog+%3D+Animal%3A%3ADog%3B%0D%0A%0D%0A++++%2F%2F+%EA%B5%AC%EC%A1%B0%EC%B2%B4%EC%99%80+%EC%97%B4%EA%B1%B0%ED%98%95+%EC%9D%B8%EC%8A%A4%ED%84%B4%EC%8A%A4%EC%97%90+greet+%EB%A9%94%EC%84%9C%EB%93%9C+%EC%82%AC%EC%9A%A9%0D%0A++++println%21%28%22%7B%7D%22%2C+person.greet%28%29%29%3B%0D%0A++++println%21%28%22%7B%7D%22%2C+dog.greet%28%29%29%3B%0D%0A%7D%0D%0A" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
             </div>
         </div>
-        <!-- <script>
-          document.addEventListener("DOMContentLoaded", function() {
-            // Select the widget's text element using its XPath
-            const xpath = '/html/body/main/div/div/div[1]/div[1]/div/button[1]/div';
-            const widgetText = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-
-            // Change the text content of the element
-            widgetText.textContent = "New Text";
-          });
-        </script> -->
-
         <script>
         var pres = document.querySelectorAll("pre>code");
         for (var i = 0; i < pres.length; i++) {

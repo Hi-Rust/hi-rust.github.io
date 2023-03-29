@@ -8,7 +8,7 @@
         <meta content="utf-8" http-equiv="encoding">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
         <meta name="keywords" content="Rust, Programming, Learning">
-        <meta name="description" content="Rust tutorial website based on tour_of_rust">
+        <meta name="description" content="Rust tutorial website based on tour_of_rust by 최석원">
         <meta name="theme-color" content="#ff6801"/>
         <meta http-equiv="Cache-Control" content="max-age=3600">
         
@@ -68,17 +68,6 @@
             <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=%23!%5Ballow(dead_code)%5D%0A%0A%2F%2F%20%EC%84%9C%EB%A1%9C%20%EB%8B%A4%EB%A5%B8%20%EB%9D%BC%EC%9D%B4%ED%94%84%ED%83%80%EC%9E%84%EC%9D%84%20%EA%B0%80%EC%A7%84%20%EB%91%90%20%EA%B0%9C%EC%9D%98%20%EC%B0%B8%EC%A1%B0%EB%A5%BC%20%ED%8F%AC%ED%95%A8%ED%95%98%EB%8A%94%20%EA%B5%AC%EC%A1%B0%EC%B2%B4%0Astruct%20Foo%3C'a%2C%20'b%3E%20%7B%0A%20%20%20%20x%3A%20%26'a%20i32%2C%0A%20%20%20%20y%3A%20%26'b%20i32%2C%0A%7D%0A%0A%2F%2F%20Foo%20%EA%B5%AC%EC%A1%B0%EC%B2%B4%EB%A5%BC%20%EA%B0%80%EC%A0%B8%EC%99%80%EC%84%9C%20x%EC%99%80%20%EB%8F%99%EC%9D%BC%ED%95%9C%20%EB%9D%BC%EC%9D%B4%ED%94%84%20%ED%83%80%EC%9E%84%EC%9D%84%20%EA%B0%80%EC%A7%84%20%EC%B0%B8%EC%A1%B0%EB%A5%BC%20%EB%B0%98%ED%99%98%ED%95%98%EB%8A%94%20%ED%95%A8%EC%88%98%0Afn%20get_x%3C'a%2C%20'b%3E(foo%3A%20%26Foo%3C'a%2C%20'b%3E)%20-%3E%20%26'a%20i32%20%7B%0A%20%20%20%20foo.x%0A%7D%0A%0A%2F%2F%20%EC%9B%90%EC%8B%9C%20%ED%8F%AC%EC%9D%B8%ED%84%B0%EB%A5%BC%20%EA%B0%80%EC%A0%B8%EC%99%80%20%EC%9E%84%EC%9D%98%EC%9D%98%20%EB%9D%BC%EC%9D%B4%ED%94%84%ED%83%80%EC%9E%84%EC%9D%84%20%EA%B0%80%EC%A7%84%20%EC%B0%B8%EC%A1%B0%EB%A5%BC%20%EB%B0%98%ED%99%98%ED%95%98%EB%8A%94%20unsafe%20%ED%95%A8%EC%88%98%0Aunsafe%20fn%20deref_raw%3C'a%3E(ptr%3A%20*const%20i32)%20-%3E%20%26'a%20i32%20%7B%0A%20%20%20%20%26*ptr%20%2F%2F%20dereference%20raw%20pointer%0A%7D%0A%0Afn%20main()%20%7B%0A%20%20%20%20let%20x%20%3D%2010%3B%0A%20%20%20%20let%20y%20%3D%2020%3B%0A%0A%20%20%20%20%2F%2F%20x%EC%99%80%20y%EC%97%90%20%EB%8C%80%ED%95%9C%20%EC%B0%B8%EC%A1%B0%EB%A5%BC%20%ED%8F%AC%ED%95%A8%ED%95%98%EB%8A%94%20Foo%20%EA%B5%AC%EC%A1%B0%EC%B2%B4%20%EB%A7%8C%EB%93%A4%EA%B8%B0%0A%20%20%20%20let%20foo%20%3D%20Foo%20%7B%20x%3A%20%26x%2C%20y%3A%20%26y%20%7D%3B%0A%0A%20%20%20%20%2F%2F%20get_x%20%ED%98%B8%EC%B6%9C%ED%95%98%EB%A9%B4%EC%84%9C%20foo.x%EC%99%80%20%EB%8F%99%EC%9D%BC%ED%95%9C%20%EB%9D%BC%EC%9D%B4%ED%94%84%ED%83%80%EC%9E%84%EC%9D%84%20%EA%B0%80%EC%A7%84%20x%EC%97%90%20%EB%8C%80%ED%95%9C%20%EC%B0%B8%EC%A1%B0%20%EA%B0%80%EC%A0%B8%EC%98%A4%EA%B8%B0%0A%20%20%20%20let%20r1%20%3D%20get_x(%26foo)%3B%0A%0A%20%20%20%20%2F%2F%20r1%EC%97%90%EC%84%9C%20%EC%9B%90%EC%8B%9C(raw)%20%ED%8F%AC%EC%9D%B8%ED%84%B0%20%EB%A7%8C%EB%93%A4%EA%B8%B0%0A%20%20%20%20let%20ptr%20%3D%20r1%20as%20*const%20i32%3B%0A%0A%20%20%20%20%2F%2F%20deref_raw%20%ED%98%B8%EC%B6%9C%ED%95%B4%EC%84%9C%20%EC%9E%84%EC%9D%98%EC%9D%98%20%EB%9D%BC%EC%9D%B4%ED%94%84%ED%83%80%EC%9E%84%20'a%EB%A5%BC%20%EA%B0%80%EC%A7%84%20r1%EC%97%90%20%EB%8C%80%ED%95%9C%20%EC%B0%B8%EC%A1%B0%20%EA%B0%80%EC%A0%B8%EC%98%A4%EA%B8%B0%0A%20%20%20%20let%20r2%20%3D%20unsafe%20%7B%20deref_raw(ptr)%20%7D%3B%0A%0A%20%20%20%20%2F%2F%20r1%EA%B3%BC%20r2%EC%9D%98%20%EA%B0%92%EC%9D%84%20%EC%B6%9C%EB%A0%A5%ED%95%98%EA%B8%B0%0A%20%20%20%20println!(%22r1%20%3D%20%7B%7D%2C%20r2%20%3D%20%7B%7D%22%2C%20r1%2C%20r2)%3B%20%20%2F%2F%20r1%20%3D%2010%2C%20r2%20%3D%2010%0A%7D%0A" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
             </div>
         </div>
-        <!-- <script>
-          document.addEventListener("DOMContentLoaded", function() {
-            // Select the widget's text element using its XPath
-            const xpath = '/html/body/main/div/div/div[1]/div[1]/div/button[1]/div';
-            const widgetText = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-
-            // Change the text content of the element
-            widgetText.textContent = "New Text";
-          });
-        </script> -->
-
         <script>
         var pres = document.querySelectorAll("pre>code");
         for (var i = 0; i < pres.length; i++) {

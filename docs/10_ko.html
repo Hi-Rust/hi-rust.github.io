@@ -8,7 +8,7 @@
         <meta content="utf-8" http-equiv="encoding">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
         <meta name="keywords" content="Rust, Programming, Learning">
-        <meta name="description" content="Rust tutorial website based on tour_of_rust">
+        <meta name="description" content="Rust tutorial website based on tour_of_rust by 최석원">
         <meta name="theme-color" content="#ff6801"/>
         <meta http-equiv="Cache-Control" content="max-age=3600">
         
@@ -37,21 +37,24 @@
             <div class="page">
             <h1>기본 타입</h1>
             <p>Rust는 다양한 익숙한 유형을 제공합니다:</p>
+<div align="center"> <p>
+    <img src="https://user-images.githubusercontent.com/2356749/228573875-e7980e94-248c-4477-b522-79f9532bf0f1.png">
+</p> </div>
 <ul>
-<li>booleans - <code>bool</code>로 참/거짓을 나타냅니다.</li>
-<li>unsigned integers (부호 없는 정수) - 음이 아닌 정수를 나타내는 <code>u8</code>, <code>u16</code>, <code>u32</code>, <code>u64</code>, <code>u128</code>입니다.</li>
-<li>signed integers (부호 있는 정수) - 정수를 나타내는 <code>i8</code>, <code>i16</code>, <code>i32</code>, <code>i64</code>, <code>i128</code>입니다.</li>
-<li>pointer sized integers - 메모리에서 색인과 항목의 크기를 나타내는 <code>usize</code>, <code>isize</code>입니다.</li>
+<li>booleans - <code>bool</code>로 참/거짓</li>
+<li>unsigned integers (부호 없는 정수) - 음이 아닌 정수를 나타내는 <code>u8</code>, <code>u16</code>, <code>u32</code>, <code>u64</code>, <code>u128</code></li>
+<li>signed integers (부호 있는 정수) - 정수를 나타내는 <code>i8</code>, <code>i16</code>, <code>i32</code>, <code>i64</code>, <code>i128</code></li>
+<li>pointer sized integers - 메모리에서 색인과 항목의 크기를 나타내는 <code>usize</code>, <code>isize</code></li>
 <li>floating point - <code>f32</code> <code>f64</code></li>
-<li>tuple - 고정된 값의 시퀀스를 스택에 전달하는 <code>(value, value, ...)</code> 입니다.</li>
-<li>arrays - 컴파일 시점에서 크기가 고정되어 있는 비슷한 요소의 집합으로 <code>[value, value, ...]</code> 입니다.</li>
-<li>slices - 런타임에 길이가 알려진 비슷한 요소의 집합입니다.</li>
-<li><code>str</code>(문자열 슬라이스) - 런타임에 길이가 알려진 텍스트입니다.</li>
+<li>tuple - 고정된 값의 시퀀스를 스택에 전달하는 <code>(value, value, ...)</code></li>
+<li>arrays - 컴파일 시점에서 크기가 고정되어 있는 비슷한 요소의 집합으로 <code>[value, value, ...]</code></li>
+<li>slices - 런타임에 길이가 알려진 비슷한 요소의 집합</li>
+<li><code>str</code>(문자열 슬라이스) - 런타임에 길이가 알려진 텍스트</li>
 </ul>
-<p>다른 언어에서 사용하는 것보다 텍스트는 더 복잡할 수 있습니다.<br />
-Rust가 시스템 프로그래밍 언어이기 때문에, 기존에 익숙하지 않은 메모리 문제에 대해서도 신경쓰고 있습니다.<br />
-이에 대해서는 나중에 자세히 다룰 예정입니다.</p>
 <p>숫자형은 숫자 끝에 유형을 명시하여 명시적으로 지정할 수 있습니다(예: <code>13u32</code>, <code>2u8</code>).</p>
+<p>다른 언어에서 사용하는 것보다 텍스트는 더 복잡할 수 있습니다.</p>
+<p>Rust가 시스템 프로그래밍 언어이기 때문에, 기존에 익숙하지 않은 메모리 문제에 대해서도 신경쓰고 있습니다.</p>
+<p>이에 대해서는 다음 페이지를 참고해주세요!</p>
             <div class="bottomnav">
                 <span class="back"><a href="09_ko.html" rel="prev">❮ 이전</a></span>
                 <span class="next"><a href="11_ko.html" rel="next">다음 ❯</a></span>
@@ -61,17 +64,6 @@ Rust가 시스템 프로그래밍 언어이기 때문에, 기존에 익숙하지
             <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&code=fn%20main()%20%7B%0A%20%20%20%20let%20x%20%3D%2012%3B%20%2F%2F%20by%20default%20this%20is%20i32%0A%20%20%20%20let%20a%20%3D%2012u8%3B%0A%20%20%20%20let%20b%20%3D%204.3%3B%20%2F%2F%20by%20default%20this%20is%20f64%0A%20%20%20%20let%20c%20%3D%204.3f32%3B%0A%20%20%20%20let%20bv%20%3D%20true%3B%0A%20%20%20%20let%20t%20%3D%20(13%2C%20false)%3B%0A%20%20%20%20let%20sentence%20%3D%20%22hello%20world!%22%3B%0A%20%20%20%20println!(%0A%20%20%20%20%20%20%20%20%22%7B%7D%20%7B%7D%20%7B%7D%20%7B%7D%20%7B%7D%20%7B%7D%20%7B%7D%20%7B%7D%22%2C%0A%20%20%20%20%20%20%20%20x%2C%20a%2C%20b%2C%20c%2C%20bv%2C%20t.0%2C%20t.1%2C%20sentence%0A%20%20%20%20)%3B%0A%7D%0A" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
             </div>
         </div>
-        <!-- <script>
-          document.addEventListener("DOMContentLoaded", function() {
-            // Select the widget's text element using its XPath
-            const xpath = '/html/body/main/div/div/div[1]/div[1]/div/button[1]/div';
-            const widgetText = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-
-            // Change the text content of the element
-            widgetText.textContent = "New Text";
-          });
-        </script> -->
-
         <script>
         var pres = document.querySelectorAll("pre>code");
         for (var i = 0; i < pres.length; i++) {

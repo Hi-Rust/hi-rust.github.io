@@ -8,7 +8,7 @@
         <meta content="utf-8" http-equiv="encoding">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
         <meta name="keywords" content="Rust, Programming, Learning">
-        <meta name="description" content="Rust tutorial website based on tour_of_rust">
+        <meta name="description" content="Rust tutorial website based on tour_of_rust by 최석원">
         <meta name="theme-color" content="#ff6801"/>
         <meta http-equiv="Cache-Control" content="max-age=3600">
         
@@ -74,17 +74,6 @@ fn main() {
             <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=%2F%2F+%60drop%60+%ED%95%A8%EC%88%98+%EC%86%8C%EA%B0%9C%3A%0A%2F%2F+Rust%EC%97%90%EC%84%9C%EB%8A%94+%EA%B0%92%EC%9D%B4+%EB%B2%94%EC%9C%84%EB%A5%BC+%EB%B2%97%EC%96%B4%EB%82%A0+%EB%95%8C+%EC%9E%90%EB%8F%99%EC%9C%BC%EB%A1%9C+drop+%ED%95%A8%EC%88%98%EA%B0%80+%ED%98%B8%EC%B6%9C%EB%90%A9%EB%8B%88%EB%8B%A4.%0A%2F%2F+drop+%ED%95%A8%EC%88%98%EB%8A%94+%EB%A9%94%EB%AA%A8%EB%A6%AC%EB%A5%BC+%EC%95%88%EC%A0%84%ED%95%98%EA%B2%8C+%ED%95%B4%EC%A0%9C%ED%95%98%EB%8A%94+%EC%97%AD%ED%95%A0%EC%9D%84+%ED%95%A9%EB%8B%88%EB%8B%A4.%0A%2F%2F+%EC%9D%B4%EB%A5%BC+%ED%86%B5%ED%95%B4+%EA%B0%9C%EB%B0%9C%EC%9E%90%EA%B0%80+%EC%A7%81%EC%A0%91+%EB%A9%94%EB%AA%A8%EB%A6%AC+%ED%95%B4%EC%A0%9C%EB%A5%BC+%EA%B4%80%EB%A6%AC%ED%95%A0+%ED%95%84%EC%9A%94%EA%B0%80+%EC%97%86%EC%8A%B5%EB%8B%88%EB%8B%A4.%0Astruct+CustomStruct+%7B%0A++++data%3A+String%2C%0A%7D%0A%0Aimpl+Drop+for+CustomStruct+%7B%0A++++fn+drop%28%26mut+self%29+%7B%0A++++++++println%21%28%22Dropping+CustomStruct+with+data%3A+%7B%7D%22%2C+self.data%29%3B%0A++++%7D%0A%7D%0A%0Afn+main%28%29+%7B%0A++++let+custom+%3D+CustomStruct+%7B%0A++++++++data%3A+String%3A%3Afrom%28%22hello%22%29%2C%0A++++%7D%3B%0A++++println%21%28%22Created+CustomStruct+with+data%3A+%7B%7D%22%2C+custom.data%29%3B%0A++++%2F%2F+custom%EC%9D%80+%EC%9D%B4+%EC%8A%A4%EC%BD%94%ED%94%84%EB%A5%BC+%EB%B2%97%EC%96%B4%EB%82%98%EB%A9%B4%EC%84%9C+drop+%ED%95%A8%EC%88%98%EA%B0%80+%ED%98%B8%EC%B6%9C%EB%90%98%EC%96%B4+%EB%A9%94%EB%AA%A8%EB%A6%AC%EA%B0%80+%EC%95%88%EC%A0%84%ED%95%98%EA%B2%8C+%ED%95%B4%EC%A0%9C%EB%90%A9%EB%8B%88%EB%8B%A4.%0A%7D%0A" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
             </div>
         </div>
-        <!-- <script>
-          document.addEventListener("DOMContentLoaded", function() {
-            // Select the widget's text element using its XPath
-            const xpath = '/html/body/main/div/div/div[1]/div[1]/div/button[1]/div';
-            const widgetText = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-
-            // Change the text content of the element
-            widgetText.textContent = "New Text";
-          });
-        </script> -->
-
         <script>
         var pres = document.querySelectorAll("pre>code");
         for (var i = 0; i < pres.length; i++) {
