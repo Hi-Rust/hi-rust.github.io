@@ -41,13 +41,13 @@
     <img src="https://user-images.githubusercontent.com/2356749/228573875-e7980e94-248c-4477-b522-79f9532bf0f1.png">
 </p> </div>
 <ul>
-<li>booleans - <code>bool</code>로 참/거짓</li>
-<li>unsigned integers (부호 없는 정수) - 음이 아닌 정수를 나타내는 <code>u8</code>, <code>u16</code>, <code>u32</code>, <code>u64</code>, <code>u128</code></li>
+<li>booleans - <code>bool</code>로 참/거짓 (1 byte)</li>
+<li>unsigned integers (부호 없는 정수) - 음이 아닌 정수를 나타내는 <code>u8</code>, <code>u16</code>, <code>u32</code>, <code>u64</code>, <code>u128</code> (u8 = 1 byte, u128 = 16 bytes)</li>
 <li>signed integers (부호 있는 정수) - 정수를 나타내는 <code>i8</code>, <code>i16</code>, <code>i32</code>, <code>i64</code>, <code>i128</code></li>
-<li>pointer sized integers - 메모리에서 색인과 항목의 크기를 나타내는 <code>usize</code>, <code>isize</code></li>
-<li>floating point - <code>f32</code> <code>f64</code></li>
+<li>pointer sized integers - 메모리에서 색인과 항목의 크기를 나타내는 <code>usize</code>, <code>isize</code> (보통 4 or 8 bytes)</li>
+<li>floating point - <code>f32</code>, <code>f64</code> (4, 8 bytes)</li>
 <li>tuple - 고정된 값의 시퀀스를 스택에 전달하는 <code>(value, value, ...)</code></li>
-<li>arrays - 컴파일 시점에서 크기가 고정되어 있는 비슷한 요소의 집합으로 <code>[value, value, ...]</code></li>
+<li>arrays - 컴파일 시점에서 크기가 고정되어 있는 비슷한 요소의 집합으로 <code>[value, value, ...]</code> ([i32; 3] = 12 bytes)</li>
 <li>slices - 런타임에 길이가 알려진 비슷한 요소의 집합</li>
 <li><code>str</code>(문자열 슬라이스) - 런타임에 길이가 알려진 텍스트</li>
 </ul>
