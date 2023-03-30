@@ -53,7 +53,7 @@ let my_literal: &'static str = "안녕하세요!";
 <p>이러한 방식을 사용함으로써, Rust는 안전성과 소유권을 보장할 수 있습니다.</p>
 <pre><code class="rust">// 예제 2
 let full_name = "홍길동";
-let first_name: &str = &full_name[..2]; // "홍길"만 참조</code></pre>
+let first_name: &str = &full_name[..6]; // "홍길"만 참조, 한글 3bytes, 알파벳 1byte</code></pre>
 <hr />
 <p><code>String</code>: 이 타입은 가변하며 크기가 변경될 수 있는 문자열입니다.</p>
 <p>String은 <code>Heap</code>에 저장되며, 필요에 따라 크기를 늘이거나 줄일 수 있습니다.</p>

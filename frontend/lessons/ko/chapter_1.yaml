@@ -192,7 +192,7 @@
 
     let full_name = "홍길동";
 
-    let first_name: &str = &full_name[..2]; // "홍길"만 참조
+    let first_name: &str = &full_name[..6]; // "홍길"만 참조, 한글 3bytes, 알파벳 1byte
     %end%
 
 
@@ -276,6 +276,16 @@
 
 
     다행히 Rust는 **as** 키워드를 사용하여 숫자형을 쉽게 변환할 수 있습니다.
+
+
+    또는 `parse`를 자주 사용합니다.
+
+
+    %rust%
+    let my_string = "42";
+    let my_integer = my_string.parse::<i32>().unwrap();
+    // double colon op, ::<i32> syntax tells the compiler to parse the string as an i32 type
+    %end%
 - title: Constants
   code: >-
     https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&code=const%20PI%3A%20f32%20%3D%203.14159%3B%0A%0Afn%20main()%20%7B%0A%20%20%20%20println!(%0A%20%20%20%20%20%20%20%20%22To%20make%20an%20apple%20%7B%7D%20from%20scratch%2C%20you%20must%20first%20create%20a%20universe.%22%2C%0A%20%20%20%20%20%20%20%20PI%0A%20%20%20%20)%3B%0A%7D%0A
@@ -379,7 +389,7 @@
             0 => println!("숫자는 영입니다"),
             1 => println!("숫자는 일입니다"),
             42 => println!("인생, 우주, 그리고 모든 것에 대한 답"),
-            _ => println!("숫자는 다른 것입니다"),
+            _ => println!("다른 숫자입니다"),
         }
     }
     %end%
@@ -401,7 +411,9 @@
     }
 
     fn main() {
-        let age = 25;
+        let age = 65;
+        classify_age(age);
+        let age = 30;
         classify_age(age);
     }
     %end%
