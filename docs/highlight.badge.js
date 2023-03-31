@@ -238,7 +238,7 @@ Uses some ES6 features so won't work in IE without shims:
       var text = $code.textContent || $code.innerText;
 
       if (options.blogURL) {
-        text = text + "\n\n" + `[ 출처: ${options.blogURL} ]`;
+        text = text + "\n\n" + `// [ source: ${options.blogURL} ]`;
       }
 
       // Create a textblock and assign the text and add to document

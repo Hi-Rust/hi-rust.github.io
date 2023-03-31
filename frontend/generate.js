@@ -218,7 +218,7 @@ function template(
             loadDelay: 0,
             copyIconClass: "far fa-clipboard",
             checkIconClass: "fa fa-check text-success",
-            blogURL: "// http://rust-study.ajousw.kr/"
+            blogURL: "http://rust-study.ajousw.kr/"
         };
         window.highlightJsBadge(options);
         </script>
