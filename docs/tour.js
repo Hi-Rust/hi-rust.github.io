@@ -64,6 +64,24 @@ document.addEventListener("touchmove", handleTouchMove, false);
 setupKeys();
 
 document.addEventListener("DOMContentLoaded", function () {
+  const coll = document.getElementsByClassName("collapsible");
+  // console.log(coll);
+  if (coll) {
+    let i;
+
+    for (i = 0; i < coll.length; i++) {
+      coll[i].addEventListener("click", function () {
+        this.classList.toggle("active");
+        let content = this.nextElementSibling;
+        if (content.style.maxHeight) {
+          content.style.maxHeight = null;
+        } else {
+          content.style.maxHeight = content.scrollHeight + "px";
+        }
+      });
+    }
+  }
+
   const iframeElement = document.querySelector("iframe");
   if (iframeElement) {
     setupKeys();
