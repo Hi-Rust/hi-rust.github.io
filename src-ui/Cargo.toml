@@ -1,13 +1,12 @@
 [package]
 name = "Rust-Tutorial"
-version = "1.0.0"
+version = "1.0.3"
 description = "Rust embedded"
 authors = ["Seok Won Choi <ikr@kakao.com>"]
 license = "MIT"
-repository = ""
+repository = "https://github.com/Hi-Rust/hi-rust.github.io"
 edition = "2021"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [build-dependencies]
 tauri-build = { version = "1.2", features = [] }

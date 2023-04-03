@@ -283,8 +283,11 @@
 
     %rust%
     let my_string = "42";
+
     let my_integer = my_string.parse::<i32>().unwrap();
+
     // double colon op, ::<i32> syntax tells the compiler to parse the string as an i32 type
+
     %end%
 - title: Constants
   code: >-
@@ -340,6 +343,7 @@
 
 
     ```python
+    # 파이썬으로 보면
 
     def add(x: int, y: int) -> int:
         return x + y
