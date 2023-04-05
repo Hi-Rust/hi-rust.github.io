@@ -61,7 +61,7 @@ fn area(shape: &Shape) -> f64 {
             let s = (a + b + c) / 2.0;
             let area = s * (s - a) * (s - b) * (s - c);
             // 넓이가 음수면 에러 발생
-            if area < 0.0 {
+            if area &lt; 0.0 {
                 panic!("Invalid triangle");
             } else {
                 area.sqrt()

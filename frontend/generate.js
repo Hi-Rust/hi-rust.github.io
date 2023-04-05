@@ -8,7 +8,8 @@ const targetDir = process.argv[3];
 const rustExtension = {
   type: "lang",
   regex: /%rust%([^]+?)%end%/gi,
-  replace: (s, match) => `<pre><code class="rust">${match.trim()}</code></pre>`,
+  replace: (s, match) =>
+    `<pre><code class="rust">${match.trim().replace("<", "&lt;")}</code></pre>`,
 };
 
 const centerImageExtension = {

@@ -47,7 +47,7 @@
 <p>예제 1: 함수 시그니처에서 수명 표시</p>
 <pre><code class="rust">// 여기에서 사용된 'a는 수명을 나타내는 표시입니다.
 // 이를 통해 입력과 출력의 참조들이 동일한 수명을 가지도록 합니다.
-fn longest<'a>(s1: &'a str, s2: &'a str) -> &'a str {
+fn longest&lt;'a>(s1: &'a str, s2: &'a str) -> &'a str {
     if s1.len() > s2.len() {
         s1
     } else {
@@ -57,7 +57,7 @@ fn longest<'a>(s1: &'a str, s2: &'a str) -> &'a str {
 <p>예제 2: 구조체에서 수명 표시</p>
 <pre><code class="rust">// Person 구조체는 이름을 문자열 슬라이스로 저장합니다.
 // 여기에서 사용된 'a는 구조체의 이름 필드가 참조하는 문자열 슬라이스의 수명을 나타냅니다.
-struct Person<'a> {
+struct Person&lt;'a> {
     name: &'a str,
 }</code></pre>
 <p>수명과 빌림 검사기:</p>

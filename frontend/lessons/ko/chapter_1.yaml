@@ -268,6 +268,9 @@
 
 
     다른 타입들의 경우에는 to\_string()이 문자열 변환을 처리하고, to\_owned()는 다른 목적으로 사용됩니다.
+
+
+    참고: [@Rust 공식 문서](https://rinthel.github.io/rust-lang-book-ko/ch08-02-strings.html)
 - title: Basic Type Conversion
   code: >-
     https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&code=fn%20main()%20%7B%0A%20%20%20%20let%20a%20%3D%2013u8%3B%0A%20%20%20%20let%20b%20%3D%207u32%3B%0A%20%20%20%20let%20c%20%3D%20a%20as%20u32%20%2B%20b%3B%0A%20%20%20%20println!(%22%7B%7D%22%2C%20c)%3B%0A%0A%20%20%20%20let%20t%20%3D%20true%3B%0A%20%20%20%20println!(%22%7B%7D%22%2C%20t%20as%20u8)%3B%0A%7D%0A
@@ -280,13 +283,12 @@
 
     또는 `parse`를 자주 사용합니다.
 
-
     %rust%
     let my_string = "42";
 
-    let my_integer = my_string.parse::<i32>().unwrap();
+    let my_integer = my_string.parse::&lt;i32>().unwrap();
 
-    // double colon op, ::<i32> syntax tells the compiler to parse the string as an i32 type
+    // double colon op, ::&lt;i32> syntax tells the compiler to parse the string as an i32 type
 
     %end%
 - title: Constants
@@ -648,7 +650,7 @@
 
     %rust%
     fn parse_integer(input: &str) -> Result<i32, String> {
-        match input.parse::<i32>() {
+        match input.parse::&lt;i32>() {
             Ok(value) => Ok(value),
             Err(_) => Err(format!("'{}' is not a valid integer.", input)),
         }
