@@ -35,48 +35,17 @@
                 <span class="toc"><a href="TOC_ko.html">목차</a></span>
             </div>
             <div class="page">
-            <h1>Error handling</h1>
-            <p>오류 핸들링은 Rust의 핵심 개념 중 하나로, 다양한 오류 상황을 효과적으로 처리할 수 있는 기능을 제공합니다.</p>
-<p>이 튜토리얼에서는 Rust에서의 오류 핸들링 기본 사항을 다룰 것입니다.</p>
-<p>이를 위해 Result 열거형(enum)과 match 문을 사용하여 오류를 처리하는 방법을 알아봅시다.</p>
-<p><strong>Result 열거형</strong><br />
-Rust에서는 결과를 나타내기 위해 Result 열거형을 사용합니다.<br />
-이는 다음과 같은 두 가지 값 중 하나를 갖습니다.<br />
-    - Ok(T): 연산이 성공적으로 수행되었을 때 반환되는 값 T.<br />
-    - Err(E): 연산이 실패했을 때 반환되는 오류 값 E.</p>
-<p>예를 들어, 정수를 문자열로 변환하는 간단한 함수를 작성해 봅시다.</p>
-<p>이 함수는 문자열을 입력으로 받아 정수로 변환하려고 시도하고, 변환에 성공하면 Ok 값을 반환합니다.</p>
-<p>만약 변환에 실패하면, Err 값을 반환합니다.</p>
-<pre><code class="rust">fn parse_integer(input: &str) -> Result&lt;i32, String> {
-    match input.parse::&lt;i32>() {
-        Ok(value) => Ok(value),
-        Err(_) => Err(format!("'{}' is not a valid integer.", input)),
-    }
-}</code></pre>
-<p><strong>match 문을 사용한 오류 처리</strong></p>
-<p>오류 처리를 위해 match 문을 사용하여 Result 열거형에 따른 처리를 구현할 수 있습니다. </p>
-<p>예를 들어, 다음 코드는 parse_integer 함수의 결과를 처리합니다.</p>
-<pre><code class="rust">fn main() {
-    let input = "42";
-    let parsed = parse_integer(input);
-
-    match parsed {
-        Ok(value) => println!("The integer value is: {}", value),
-        Err(error) => println!("Error: {}", error),
-    }
-}</code></pre>
-<p>이 코드는 parse_integer 함수를 호출하여 결과를 가져옵니다.</p>
-<p>그런 다음 match 문을 사용하여 결과가 Ok인지 Err인지 확인하고, 각 경우에 따라 적절한 동작을 수행합니다.</p>
-<p>이 튜토리얼에서는 Rust의 오류 핸들링의 기본 사항만 다루었습니다.</p>
-<p>실제로는 <code>?</code> 연산자를 사용하여 오류를 전파하거나, 사용자 지정 오류 유형을 정의하는 등 더 많은 기능을 활용할 수 있습니다.</p>
-<p>이러한 고급 기능을 배우는 것도 도움이 될 것입니다.</p>
+            <h1>Returning Nothing</h1>
+            <p>함수에 대해 반환 유형이 지정되어 있지 않으면, <em>unit</em>이라고도 하는 빈 튜플을 반환합니다.</p>
+<p>빈 튜플은 <code>()</code>로 나타낼 수 있습니다.</p>
+<p><code>()</code>을 사용하는 것은 드문 경우이지만 충분히 자주 출현하기 때문에 무슨 일이 일어나는지 알아둘 가치가 있습니다.</p>
             <div class="bottomnav">
                 <span class="back"><a href="19_ko.html" rel="prev">❮ 이전</a></span>
                 <span class="next"><a href="21_ko.html" rel="next">다음 ❯</a></span>
             </div>
             </div>
             <div class="code">
-            <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=use+std%3A%3Afmt%3B%0Ause+std%3A%3Astr%3A%3AFromStr%3B%0A%0A%23%5Bderive%28Debug%29%5D%0Aenum+ParseIntegerError+%7B%0A++++InvalidNumber%28String%29%2C%0A++++ParseIntError%28std%3A%3Anum%3A%3AParseIntError%29%2C%0A%7D%0A%0Aimpl+fmt%3A%3ADisplay+for+ParseIntegerError+%7B%0A++++fn+fmt%28%26self%2C+f%3A+%26mut+fmt%3A%3AFormatter%29+-%3E+fmt%3A%3AResult+%7B%0A++++++++match+self+%7B%0A++++++++++++ParseIntegerError%3A%3AInvalidNumber%28ref+s%29+%3D%3E+write%21%28f%2C+%22Invalid+number%3A+%7B%7D%22%2C+s%29%2C%0A++++++++++++ParseIntegerError%3A%3AParseIntError%28ref+e%29+%3D%3E+e.fmt%28f%29%2C%0A++++++++%7D%0A++++%7D%0A%7D%0A%0Aimpl+std%3A%3Aerror%3A%3AError+for+ParseIntegerError+%7B%7D%0A%0Afn+parse_integer%28input%3A+%26str%29+-%3E+Result%3Ci32%2C+ParseIntegerError%3E+%7B%0A++++if+input.is_empty%28%29+%7B%0A++++++++return+Err%28ParseIntegerError%3A%3AInvalidNumber%28input.to_owned%28%29%29%29%3B%0A++++%7D%0A%0A++++let+value+%3D+i32%3A%3Afrom_str%28input%29.map_err%28ParseIntegerError%3A%3AParseIntError%29%3F%3B%0A++++Ok%28value%29%0A%7D%0A%0Afn+main%28%29+%7B%0A++++let+inputs+%3D+%5B%2242%22%2C+%22abc%22%2C+%22%22%5D%3B%0A++++for+input+in+%26inputs+%7B%0A++++++++let+parsed+%3D+parse_integer%28input%29%3B%0A%0A++++++++match+parsed+%7B%0A++++++++++++Ok%28value%29+%3D%3E+println%21%28%22The+integer+value+of+%27%7B%7D%27+is%3A+%7B%7D%22%2C+input%2C+value%29%2C%0A++++++++++++Err%28error%29+%3D%3E+println%21%28%22Error+parsing+%27%7B%7D%27%3A+%7B%7D%22%2C+input%2C+error%29%2C%0A++++++++%7D%0A++++%7D%0A%7D%0A" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
+            <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&code=fn%20make_nothing()%20-%3E%20()%20%7B%0A%20%20%20%20return%20()%3B%0A%7D%0A%0A%2F%2F%20the%20return%20type%20is%20implied%20as%20()%0Afn%20make_nothing2()%20%7B%0A%20%20%20%20%2F%2F%20this%20function%20will%20return%20()%20if%20nothing%20is%20specified%20to%20return%0A%7D%0A%0Afn%20main()%20%7B%0A%20%20%20%20let%20a%20%3D%20make_nothing()%3B%0A%20%20%20%20let%20b%20%3D%20make_nothing2()%3B%0A%0A%20%20%20%20%2F%2F%20Printing%20a%20debug%20string%20for%20a%20and%20b%0A%20%20%20%20%2F%2F%20Because%20it's%20hard%20to%20print%20nothingness%0A%20%20%20%20println!(%22The%20value%20of%20a%3A%20%7B%3A%3F%7D%22%2C%20a)%3B%0A%20%20%20%20println!(%22The%20value%20of%20b%3A%20%7B%3A%3F%7D%22%2C%20b)%3B%0A%7D%0A" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
             </div>
         </div>
         <script>

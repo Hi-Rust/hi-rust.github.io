@@ -305,6 +305,129 @@
 
 
     상수 이름은 항상 `SCREAMING_SNAKE_CASE`로 지정됩니다.
+- title: if, while, for
+  code: >-
+    https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=%23%5Ballow%28unused_assignments%29%5D%0A%0Afn+main%28%29+%7B%0A++++%2F%2F+%EB%A0%88%EC%9D%B4%EB%B8%94%EC%9D%84+%EC%82%AC%EC%9A%A9%ED%95%9C+while+%EB%AC%B8+%EC%98%88%EC%A0%9C%0A++++let+mut+x+%3D+0%3B%0A++++let+mut+y+%3D+0%3B%0A%0A++++%27outer_while%3A+while+x+%3C+5+%7B%0A++++++++y+%3D+0%3B%0A%0A++++++++while+y+%3C+5+%7B%0A++++++++++++if+x+*+y+%3E+10+%7B%0A++++++++++++++++println%21%28%22%EC%A1%B0%EA%B1%B4+%EB%A7%8C%EC%A1%B1%3A+x%3D%7B%7D%2C+y%3D%7B%7D%22%2C+x%2C+y%29%3B%0A++++++++++++++++break+%27outer_while%3B%0A++++++++++++%7D%0A++++++++++++y+%2B%3D+1%3B%0A++++++++%7D%0A%0A++++++++x+%2B%3D+1%3B%0A++++%7D%0A%0A++++%2F%2F+%EB%A0%88%EC%9D%B4%EB%B8%94%EC%9D%84+%EC%82%AC%EC%9A%A9%ED%95%9C+for+%EB%AC%B8+%EC%98%88%EC%A0%9C%0A++++%27outer_for%3A+for+x+in+0..5+%7B%0A++++++++for+y+in+0..5+%7B%0A++++++++++++if+x+*+y+%3E+10+%7B%0A++++++++++++++++println%21%28%22%EC%A1%B0%EA%B1%B4+%EB%A7%8C%EC%A1%B1%3A+x%3D%7B%7D%2C+y%3D%7B%7D%22%2C+x%2C+y%29%3B%0A++++++++++++++++break+%27outer_for%3B%0A++++++++++++%7D%0A++++++++%7D%0A++++%7D%0A%0A++++%2F%2F+%EB%A0%88%EC%9D%B4%EB%B8%94%EC%9D%84+%EC%82%AC%EC%9A%A9%ED%95%9C+loop+%EB%AC%B8+%EC%98%88%EC%A0%9C%0A++++let+mut+x+%3D+0%3B%0A++++let+mut+y+%3D+0%3B%0A%0A++++%27outer_loop%3A+loop+%7B%0A++++++++y+%3D+0%3B%0A%0A++++++++loop+%7B%0A++++++++++++if+x+*+y+%3E+10+%7B%0A++++++++++++++++println%21%28%22%EC%A1%B0%EA%B1%B4+%EB%A7%8C%EC%A1%B1%3A+x%3D%7B%7D%2C+y%3D%7B%7D%22%2C+x%2C+y%29%3B%0A++++++++++++++++break+%27outer_loop%3B%0A++++++++++++%7D%0A%0A++++++++++++y+%2B%3D+1%3B%0A++++++++++++if+y+%3E%3D+5+%7B%0A++++++++++++++++break%3B%0A++++++++++++%7D%0A++++++++%7D%0A%0A++++++++x+%2B%3D+1%3B%0A++++++++if+x+%3E%3D+5+%7B%0A++++++++++++break%3B%0A++++++++%7D%0A++++%7D%0A%7D%0A
+  content_markdown: >
+    **반복문과 조건문**
+
+
+    조건문과 반복문은 프로그램의 흐름을 제어하는 데 사용되는 기본적인 구조입니다.
+
+
+    Rust에서는 if, while, for 문을 사용하여 조건문과 반복문을 작성할 수 있습니다.
+
+
+    ## if 문
+
+
+    if 문은 주어진 조건이 참인 경우에만 코드 블록을 실행합니다.
+
+
+    %rust%
+    if 조건 {
+        // 조건이 참일 때 실행할 코드
+    }
+    %end%
+
+
+    ## while 문
+
+
+    while 문은 주어진 조건이 참인 동안 코드 블록을 계속 반복해서 실행합니다.
+
+    %rust%
+    while 조건 {
+        // 조건이 참인 동안 반복할 코드
+    }
+    %end%
+
+
+    ## for 문
+
+
+    for 문은 반복 가능한 객체(예: 범위, 벡터 등)를 순회하며 코드 블록을 실행합니다.
+
+
+    %rust%
+    // Range를 사용한 for 문
+
+    for 변수 in 시작..끝_미포함 { // range(시작, 끝)
+        // 코드 블록
+    }
+
+
+    for 변수 in 시작..=끝_포함 { // range(시작, 끝 + 1)
+        // 코드 블록
+    }
+    %end%
+
+
+    %rust%
+    // Loop 키워드를 사용한 무한 반복
+
+    loop {
+        // 무한 반복할 코드
+        // 'break'를 사용해 반복을 종료할 수 있음
+    }
+    %end%
+
+
+
+    ## 레이블(label)
+
+
+    Rust에서 while, for, loop 문에서 이름을 지정하고 break할 수 있습니다.
+
+
+    레이블은 `이름:` 형식으로 작성하며, break할 때 `break 이름;`을 사용합니다.
+
+
+    이렇게 하면 중첩된 반복문에서 특정 반복문을 종료할 수 있습니다.
+
+
+    %rust%
+    // 2 이상의 소수를 찾아 출력하는 프로그램
+
+    fn main() {
+        let mut number = 2;
+
+        'search: loop {
+            let mut is_prime = true;
+
+            'check_prime: for i in 2..number {
+                if number % i == 0 {
+                    is_prime = false;
+                    break 'check_prime;
+                }
+            }
+
+            if is_prime {
+                println!("소수 발견: {}", number);
+            }
+
+            number += 1;
+            if number > 20 {
+                break 'search;
+            }
+        }
+    }
+    %end%
+
+
+    위 예제 동작 순서
+
+    - `number` 변수를 2로 초기화합니다.
+
+    - `search` 라는 이름의 loop 문에서 소수를 찾기 시작합니다.
+
+    - `check_prime` 이라는 이름의 for 문에서 2부터 `number - 1` 까지 나누어 떨어지는지 확인합니다.
+
+    - 만약 나누어 떨어진다면, `is_prime` 변수를 false로 설정하고 `check_prime` 레이블을 사용하여 for 문을 빠져나옵니다.
+
+    - `is_prime` 이 true인 경우, 소수를 발견했으므로 해당 숫자를 출력합니다.
+
+    - `number` 를 1 증가시키고, `number` 가 20보다 크면 `search` 레이블을 사용하여 loop 문을 빠져나옵니다.
 - title: Arrays
   code: >-
     https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&code=fn%20main()%20%7B%0A%20%20%20%20let%20nums%3A%20%5Bi32%3B%203%5D%20%3D%20%5B1%2C%202%2C%203%5D%3B%0A%20%20%20%20println!(%22%7B%3A%3F%7D%22%2C%20nums)%3B%0A%20%20%20%20println!(%22%7B%7D%22%2C%20nums%5B1%5D)%3B%0A%7D%0A

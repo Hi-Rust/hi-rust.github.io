@@ -1,6 +1,6 @@
 [package]
 name = "Rust-Tutorial"
-version = "1.0.3"
+version = "1.0.4"
 description = "Rust embedded"
 authors = ["Seok Won Choi <ikr@kakao.com>"]
 license = "MIT"
