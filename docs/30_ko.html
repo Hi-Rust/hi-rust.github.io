@@ -36,14 +36,35 @@
             </div>
             <div class="page">
             <h1>Chapter 2 - Conclusion</h1>
-            <p>gff</p>
+            <p>Rust의 핵심 개념인 소유권, 빌림, 그리고 빌림 검사기에 대해 배웠습니다.</p>
+<p>이러한 개념들은 Rust의 메모리 관리 체계의 핵심이며, 이를 이해하고 올바르게 사용함으로써 메모리 안전성과 효율성을 높일 수 있습니다/</p>
+<p>Rust의 강력한 컴파일러와 빌림 검사기는 코드가 메모리 안전성을 보장하도록 도와줍니다.</p>
+<div> <button type="button" class="collapsible">정답 보기</button> <div class="content"> <p>오류의 원인은 변수 s에 대한 변경 가능한 참조(r3)와 변경 불가능한 참조(r1과 r2)가 동시에 존재하기 때문입니다.
+
+Rust의 빌림 규칙에 따라, 한 번에 여러 개의 변경 불가능한 참조가 허용되지만, 변경 가능한 참조가 있는 동안에는 다른 참조가 허용되지 않습니다.</p>
+
+<pre><code class="rust">fn main() {
+    let mut s = String::from("hello");
+    {
+        let r1 = &s;
+        let r2 = &s;
+        println!("r1: {}, r2: {}", r1, r2);
+    }
+    let r3 = &mut s;
+    println!("r3: {}", r3);
+}</code></pre>
+<p> 위 수정된 코드에서는 r1과 r2가 사용되는 범위를 별도의 블록으로 감싸서 변경 불가능한 참조들의 수명을 줄였습니다.
+
+이렇게 하면 r3를 선언할 때 변경 불가능한 참조들이 이미 끝났기 때문에 컴파일 오류가 발생하지 않습니다.
+
+이렇게 수명을 조절하면 Rust의 빌림 규칙을 준수하면서 안전한 코드를 작성할 수 있습니다. </p> </div> </div>
             <div class="bottomnav">
                 <span class="back"><a href="29_ko.html" rel="prev">❮ 이전</a></span>
                 <span class="next"><a href="chapter_3_ko.html" rel="next">다음 ❯</a></span>
             </div>
             </div>
             <div class="code">
-            <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=%2F%2F+%EC%86%8C%EC%9C%A0%EA%B6%8C%2C+%EB%B9%8C%EB%A6%BC%2C+%EC%B0%B8%EC%A1%B0%2C+%EB%B2%94%EC%9C%84+%EB%93%B1%EC%9D%98+%EA%B8%B0%EB%8A%A5%EC%9D%84+%ED%95%9C+%EB%B2%88%EC%97%90+%EC%82%AC%EC%9A%A9%0D%0A%23%5Bderive%28Debug%29%5D%0D%0Astruct+MyStruct+%7B%0D%0A++++data%3A+String%2C%0D%0A%7D%0D%0A%0D%0Afn+print_and_modify%28s%3A+%26mut+MyStruct%29+%7B%0D%0A++++println%21%28%22%5Ct%3E+MyStruct%EB%A5%BC+%EC%B0%B8%EC%A1%B0%3A+%7B%3A%3F%7D%22%2C+s%29%3B%0D%0A++++s.data.push_str%28%22+%EC%88%98%EC%A0%95%EB%90%A8%22%29%3B%0D%0A%7D%0D%0A%0D%0Afn+main%28%29+%7B%0D%0A++++let+mut+my_struct1+%3D+MyStruct+%7B%0D%0A++++++++data%3A+String%3A%3Afrom%28%22MyStruct1%22%29%2C%0D%0A++++%7D%3B%0D%0A%0D%0A++++let+mut+my_struct2+%3D+MyStruct+%7B%0D%0A++++++++data%3A+String%3A%3Afrom%28%22MyStruct2%22%29%2C%0D%0A++++%7D%3B%0D%0A%0D%0A++++%2F%2F+%EB%B6%88%EB%B3%80+%EC%B0%B8%EC%A1%B0%EB%A5%BC+%EC%82%AC%EC%9A%A9%ED%95%98%EC%97%AC+%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%A5%BC+%EC%B6%9C%EB%A0%A5%ED%95%A9%EB%8B%88%EB%8B%A4.%0D%0A++++println%21%28%22%EB%B6%88%EB%B3%80+%EC%B0%B8%EC%A1%B0%3A+%7B%3A%3F%7D%22%2C+%26my_struct1%29%3B%0D%0A%0D%0A++++%2F%2F+%EA%B0%80%EB%B3%80+%EC%B0%B8%EC%A1%B0%EB%A5%BC+%EC%82%AC%EC%9A%A9%ED%95%98%EC%97%AC+%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%A5%BC+%EC%88%98%EC%A0%95%ED%95%A9%EB%8B%88%EB%8B%A4.%0D%0A++++print_and_modify%28%26mut+my_struct1%29%3B%0D%0A++++println%21%28%22%EC%88%98%EC%A0%95%EB%90%9C+MyStruct1%3A+%7B%3A%3F%7D%22%2C+my_struct1%29%3B%0D%0A%0D%0A++++%2F%2F+%EB%B2%94%EC%9C%84%EB%A5%BC+%EC%82%AC%EC%9A%A9%ED%95%98%EC%97%AC+%EB%B9%8C%EB%A6%BC%EC%9D%98+%EA%B7%9C%EC%B9%99%EC%9D%84+%EB%B3%B4%EC%97%AC%EC%A4%8D%EB%8B%88%EB%8B%A4.%0D%0A++++%7B%0D%0A++++++++let+mut_ref+%3D+%26mut+my_struct2%3B+%2F%2F+%EA%B0%80%EB%B3%80+%EC%B0%B8%EC%A1%B0%EB%A5%BC+%EC%83%9D%EC%84%B1%ED%95%A9%EB%8B%88%EB%8B%A4.%0D%0A++++++++print_and_modify%28mut_ref%29%3B+%2F%2F+%EA%B0%80%EB%B3%80+%EC%B0%B8%EC%A1%B0%EB%A5%BC+%ED%95%A8%EC%88%98%EC%97%90+%EC%A0%84%EB%8B%AC%ED%95%A9%EB%8B%88%EB%8B%A4.%0D%0A++++++++%2F%2F+%EC%9D%B4+%EC%A7%80%EC%A0%90%EC%97%90%EC%84%9C+mut_ref%EB%A5%BC+%EB%8D%94+%EC%9D%B4%EC%83%81+%EC%82%AC%EC%9A%A9%ED%95%A0+%EC%88%98+%EC%97%86%EC%8A%B5%EB%8B%88%EB%8B%A4.%0D%0A++++%7D%0D%0A%0D%0A++++%2F%2F+%EB%B2%94%EC%9C%84%EB%A5%BC+%EB%B2%97%EC%96%B4%EB%82%9C+%ED%9B%84%EC%97%90%EB%8A%94+%EC%9B%90%EB%9E%98+%EB%B3%80%EC%88%98%EB%A5%BC+%EB%8B%A4%EC%8B%9C+%EC%82%AC%EC%9A%A9%ED%95%A0+%EC%88%98+%EC%9E%88%EC%8A%B5%EB%8B%88%EB%8B%A4.%0D%0A++++println%21%28%22%EC%88%98%EC%A0%95%EB%90%9C+MyStruct2%3A+%7B%3A%3F%7D%22%2C+my_struct2%29%3B%0D%0A%0D%0A++++%2F%2F+%EC%86%8C%EC%9C%A0%EA%B6%8C%EC%9D%84+%EC%9D%B4%EB%8F%99%EC%8B%9C%ED%82%B5%EB%8B%88%EB%8B%A4.%0D%0A++++let+my_struct3+%3D+MyStruct+%7B%0D%0A++++++++data%3A+String%3A%3Afrom%28%22MyStruct3%22%29%2C%0D%0A++++%7D%3B%0D%0A++++let+my_struct4+%3D+my_struct3%3B+%2F%2F+%EC%86%8C%EC%9C%A0%EA%B6%8C%EC%9D%84+%EC%9D%B4%EB%8F%99%EC%8B%9C%ED%82%B5%EB%8B%88%EB%8B%A4.%0D%0A++++%2F%2F+%EC%9D%B4%EC%A0%9C+my_struct3%EC%9D%80+%EC%82%AC%EC%9A%A9%ED%95%A0+%EC%88%98+%EC%97%86%EC%8A%B5%EB%8B%88%EB%8B%A4.%0D%0A++++println%21%28%22%EC%86%8C%EC%9C%A0%EA%B6%8C%EC%9D%B4+%EC%9D%B4%EB%8F%99%EB%90%9C+MyStruct4%3A+%7B%3A%3F%7D%22%2C+my_struct4%29%3B%0D%0A%7D%0D%0A" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
+            <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=fn+main%28%29+%7B%0D%0A++++let+mut+s+%3D+String%3A%3Afrom%28%22hello%22%29%3B%0D%0A++++let+r1+%3D+%26s%3B%0D%0A++++let+r2+%3D+%26s%3B%0D%0A++++let+r3+%3D+%26mut+s%3B+%2F%2F+%EC%BB%B4%ED%8C%8C%EC%9D%BC+%EC%98%A4%EB%A5%98+%EC%97%AC%EB%B6%80+%ED%99%95%EC%9D%B8%0D%0A++++println%21%28%22r1%3A+%7B%7D%2C+r2%3A+%7B%7D%2C+r3%3A+%7B%7D%22%2C+r1%2C+r2%2C+r3%29%3B%0D%0A%7D%0D%0A%0D%0Afn+modify_string%28s%3A+%26mut+String%29+%7B%0D%0A++++s.push_str%28%22+world%22%29%3B%0D%0A%7D%0D%0A" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
             </div>
         </div>
         <script>

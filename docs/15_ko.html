@@ -35,20 +35,33 @@
                 <span class="toc"><a href="TOC_ko.html">목차</a></span>
             </div>
             <div class="page">
-            <h1>Arrays</h1>
-            <p><em>배열</em>은 동일한 유형의 데이터 요소들의 <strong>고정된 길이 집합</strong>입니다.</p>
-<p><em>배열</em>의 데이터 유형은 <code>[T;N]</code> 입니다.<br />
-(T는 요소의 유형이고, N은 컴파일 시간에 알려진 고정 길이)</p>
-<p>개별 요소는 <code>[x]</code> 연산자를 사용하여 가져올 수 있습니다.<br />
-여기서 x는 원하는 요소의 <em>usize</em> 인덱스(0부터 시작)입니다.</p>
-<p>가변 길이의 컬렉션, 즉 가변 배열은 나중에 <strong>Vectors</strong>에 대한 챕터에서 소개됩니다.</p>
+            <h1>Scope</h1>
+            <p><em>범위</em></p>
+<p>범위는 프로그램 내에서 변수가 유효한 영역을 정의합니다.</p>
+<pre><code class="rust">fn main() {
+    let x = 10;
+
+    {
+        let y = 20;
+        println!("Inside the inner scope, x: {}, y: {}", x, y);
+    }
+
+    println!("Outside the inner scope, x: {}", x);
+    // println!("Outside the inner scope, y: {}", y); // This will cause a compile error
+}</code></pre>
+<p>우측 예제에서는 r1, r2, r3라는 세 개의 참조가 선언되어 있으며, 각각 두 개의 다른 범위에서 초기화됩니다.</p>
+<p>첫 번째 범위에서 r1과 r2는 s에 대한 불변 참조로 초기화됩니다.</p>
+<p>이 범위가 종료되면, r1과 r2에 대한 참조는 더 이상 유효하지 않습니다.</p>
+<p>두 번째 범위에서는 r3가 s에 대한 변경 가능한 참조로 초기화됩니다.</p>
+<p>이렇게 하면 첫 번째 범위에서의 불변 참조와 겹치지 않으므로 빌림 규칙에 위배되지 않습니다.</p>
+<p>마지막으로 모든 범위가 종료된 후에는 각 참조가 각각 다른 범위에서 초기화되었기 때문에 r1, r2, r3를 함께 출력할 수 있습니다.</p>
             <div class="bottomnav">
                 <span class="back"><a href="14_ko.html" rel="prev">❮ 이전</a></span>
                 <span class="next"><a href="16_ko.html" rel="next">다음 ❯</a></span>
             </div>
             </div>
             <div class="code">
-            <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&code=fn%20main()%20%7B%0A%20%20%20%20let%20nums%3A%20%5Bi32%3B%203%5D%20%3D%20%5B1%2C%202%2C%203%5D%3B%0A%20%20%20%20println!(%22%7B%3A%3F%7D%22%2C%20nums)%3B%0A%20%20%20%20println!(%22%7B%7D%22%2C%20nums%5B1%5D)%3B%0A%7D%0A" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
+            <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&code=fn+main%28%29+%7B%0D%0A++++let+mut+s+%3D+String%3A%3Afrom%28%22hello%22%29%3B%0D%0A%0D%0A++++let+r1%3B%0D%0A++++let+r2%3B%0D%0A++++let+r3%3B%0D%0A%0D%0A++++%7B%0D%0A++++++++r1+%3D+%26s%3B%0D%0A++++++++r2+%3D+%26s%3B%0D%0A++++++++println%21%28%22%EC%95%88%EC%AA%BD+inner+%EB%B2%94%EC%9C%84%2C+r1%3A+%7B%7D%2C+r2%3A+%7B%7D%22%2C+r1%2C+r2%29%3B%0D%0A++++++++%2F%2F+r1%EA%B3%BC+r2%EC%9D%98+%EB%B2%94%EC%9C%84%EB%A5%BC+%EC%97%AC%EA%B8%B0%EC%97%90%EC%84%9C+%EC%A2%85%EB%A3%8C%EC%8B%9C%ED%82%A4%EA%B8%B0+%EC%9C%84%ED%95%B4+%EC%A4%91%EA%B4%84%ED%98%B8%EB%A5%BC+%EC%B6%94%EA%B0%80%ED%95%A9%EB%8B%88%EB%8B%A4.%0D%0A++++%7D%0D%0A%0D%0A++++%7B%0D%0A++++++++r3+%3D+%26mut+s%3B%0D%0A++++++++println%21%28%22%EC%95%88%EC%AA%BD+%EB%8B%A4%EB%A5%B8+inner+%EB%B2%94%EC%9C%84%2C+r3%3A+%7B%7D%22%2C+r3%29%3B%0D%0A++++%7D%0D%0A%0D%0A++++%2F%2F+%EC%9D%B4%EC%A0%9C+r1%EA%B3%BC+r2%EB%8A%94+%EB%8D%94+%EC%9D%B4%EC%83%81+%EC%82%AC%EC%9A%A9%EB%90%98%EC%A7%80+%EC%95%8A%EC%9C%BC%EB%AF%80%EB%A1%9C+%EC%B6%9C%EB%A0%A5%EC%97%90%EC%84%9C+%EC%A0%9C%EC%99%B8%ED%95%A9%EB%8B%88%EB%8B%A4.%0D%0A++++println%21%28%22%EB%B0%94%EA%B9%A5+%EC%AA%BD+inner+%EB%B2%94%EC%9C%84%2C+r3%3A+%7B%7D%22%2C+r3%29%3B%0D%0A%7D%0D%0A" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
             </div>
         </div>
         <script>

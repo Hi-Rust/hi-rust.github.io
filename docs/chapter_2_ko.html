@@ -49,7 +49,8 @@
 <li>이러한 문제는 프로그램의 안정성과 성능에 심각한 영향을 미칩니다.</li></ol></li>
 <li>가비지 컬렉터 소개:<ol>
 <li>가비지 컬렉터는 메모리 관리를 자동화하여 개발자가 메모리 할당 및 해제를 신경 쓰지 않아도 되게 하는 기술입니다.</li>
-<li>사용하지 않는 메모리를 자동으로 회수하여 메모리 누수를 방지할 수 있습니다.</li></ol></li>
+<li>사용하지 않는 메모리를 자동으로 회수하여 메모리 누수를 방지할 수 있습니다.</li>
+<li>Java 11+ ZGC (&lt; 10ms STOP THE WORLD)</li></ol></li>
 <li>가비지 컬렉터의 단점:<ol>
 <li>가비지 컬렉터의 주요 단점은 성능 오버헤드입니다.</li>
 <li>가비지 컬렉터가 메모리를 추적하고 회수하는 과정에서 시스템 리소스가 소모됩니다.</li>
@@ -58,11 +59,13 @@
 <p>이러한 문제들에 대한 해결책으로 Rust는 소유권, 빌림, 그리고 수명을 기반으로 한 메모리 관리 시스템을 도입하였습니다.</p>
 <p>이를 통해 컴파일 시간에 메모리 안전성을 보장하며, 가비지 컬렉터의 성능 오버헤드를 피할 수 있습니다.</p>
             <div class="bottomnav">
-                <span class="back"><a href="22_ko.html" rel="prev">❮ 이전</a></span>
-                <span class="next"><a href="24_ko.html" rel="next">다음 ❯</a></span>
+                <span class="back"><a href="23_ko.html" rel="prev">❮ 이전</a></span>
+                <span class="next"><a href="25_ko.html" rel="next">다음 ❯</a></span>
             </div>
             </div>
-            <div class="code"><center><img src="/ferris.webp" alt="Rust Tutorial" width="300" height="100%"></center></div>
+            <div class="code">
+            <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=use+std%3A%3Acell%3A%3ARefCell%3B%0D%0Ause+std%3A%3Arc%3A%3ARc%3B%0D%0A%0D%0A%23%5Bderive%28Debug%29%5D%0D%0Astruct+Node+%7B%0D%0A++++value%3A+i32%2C%0D%0A++++children%3A+RefCell%3CVec%3CRc%3CNode%3E%3E%3E%2C%0D%0A%7D%0D%0A%0D%0Afn+main%28%29+%7B%0D%0A++++let+first+%3D+Rc%3A%3Anew%28Node+%7B%0D%0A++++++++value%3A+1%2C%0D%0A++++++++children%3A+RefCell%3A%3Anew%28vec%21%5B%5D%29%2C%0D%0A++++%7D%29%3B%0D%0A%0D%0A++++let+second+%3D+Rc%3A%3Anew%28Node+%7B%0D%0A++++++++value%3A+2%2C%0D%0A++++++++children%3A+RefCell%3A%3Anew%28vec%21%5BRc%3A%3Aclone%28%26first%29%5D%29%2C%0D%0A++++%7D%29%3B%0D%0A%0D%0A++++first.children.borrow_mut%28%29.push%28Rc%3A%3Aclone%28%26second%29%29%3B%0D%0A%0D%0A++++%2F%2F+The+memory+allocated+for+first+and+second+will+not+be+freed+due+to+the+reference+cycle.%0D%0A%7D%0D%0A%0D%0A%2F*%0D%0AThe+following+memory+was+leaked%3A+alloc1540+%28Rust+heap%2C+size%3A+56%2C+align%3A+8%29+%7B%0D%0A++++0x00+%E2%94%82+01+00+00+00+00+00+00+00+01+00+00+00+00+00+00+00+%E2%94%82+................%0D%0A++++0x10+%E2%94%82+00+00+00+00+00+00+00+00+04+00+00+00+00+00+00+00+%E2%94%82+................%0D%0A++++0x20+%E2%94%82+%E2%95%BE0x2aa60%5Ba1939%5D%3C3807%3E%E2%94%80%E2%95%BC+01+00+00+00+00+00+00+00+%E2%94%82+%E2%95%BE%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%95%BC........%0D%0A++++0x30+%E2%94%82+01+00+00+00+__+__+__+__+++++++++++++++++++++++++%E2%94%82+....%E2%96%91%E2%96%91%E2%96%91%E2%96%91%0D%0A%7D%0D%0Aalloc1609+%28Rust+heap%2C+size%3A+8%2C+align%3A+8%29+%7B%0D%0A++++%E2%95%BE0x286f8%5Ba1540%5D%3C2981%3E%E2%94%80%E2%95%BC+++++++++++++++++++++++++%E2%94%82+%E2%95%BE%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%95%BC%0D%0A%7D%0D%0Aalloc1750+%28Rust+heap%2C+size%3A+56%2C+align%3A+8%29+%7B%0D%0A++++0x00+%E2%94%82+01+00+00+00+00+00+00+00+01+00+00+00+00+00+00+00+%E2%94%82+................%0D%0A++++0x10+%E2%94%82+00+00+00+00+00+00+00+00+01+00+00+00+00+00+00+00+%E2%94%82+................%0D%0A++++0x20+%E2%94%82+%E2%95%BE0x28cc0%5Ba1609%5D%3C3235%3E%E2%94%80%E2%95%BC+01+00+00+00+00+00+00+00+%E2%94%82+%E2%95%BE%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%95%BC........%0D%0A++++0x30+%E2%94%82+02+00+00+00+__+__+__+__+++++++++++++++++++++++++%E2%94%82+....%E2%96%91%E2%96%91%E2%96%91%E2%96%91%0D%0A%7D%0D%0Aalloc1939+%28Rust+heap%2C+size%3A+32%2C+align%3A+8%29+%7B%0D%0A++++0x00+%E2%94%82+%E2%95%BE0x299f0%5Ba1750%5D%3C3432%3E%E2%94%80%E2%95%BC+__+__+__+__+__+__+__+__+%E2%94%82+%E2%95%BE%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%95%BC%E2%96%91%E2%96%91%E2%96%91%E2%96%91%E2%96%91%E2%96%91%E2%96%91%E2%96%91%0D%0A++++0x10+%E2%94%82+__+__+__+__+__+__+__+__+__+__+__+__+__+__+__+__+%E2%94%82+%E2%96%91%E2%96%91%E2%96%91%E2%96%91%E2%96%91%E2%96%91%E2%96%91%E2%96%91%E2%96%91%E2%96%91%E2%96%91%E2%96%91%E2%96%91%E2%96%91%E2%96%91%E2%96%91%0D%0A%7D%0D%0A*%2F" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
+            </div>
         </div>
         <script>
         var pres = document.querySelectorAll("pre>code");
