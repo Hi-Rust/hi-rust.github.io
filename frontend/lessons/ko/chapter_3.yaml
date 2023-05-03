@@ -1,10 +1,525 @@
-- title: Chapter 3 - Generic, Trait
-  source: >-
-    /ajou.webp
-  content_markdown: >
-    OOP
-- title: Hey
+- title: Chapter 3 - Collections and Iterators
   source: >-
     /ferris_lofi.png
   content_markdown: >
-    CSW
+    # 컬렉션과 그 중요성
+
+    컬렉션은 여러 요소를 그룹화하여 저장하고 관리할 수 있는 프로그래밍 구조입니다.
+
+
+    이러한 컬렉션은 데이터를 조직화하고, 검색, 추가 및 제거와 같은 다양한 작업을 수행할 수 있도록 돕습니다.
+
+
+    러스트에서는 주로 벡터(Vector), 문자열(String) 및 해시맵(HashMap)과 같은 컬렉션을 사용합니다.
+
+
+    ## 컬렉션의 중요성
+
+    프로그래밍에서 컬렉션은 다음과 같은 이유로 중요합니다.
+
+
+    1. **데이터 조직화**: 컬렉션을 사용하면 개별 변수를 사용하는 것보다 데이터를 보다 효율적으로 저장하고 관리할 수 있습니다.
+
+    2. **확장성**: 컬렉션은 데이터를 동적으로 추가하거나 제거할 수 있어 프로그램의 유연성을 높입니다.
+
+    3. **검색 및 필터링**: 컬렉션은 데이터를 쉽게 검색, 정렬 및 필터링할 수 있도록 지원합니다.
+
+    4. **성능 최적화**: 러스트의 컬렉션은 메모리 접근 및 할당을 효율적으로 관리하여 성능을 향상시킵니다.
+
+
+    이러한 이유로 컬렉션은 프로그래밍에서 핵심 요소로 간주되며, 러스트에서는 이를 효과적으로 활용할 수 있는 다양한 컬렉션 타입을 제공합니다.
+
+
+    이 챕터에서는 러스트의 주요 컬렉션 타입에 대해 알아보겠습니다.
+- title: 주요 컬렉션 타입 소개
+  code: >-
+    https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=%2F%2F+%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC+%EA%B0%80%EC%A0%B8%EC%98%A4%EA%B8%B0%0D%0Ause+std%3A%3Acollections%3A%3AHashMap%3B%0D%0A%0D%0Afn+main%28%29+%7B%0D%0A++++%2F%2F+%EB%B2%A1%ED%84%B0+%EC%83%9D%EC%84%B1%0D%0A++++let+mut+names%3A+Vec%3CString%3E+%3D+Vec%3A%3Anew%28%29%3B%0D%0A%0D%0A++++%2F%2F+%EB%AC%B8%EC%9E%90%EC%97%B4%EC%9D%84+%EB%B2%A1%ED%84%B0%EC%97%90+%EC%B6%94%EA%B0%80%0D%0A++++names.push%28%22%EC%B2%A0%EC%88%98%22.to_string%28%29%29%3B%0D%0A++++names.push%28%22%EC%98%81%ED%9D%AC%22.to_string%28%29%29%3B%0D%0A++++names.push%28%22%EB%AF%BC%EC%88%98%22.to_string%28%29%29%3B%0D%0A%0D%0A++++%2F%2F+%ED%95%B4%EC%8B%9C%EB%A7%B5+%EC%83%9D%EC%84%B1%0D%0A++++let+mut+ages%3A+HashMap%3CString%2C+u32%3E+%3D+HashMap%3A%3Anew%28%29%3B%0D%0A%0D%0A++++%2F%2F+%EB%AC%B8%EC%9E%90%EC%97%B4%EA%B3%BC+%EC%97%B0%EA%B4%80%EB%90%9C+%EA%B0%92%EC%9D%84+%ED%95%B4%EC%8B%9C%EB%A7%B5%EC%97%90+%EC%B6%94%EA%B0%80%0D%0A++++ages.insert%28%22%EC%B2%A0%EC%88%98%22.to_string%28%29%2C+25%29%3B%0D%0A++++ages.insert%28%22%EC%98%81%ED%9D%AC%22.to_string%28%29%2C+24%29%3B%0D%0A++++ages.insert%28%22%EB%AF%BC%EC%88%98%22.to_string%28%29%2C+26%29%3B%0D%0A%0D%0A++++%2F%2F+%EB%B2%A1%ED%84%B0%EC%9D%98+%EC%9A%94%EC%86%8C%EB%93%A4%EC%9D%84+%EB%B0%98%EB%B3%B5%ED%95%98%EB%A9%B0%2C+%EA%B0%81+%EC%9D%B4%EB%A6%84%EC%97%90+%EB%8C%80%ED%95%9C+%EB%82%98%EC%9D%B4%EB%A5%BC+%EC%B6%9C%EB%A0%A5%0D%0A++++for+name+in+names.iter%28%29+%7B%0D%0A++++++++%2F%2F+%ED%95%B4%EC%8B%9C%EB%A7%B5%EC%97%90%EC%84%9C+%EC%9D%B4%EB%A6%84%EC%97%90+%ED%95%B4%EB%8B%B9%ED%95%98%EB%8A%94+%EB%82%98%EC%9D%B4%EB%A5%BC+%EA%B0%80%EC%A0%B8%EC%98%B4%0D%0A++++++++let+age+%3D+ages.get%28name%29.unwrap%28%29%3B%0D%0A%0D%0A++++++++%2F%2F+%EA%B2%B0%EA%B3%BC+%EC%B6%9C%EB%A0%A5%0D%0A++++++++println%21%28%22%7B%7D%EB%8B%98%EC%9D%98+%EB%82%98%EC%9D%B4%EB%8A%94+%7B%7D%EC%82%B4%EC%9E%85%EB%8B%88%EB%8B%A4.%22%2C+name%2C+age%29%3B%0D%0A++++%7D%0D%0A%7D%0D%0A
+  comment: >-
+    이 예제 코드는 Vec, String, HashMap을 함께 사용하여 각각의 이름(String)에 대한 나이(u32) 정보를 저장하고 출력합니다. names 벡터에는 문자열로 된 이름이 저장되며, ages 해시맵에는 각 이름에 해당하는 나이가 저장됩니다. 코드는 벡터의 요소를 반복하며, 각 이름에 대한 나이를 해시맵에서 가져와 출력합니다.
+  content_markdown: >
+    러스트는 일반적인 목적의 프로그래밍 데이터 구조에 대한 효율적인 구현을 제공하는 표준 컬렉션 라이브러리를 갖추고 있습니다.
+
+
+    표준 구현을 사용하면 두 라이브러리 간에 데이터 변환 없이 원활하게 통신할 수 있습니다.
+
+
+    가장 일반적인 사용 사례를 위해 `Vec` 또는 `HashMap`을 사용하는 것이 좋습니다.
+
+
+    이 두 컬렉션은 대부분의 일반 데이터 저장 및 처리에 사용되며, 뛰어난 성능을 제공합니다.
+
+
+    표준 라이브러리의 다른 컬렉션들은 특정 사용 사례에서 최적의 선택이지만, 비교적 특수한 경우에 해당합니다.
+
+
+    실제로 `Vec`과 `HashMap`이 기술적으로 최적이 아니더라도, 시작하기에 충분한 선택이 될 것입니다.
+
+
+    러스트의 컬렉션은 크게 4가지 주요 카테고리로 분류할 수 있습니다.
+
+    1. **Sequences**: `Vec`, `VecDeque`, `LinkedList`
+
+    2. **Maps**: `HashMap`, `BTreeMap`
+
+    3. **Sets**: `HashSet`, `BTreeSet`
+
+    4. **Misc**: `BinaryHeap`
+
+
+    여기서는 러스트의 주요 컬렉션 타입인 벡터(Vector), 문자열(String) 및 해시맵(HashMap)에 대해 간략하게 소개하겠습니다.
+
+    ## 벡터(Vector)
+
+    벡터는 동적 배열로, 연속된 메모리 공간에 저장되는 동일한 타입의 요소들을 가집니다.
+
+
+    벡터는 크기를 자동으로 조절할 수 있으며, 요소에 빠르게 접근할 수 있는 장점이 있습니다.
+
+    ## 문자열(String)
+
+    문자열은 UTF-8 인코딩된 문자의 연속으로 구성되어 있습니다.
+
+
+    러스트의 문자열은 변경이 불가능한 `&str` 타입과 변경 가능한 `String` 타입이 있습니다.
+
+
+    문자열은 텍스트 데이터를 저장하고 처리하는데 사용됩니다.
+
+    ## 해시맵(HashMap)
+
+    해시맵은 키-값 쌍을 저장하는 데 사용되는 컬렉션입니다.
+
+
+    해시 함수를 사용하여 키를 해싱하여 값을 빠르게 찾을 수 있습니다.
+
+
+    해시맵은 삽입, 검색 및 삭제 작업에 대한 평균 시간 복잡도가 O(1)입니다.
+- title: 벡터(Vector)
+  code: >-
+    https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=%2F%2F+%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC+%EA%B0%80%EC%A0%B8%EC%98%A4%EA%B8%B0%0D%0Ause+std%3A%3Acollections%3A%3AHashMap%3B%0D%0A%0D%0Afn+main%28%29+%7B%0D%0A++++%2F%2F+%EB%B2%A1%ED%84%B0+%EC%83%9D%EC%84%B1%0D%0A++++let+mut+names%3A+Vec%3CString%3E+%3D+Vec%3A%3Anew%28%29%3B%0D%0A%0D%0A++++%2F%2F+%EB%AC%B8%EC%9E%90%EC%97%B4%EC%9D%84+%EB%B2%A1%ED%84%B0%EC%97%90+%EC%B6%94%EA%B0%80%0D%0A++++names.push%28%22%EC%B2%A0%EC%88%98%22.to_string%28%29%29%3B%0D%0A++++names.push%28%22%EC%98%81%ED%9D%AC%22.to_string%28%29%29%3B%0D%0A++++names.push%28%22%EB%AF%BC%EC%88%98%22.to_string%28%29%29%3B%0D%0A%0D%0A++++%2F%2F+%ED%95%B4%EC%8B%9C%EB%A7%B5+%EC%83%9D%EC%84%B1%0D%0A++++let+mut+ages%3A+HashMap%3CString%2C+u32%3E+%3D+HashMap%3A%3Anew%28%29%3B%0D%0A%0D%0A++++%2F%2F+%EB%AC%B8%EC%9E%90%EC%97%B4%EA%B3%BC+%EC%97%B0%EA%B4%80%EB%90%9C+%EA%B0%92%EC%9D%84+%ED%95%B4%EC%8B%9C%EB%A7%B5%EC%97%90+%EC%B6%94%EA%B0%80%0D%0A++++ages.insert%28%22%EC%B2%A0%EC%88%98%22.to_string%28%29%2C+25%29%3B%0D%0A++++ages.insert%28%22%EC%98%81%ED%9D%AC%22.to_string%28%29%2C+24%29%3B%0D%0A++++ages.insert%28%22%EB%AF%BC%EC%88%98%22.to_string%28%29%2C+26%29%3B%0D%0A%0D%0A++++%2F%2F+%EB%B2%A1%ED%84%B0%EC%9D%98+%EC%9A%94%EC%86%8C%EB%93%A4%EC%9D%84+%EB%B0%98%EB%B3%B5%ED%95%98%EB%A9%B0%2C+%EA%B0%81+%EC%9D%B4%EB%A6%84%EC%97%90+%EB%8C%80%ED%95%9C+%EB%82%98%EC%9D%B4%EB%A5%BC+%EC%B6%9C%EB%A0%A5%0D%0A++++for+name+in+names.iter%28%29+%7B%0D%0A++++++++%2F%2F+%ED%95%B4%EC%8B%9C%EB%A7%B5%EC%97%90%EC%84%9C+%EC%9D%B4%EB%A6%84%EC%97%90+%ED%95%B4%EB%8B%B9%ED%95%98%EB%8A%94+%EB%82%98%EC%9D%B4%EB%A5%BC+%EA%B0%80%EC%A0%B8%EC%98%B4%0D%0A++++++++let+age+%3D+ages.get%28name%29.unwrap%28%29%3B%0D%0A%0D%0A++++++++%2F%2F+%EA%B2%B0%EA%B3%BC+%EC%B6%9C%EB%A0%A5%0D%0A++++++++println%21%28%22%7B%7D%EB%8B%98%EC%9D%98+%EB%82%98%EC%9D%B4%EB%8A%94+%7B%7D%EC%82%B4%EC%9E%85%EB%8B%88%EB%8B%A4.%22%2C+name%2C+age%29%3B%0D%0A++++%7D%0D%0A%7D%0D%0A
+  comment: >-
+    이 예제 코드는 Vec, String, HashMap을 함께 사용하여 각각의 이름(String)에 대한 나이(u32) 정보를 저장하고 출력합니다. names 벡터에는 문자열로 된 이름이 저장되며, ages 해시맵에는 각 이름에 해당하는 나이가 저장됩니다. 코드는 벡터의 요소를 반복하며, 각 이름에 대한 나이를 해시맵에서 가져와 출력합니다.
+  content_markdown: >
+    벡터는 동적 배열로, 연속된 메모리 공간에 저장되는 동일한 타입의 요소들을 가집니다.
+
+
+    벡터는 크기를 자동으로 조절할 수 있으며, 요소에 빠르게 접근할 수 있는 장점이 있습니다.
+
+
+    ## a. 벡터 생성 및 초기화
+
+    벡터를 생성하려면 다음과 같은 방법을 사용할 수 있습니다.
+
+    %rust%
+    // 빈 벡터 생성
+
+    let mut vec1: Vec<i32> = Vec::new();
+
+
+    // 초기 값이 있는 벡터 생성
+
+    let vec2 = vec![1, 2, 3, 4, 5];
+    %end%
+
+    ## b. 벡터 요소에 접근하고 수정하기
+
+    벡터 요소에 접근하거나 수정하려면 인덱스를 사용합니다.
+
+    %rust%
+    // 벡터에서 인덱스를 사용해 요소에 접근하기
+
+    let first_element = vec2[0]; // 첫 번째 요소
+
+
+    // 벡터에서 인덱스를 사용해 요소를 수정하기
+
+    vec1.push(10); // 벡터 끝에 10 추가
+
+    vec1[0] = 20;  // 첫 번째 요소를 20으로 변경
+    %end%
+
+    ## c. 벡터 순회하기
+
+    벡터의 요소를 반복하려면 `for` 루프를 사용합니다.
+
+    %rust%
+    for element in vec2.iter() {
+        println!("요소: {}", element);
+    }
+    %end%
+
+    ## d. 벡터 슬라이싱
+
+    벡터의 일부분만 참조하려면 슬라이스를 사용합니다.
+
+    %rust%
+    let slice = &vec2[1..3]; // 인덱스 1부터 2까지의 슬라이스 생성
+    %end%
+
+    ## e. 벡터 크기 조절 및 용량 관리
+
+    벡터의 크기를 조절하거나 용량을 관리하려면 다음과 같은 메서드를 사용합니다.
+
+    %rust%
+    vec1.reserve(10); // 최소한 10개 요소를 저장할 수 있는 공간을 확보
+    vec1.shrink_to_fit(); // 벡터의 용량을 최소한으로 줄이기
+    vec1.resize(5, 0); // 벡터 크기를 5로 조절하고, 새로운 요소를 0으로 초기화
+    %end%
+
+    ## f. 고급 벡터 사용법
+
+    벡터의 고급 사용법에는 벡터에서 요소를 제거하거나 벡터의 일부를 다른 벡터로 이동하는 등의 작업이 포함됩니다.
+
+    %rust%
+    // 벡터에서 인덱스 i의 요소 제거
+
+    let i = 2;
+    vec1.remove(i);
+
+
+    // 벡터에서 마지막 요소를 꺼내기
+
+    if let Some(last_element) = vec1.pop() {
+        println!("마지막 요소: {}", last_element);
+    }
+    %end%
+
+
+    더 많은 메소드는 [공식 문서](https://doc.rust-lang.org/alloc/vec/struct.Vec.html#)를 참고하세요.
+- title: 벡터의 반복자(Iterators)
+  code: >-
+    https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=%2F%2F+%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC+%EA%B0%80%EC%A0%B8%EC%98%A4%EA%B8%B0%0D%0Ause+std%3A%3Acollections%3A%3AHashMap%3B%0D%0A%0D%0Afn+main%28%29+%7B%0D%0A++++%2F%2F+%EB%B2%A1%ED%84%B0+%EC%83%9D%EC%84%B1%0D%0A++++let+mut+names%3A+Vec%3CString%3E+%3D+Vec%3A%3Anew%28%29%3B%0D%0A%0D%0A++++%2F%2F+%EB%AC%B8%EC%9E%90%EC%97%B4%EC%9D%84+%EB%B2%A1%ED%84%B0%EC%97%90+%EC%B6%94%EA%B0%80%0D%0A++++names.push%28%22%EC%B2%A0%EC%88%98%22.to_string%28%29%29%3B%0D%0A++++names.push%28%22%EC%98%81%ED%9D%AC%22.to_string%28%29%29%3B%0D%0A++++names.push%28%22%EB%AF%BC%EC%88%98%22.to_string%28%29%29%3B%0D%0A%0D%0A++++%2F%2F+%ED%95%B4%EC%8B%9C%EB%A7%B5+%EC%83%9D%EC%84%B1%0D%0A++++let+mut+ages%3A+HashMap%3CString%2C+u32%3E+%3D+HashMap%3A%3Anew%28%29%3B%0D%0A%0D%0A++++%2F%2F+%EB%AC%B8%EC%9E%90%EC%97%B4%EA%B3%BC+%EC%97%B0%EA%B4%80%EB%90%9C+%EA%B0%92%EC%9D%84+%ED%95%B4%EC%8B%9C%EB%A7%B5%EC%97%90+%EC%B6%94%EA%B0%80%0D%0A++++ages.insert%28%22%EC%B2%A0%EC%88%98%22.to_string%28%29%2C+25%29%3B%0D%0A++++ages.insert%28%22%EC%98%81%ED%9D%AC%22.to_string%28%29%2C+24%29%3B%0D%0A++++ages.insert%28%22%EB%AF%BC%EC%88%98%22.to_string%28%29%2C+26%29%3B%0D%0A%0D%0A++++%2F%2F+%EB%B2%A1%ED%84%B0%EC%9D%98+%EC%9A%94%EC%86%8C%EB%93%A4%EC%9D%84+%EB%B0%98%EB%B3%B5%ED%95%98%EB%A9%B0%2C+%EA%B0%81+%EC%9D%B4%EB%A6%84%EC%97%90+%EB%8C%80%ED%95%9C+%EB%82%98%EC%9D%B4%EB%A5%BC+%EC%B6%9C%EB%A0%A5%0D%0A++++for+name+in+names.iter%28%29+%7B%0D%0A++++++++%2F%2F+%ED%95%B4%EC%8B%9C%EB%A7%B5%EC%97%90%EC%84%9C+%EC%9D%B4%EB%A6%84%EC%97%90+%ED%95%B4%EB%8B%B9%ED%95%98%EB%8A%94+%EB%82%98%EC%9D%B4%EB%A5%BC+%EA%B0%80%EC%A0%B8%EC%98%B4%0D%0A++++++++let+age+%3D+ages.get%28name%29.unwrap%28%29%3B%0D%0A%0D%0A++++++++%2F%2F+%EA%B2%B0%EA%B3%BC+%EC%B6%9C%EB%A0%A5%0D%0A++++++++println%21%28%22%7B%7D%EB%8B%98%EC%9D%98+%EB%82%98%EC%9D%B4%EB%8A%94+%7B%7D%EC%82%B4%EC%9E%85%EB%8B%88%EB%8B%A4.%22%2C+name%2C+age%29%3B%0D%0A++++%7D%0D%0A%7D%0D%0A
+  comment: >-
+    이 예제 코드는 Vec, String, HashMap을 함께 사용하여 각각의 이름(String)에 대한 나이(u32) 정보를 저장하고 출력합니다. names 벡터에는 문자열로 된 이름이 저장되며, ages 해시맵에는 각 이름에 해당하는 나이가 저장됩니다. 코드는 벡터의 요소를 반복하며, 각 이름에 대한 나이를 해시맵에서 가져와 출력합니다.
+  content_markdown: >
+    벡터와 같은 Iterator trait가 구현된 것들에는 요소들을 반복하고 처리할 때 사용할 수 있는 여러 가지 반복자 메서드가 있습니다.
+
+
+    `iter()`, `iter_mut()`, `into_iter()`는 각각 불변 참조, 가변 참조, 소유권 이동을 수행하는 반복자를 생성합니다.
+
+
+    ### 1. iter()
+
+    `iter()` 메서드는 벡터의 각 요소에 대한 불변 참조를 생성하는 반복자를 반환합니다.
+
+
+    이 반복자는 벡터의 요소를 읽기 전용으로 사용할 때 유용합니다.
+
+
+    %rust%
+    let vec = vec![1, 2, 3, 4, 5];
+
+
+    for element in vec.iter() {
+        println!("요소: {}", element);
+    }
+    %end%
+
+
+    ### 2. iter_mut()
+
+    `iter_mut()` 메서드는 벡터의 각 요소에 대한 가변 참조를 생성하는 반복자를 반환합니다.
+
+
+    이 반복자는 벡터의 요소를 수정할 때 유용합니다.
+
+    %rust%
+    let mut vec = vec![1, 2, 3, 4, 5];
+
+
+    for element in vec.iter_mut() {
+        *element *= 2; // 각 요소에 2를 곱함
+    }
+
+    println!("변경된 벡터: {:?}", vec);
+    %end%
+
+    ### 3. into_iter()
+
+    `into_iter()` 메서드는 벡터의 각 요소의 소유권을 이동하는 반복자를 반환합니다.
+
+
+    이 반복자는 벡터의 요소를 소유권을 이동시키며 처리할 때 유용합니다.
+
+
+    이를 통해 벡터의 요소를 다른 데이터 구조로 쉽게 옮길 수 있습니다.
+
+
+    %rust%
+    let vec = vec!["a".to_string(), "b".to_string(), "c".to_string()];
+
+
+    let mut uppercased_vec: Vec<String> = Vec::new();
+
+
+    for element in vec.into_iter() {
+        uppercased_vec.push(element.to_uppercase());
+    }
+
+
+    println!("대문자로 변경된 벡터: {:?}", uppercased_vec);
+    %end%
+
+    `into_iter()`를 사용할 때 원래의 벡터는 더 이상 사용할 수 없습니다.
+
+
+    소유권이 이동되어 원래 벡터에 대한 참조가 무효화되기 때문입니다.
+
+
+    ## 차이점
+
+    - `iter()`: 벡터의 요소에 대한 불변 참조를 생성하는 반복자를 반환합니다. 요소를 읽기 전용으로 사용할 때 사용됩니다.
+
+    - `iter_mut()`: 벡터의 요소에 대한 가변 참조를 생성하는 반복자를 반환합니다. 요소를 수정할 때 사용됩니다.
+
+    - `into_iter()`: 벡터의 요소의 소유권을 이동하는 반복자를 반환합니다. 요소를 소유권을 이동시키며 처리할 때 사용됩니다.
+
+
+
+    이러한 반복자들은 각각 다양한 상황에 따라 벡터를 처리할 수 있습니다.
+- title: 해시맵(HashMap)
+  code: >-
+    https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=%2F%2F+%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC+%EA%B0%80%EC%A0%B8%EC%98%A4%EA%B8%B0%0D%0Ause+std%3A%3Acollections%3A%3AHashMap%3B%0D%0A%0D%0Afn+main%28%29+%7B%0D%0A++++%2F%2F+%EB%B2%A1%ED%84%B0+%EC%83%9D%EC%84%B1%0D%0A++++let+mut+names%3A+Vec%3CString%3E+%3D+Vec%3A%3Anew%28%29%3B%0D%0A%0D%0A++++%2F%2F+%EB%AC%B8%EC%9E%90%EC%97%B4%EC%9D%84+%EB%B2%A1%ED%84%B0%EC%97%90+%EC%B6%94%EA%B0%80%0D%0A++++names.push%28%22%EC%B2%A0%EC%88%98%22.to_string%28%29%29%3B%0D%0A++++names.push%28%22%EC%98%81%ED%9D%AC%22.to_string%28%29%29%3B%0D%0A++++names.push%28%22%EB%AF%BC%EC%88%98%22.to_string%28%29%29%3B%0D%0A%0D%0A++++%2F%2F+%ED%95%B4%EC%8B%9C%EB%A7%B5+%EC%83%9D%EC%84%B1%0D%0A++++let+mut+ages%3A+HashMap%3CString%2C+u32%3E+%3D+HashMap%3A%3Anew%28%29%3B%0D%0A%0D%0A++++%2F%2F+%EB%AC%B8%EC%9E%90%EC%97%B4%EA%B3%BC+%EC%97%B0%EA%B4%80%EB%90%9C+%EA%B0%92%EC%9D%84+%ED%95%B4%EC%8B%9C%EB%A7%B5%EC%97%90+%EC%B6%94%EA%B0%80%0D%0A++++ages.insert%28%22%EC%B2%A0%EC%88%98%22.to_string%28%29%2C+25%29%3B%0D%0A++++ages.insert%28%22%EC%98%81%ED%9D%AC%22.to_string%28%29%2C+24%29%3B%0D%0A++++ages.insert%28%22%EB%AF%BC%EC%88%98%22.to_string%28%29%2C+26%29%3B%0D%0A%0D%0A++++%2F%2F+%EB%B2%A1%ED%84%B0%EC%9D%98+%EC%9A%94%EC%86%8C%EB%93%A4%EC%9D%84+%EB%B0%98%EB%B3%B5%ED%95%98%EB%A9%B0%2C+%EA%B0%81+%EC%9D%B4%EB%A6%84%EC%97%90+%EB%8C%80%ED%95%9C+%EB%82%98%EC%9D%B4%EB%A5%BC+%EC%B6%9C%EB%A0%A5%0D%0A++++for+name+in+names.iter%28%29+%7B%0D%0A++++++++%2F%2F+%ED%95%B4%EC%8B%9C%EB%A7%B5%EC%97%90%EC%84%9C+%EC%9D%B4%EB%A6%84%EC%97%90+%ED%95%B4%EB%8B%B9%ED%95%98%EB%8A%94+%EB%82%98%EC%9D%B4%EB%A5%BC+%EA%B0%80%EC%A0%B8%EC%98%B4%0D%0A++++++++let+age+%3D+ages.get%28name%29.unwrap%28%29%3B%0D%0A%0D%0A++++++++%2F%2F+%EA%B2%B0%EA%B3%BC+%EC%B6%9C%EB%A0%A5%0D%0A++++++++println%21%28%22%7B%7D%EB%8B%98%EC%9D%98+%EB%82%98%EC%9D%B4%EB%8A%94+%7B%7D%EC%82%B4%EC%9E%85%EB%8B%88%EB%8B%A4.%22%2C+name%2C+age%29%3B%0D%0A++++%7D%0D%0A%7D%0D%0A
+  comment: >-
+    이 예제 코드는 Vec, String, HashMap을 함께 사용하여 각각의 이름(String)에 대한 나이(u32) 정보를 저장하고 출력합니다. names 벡터에는 문자열로 된 이름이 저장되며, ages 해시맵에는 각 이름에 해당하는 나이가 저장됩니다. 코드는 벡터의 요소를 반복하며, 각 이름에 대한 나이를 해시맵에서 가져와 출력합니다.
+  content_markdown: >
+    해시맵은 키-값 쌍을 저장하는 데 사용되는 컬렉션입니다.
+
+
+    해시 함수를 사용하여 키를 해싱하여 값을 빠르게 찾을 수 있습니다.
+
+
+    해시맵은 삽입, 검색 및 삭제 작업에 대한 평균 시간 복잡도가 `O(1)`입니다.
+
+
+    ## a. 해시맵 생성 및 초기화
+
+    해시맵을 생성하려면 다음과 같은 방법을 사용할 수 있습니다.
+
+
+    %rust%
+    use std::collections::HashMap;
+
+
+    // 빈 해시맵 생성
+
+    let mut scores: HashMap<String, u32> = HashMap::new();
+
+
+    // 초기 값이 있는 해시맵 생성
+
+    let scores = vec![("Alice", 50), ("Bob", 60)]
+        .into_iter()
+        .map(|(k, v)| (k.to_string(), v))
+        .collect::<HashMap<String, u32>>();
+    %end%
+
+
+    ## b. 키-값 쌍 삽입 및 업데이트
+
+    해시맵에 키-값 쌍을 삽입하거나 업데이트하려면 `insert` 메서드를 사용합니다.
+
+    %rust%
+    // 키-값 쌍 삽입
+
+    scores.insert("Alice".to_string(), 50);
+
+    scores.insert("Bob".to_string(), 60);
+
+
+    // 키-값 쌍 업데이트
+
+    scores.insert("Alice".to_string(), 55);
+    %end%
+
+    ## c. 값에 접근하고 삭제하기
+
+    해시맵에서 값을 접근하거나 삭제하려면 `get` 또는 `remove` 메서드를 사용합니다.
+
+    %rust%
+    // 값에 접근하기
+
+    if let Some(score) = scores.get("Alice") {
+        println!("Alice의 점수: {}", score);
+    }
+
+
+    // 값 삭제하기
+
+    scores.remove("Alice");
+    %end%
+
+    ## d. 해시맵 순회하기
+
+    해시맵의 키-값 쌍을 반복하려면 `for` 루프를 사용합니다.
+
+    %rust%
+    for (key, value) in &scores {
+        println!("{}: {}", key, value);
+    }
+    %end%
+
+    ## e. 일반적인 해시맵 작업
+
+    해시맵에서 자주 사용되는 작업들은 다음과 같습니다.
+
+    - `contains_key`: 특정 키가 해시맵에 있는지 확인합니다.
+
+    - `keys`: 해시맵의 모든 키를 반환합니다.
+
+    - `values`: 해시맵의 모든 값을 반환합니다.
+
+    %rust%
+    // 키가 해시맵에 있는지 확인하기
+
+    if scores.contains_key("Alice") {
+        println!("Alice의 점수가 있습니다.");
+    }
+
+
+    // 해시맵의 모든 키 출력하기
+
+    for key in scores.keys() {
+        println!("키: {}", key);
+    }
+
+
+    // 해시맵의 모든 값 출력하기
+
+    for value in scores.values() {
+        println!("값: {}", value);
+    }
+    %end%
+
+    더 많은 메소드는 [공식 문서](https://doc.rust-lang.org/std/collections/struct.HashMap.html)를 참고하세요.
+- title: 이터레이터(Iterators) 소개
+  code: >-
+    https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=%2F%2F+%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC+%EA%B0%80%EC%A0%B8%EC%98%A4%EA%B8%B0%0D%0Ause+std%3A%3Acollections%3A%3AHashMap%3B%0D%0A%0D%0Afn+main%28%29+%7B%0D%0A++++%2F%2F+%EB%B2%A1%ED%84%B0+%EC%83%9D%EC%84%B1%0D%0A++++let+mut+names%3A+Vec%3CString%3E+%3D+Vec%3A%3Anew%28%29%3B%0D%0A%0D%0A++++%2F%2F+%EB%AC%B8%EC%9E%90%EC%97%B4%EC%9D%84+%EB%B2%A1%ED%84%B0%EC%97%90+%EC%B6%94%EA%B0%80%0D%0A++++names.push%28%22%EC%B2%A0%EC%88%98%22.to_string%28%29%29%3B%0D%0A++++names.push%28%22%EC%98%81%ED%9D%AC%22.to_string%28%29%29%3B%0D%0A++++names.push%28%22%EB%AF%BC%EC%88%98%22.to_string%28%29%29%3B%0D%0A%0D%0A++++%2F%2F+%ED%95%B4%EC%8B%9C%EB%A7%B5+%EC%83%9D%EC%84%B1%0D%0A++++let+mut+ages%3A+HashMap%3CString%2C+u32%3E+%3D+HashMap%3A%3Anew%28%29%3B%0D%0A%0D%0A++++%2F%2F+%EB%AC%B8%EC%9E%90%EC%97%B4%EA%B3%BC+%EC%97%B0%EA%B4%80%EB%90%9C+%EA%B0%92%EC%9D%84+%ED%95%B4%EC%8B%9C%EB%A7%B5%EC%97%90+%EC%B6%94%EA%B0%80%0D%0A++++ages.insert%28%22%EC%B2%A0%EC%88%98%22.to_string%28%29%2C+25%29%3B%0D%0A++++ages.insert%28%22%EC%98%81%ED%9D%AC%22.to_string%28%29%2C+24%29%3B%0D%0A++++ages.insert%28%22%EB%AF%BC%EC%88%98%22.to_string%28%29%2C+26%29%3B%0D%0A%0D%0A++++%2F%2F+%EB%B2%A1%ED%84%B0%EC%9D%98+%EC%9A%94%EC%86%8C%EB%93%A4%EC%9D%84+%EB%B0%98%EB%B3%B5%ED%95%98%EB%A9%B0%2C+%EA%B0%81+%EC%9D%B4%EB%A6%84%EC%97%90+%EB%8C%80%ED%95%9C+%EB%82%98%EC%9D%B4%EB%A5%BC+%EC%B6%9C%EB%A0%A5%0D%0A++++for+name+in+names.iter%28%29+%7B%0D%0A++++++++%2F%2F+%ED%95%B4%EC%8B%9C%EB%A7%B5%EC%97%90%EC%84%9C+%EC%9D%B4%EB%A6%84%EC%97%90+%ED%95%B4%EB%8B%B9%ED%95%98%EB%8A%94+%EB%82%98%EC%9D%B4%EB%A5%BC+%EA%B0%80%EC%A0%B8%EC%98%B4%0D%0A++++++++let+age+%3D+ages.get%28name%29.unwrap%28%29%3B%0D%0A%0D%0A++++++++%2F%2F+%EA%B2%B0%EA%B3%BC+%EC%B6%9C%EB%A0%A5%0D%0A++++++++println%21%28%22%7B%7D%EB%8B%98%EC%9D%98+%EB%82%98%EC%9D%B4%EB%8A%94+%7B%7D%EC%82%B4%EC%9E%85%EB%8B%88%EB%8B%A4.%22%2C+name%2C+age%29%3B%0D%0A++++%7D%0D%0A%7D%0D%0A
+  comment: >-
+    이 예제 코드는 Vec, String, HashMap을 함께 사용하여 각각의 이름(String)에 대한 나이(u32) 정보를 저장하고 출력합니다. names 벡터에는 문자열로 된 이름이 저장되며, ages 해시맵에는 각 이름에 해당하는 나이가 저장됩니다. 코드는 벡터의 요소를 반복하며, 각 이름에 대한 나이를 해시맵에서 가져와 출력합니다.
+  content_markdown: >
+    이터레이터는 Rust에서 컬렉션의 요소를 순회하고 처리하는 데 중요한 역할을 하는 추상화 개념입니다.
+
+
+    이터레이터는 컬렉션의 요소를 효율적이고 간결한 방법으로 처리할 수 있게 도와줍니다.
+
+
+    ## a. 이터레이터 개념 및 Rust에서의 중요성
+
+    이터레이터는 데이터 집합을 순차적으로 접근하는 데 사용되는 개체입니다.
+
+
+    Rust에서 이터레이터는 컬렉션의 요소를 처리하는 데 사용되며, 함수형 프로그래밍 패턴과 함께 사용할 수 있습니다.
+
+
+    이터레이터는 함수형 프로그래밍을 지원하며, 일반적으로 Rust의 for 루프에서 사용됩니다.
+
+
+    Rust에서 이터레이터의 중요성은 다음과 같습니다:
+
+    1. 코드의 간결성: 이터레이터를 사용하면 반복문을 사용하는 코드를 보다 간결하게 작성할 수 있습니다.
+
+    2. 느긋한 평가(Lazy evaluation): 이터레이터는 필요한 경우에만 요소를 처리하므로, 메모리 사용량과 실행 시간을 줄일 수 있습니다.
+
+    3. 컴포지션: 이터레이터를 사용하면 여러 이터레이터 메서드를 연결하여 작업을 쉽게 구성할 수 있습니다.
+
+
+    ## b. Iterator 트레잇과 메서드 소개 (next, collect 등)
+
+    `Iterator` 트레잇은 Rust의 이터레이터를 구현하는 데 사용되는 트레잇입니다.
+
+
+    이 트레잇에는 다음과 같은 메서드가 정의되어 있습니다.
+
+    ### next
+
+    `next` 메서드는 이터레이터의 다음 요소를 반환합니다.
+
+
+    모든 요소를 순회한 경우, `None`을 반환합니다.
+
+    %rust%
+    let mut numbers = vec![1, 2, 3, 4, 5].into_iter();
+
+
+    while let Some(number) = numbers.next() {
+        println!("Number: {}", number);
+    }
+    %end%
+
+    ### collect
+
+    `collect` 메서드는 이터레이터의 요소를 다른 컬렉션 타입으로 변환합니다.
+
+    %rust%
+    let numbers = vec![1, 2, 3, 4, 5];
+
+    let doubled_numbers: Vec<_> = numbers.iter().map(|x| x * 2).collect();
+
+
+    println!("Doubled numbers: {:?}", doubled_numbers);
+    %end%
+
+    이 외에도 다양한 이터레이터 메서드가 있습니다.
+
+
+    예를 들어, `filter`, `map`, `fold`, `take`, `skip`, `all`, `any` 등의 메서드를 사용하여 이터레이터를 처리할 수 있습니다.
+
+
+    더 많은 메소드는 [공식 문서](https://doc.rust-lang.org/core/iter/trait.Iterator.html)를 참고하세요.
+- title: Chapter 3 - Conclusion
+  code: >-
+    https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=use+std%3A%3Acollections%3A%3AHashMap%3B%0D%0A%0D%0Afn+main%28%29+%7B%0D%0A++++let+students+%3D+vec%21%5B%0D%0A++++++++%28%22%EA%B9%80%EC%B2%A0%EC%88%98%22%2C+80%29%2C%0D%0A++++++++%28%22%EC%9D%B4%EC%98%81%ED%9D%AC%22%2C+90%29%2C%0D%0A++++++++%28%22%EB%B0%95%EC%A7%80%EB%AF%BC%22%2C+85%29%2C%0D%0A++++++++%28%22%EC%B5%9C%EC%98%81%EC%88%98%22%2C+95%29%2C%0D%0A++++%5D%3B%0D%0A%0D%0A++++let+mut+names+%3D+Vec%3A%3Anew%28%29%3B%0D%0A++++let+mut+scores+%3D+HashMap%3A%3Anew%28%29%3B%0D%0A%0D%0A++++for+%28name%2C+score%29+in+students+%7B%0D%0A++++++++%2F%2F+TODO+1%3A+%EC%9D%B4%EB%A6%84+%EB%AA%A9%EB%A1%9D+Vec%EC%97%90+%ED%95%99%EC%83%9D+%EC%9D%B4%EB%A6%84%EC%9D%84+%EC%B6%94%EA%B0%80%ED%95%98%EC%84%B8%EC%9A%94.%0D%0A++++++++%2F%2F+%EC%B1%84%EC%9B%8C%EB%B3%B4%EC%84%B8%EC%9A%94.%0D%0A%0D%0A++++++++%2F%2F+TODO+2%3A+%EC%9D%B4%EB%A6%84%EA%B3%BC+%EC%A0%90%EC%88%98%EB%A5%BC+HashMap%EC%97%90+%EC%A0%80%EC%9E%A5%ED%95%98%EC%84%B8%EC%9A%94.%0D%0A++++++++%2F%2F+%EC%B1%84%EC%9B%8C%EB%B3%B4%EC%84%B8%EC%9A%94.%0D%0A++++%7D%0D%0A%0D%0A++++%2F%2F+TODO+3%3A+%ED%95%99%EC%83%9D%EB%93%A4%EC%9D%98+%ED%8F%89%EA%B7%A0+%EC%A0%90%EC%88%98%EB%A5%BC+%EA%B3%84%EC%82%B0%ED%95%98%EA%B3%A0+%EC%B6%9C%EB%A0%A5%ED%95%98%EC%84%B8%EC%9A%94.%0D%0A++++%2F%2F+%EC%B1%84%EC%9B%8C%EB%B3%B4%EC%84%B8%EC%9A%94.%0D%0A%7D%0D%0A
+  content_markdown: >
+    다음은 여러분들이 Vec와 HashMap을 사용하여 문제를 해결해 보는 고급 문제입니다.
+
+
+    아래 주석을 참고하여 코드를 완성해보세요.
+
+
+    문제 설명:
+
+    이름과 점수가 주어진 학생들의 정보를 Vec와 HashMap을 사용해 관리하고, 평균 점수를 계산하고 출력하는 프로그램을 작성하세요.
+
+    1. Vec를 사용하여 학생들의 이름 목록을 저장하세요.
+
+    2. HashMap을 사용하여 학생들의 이름과 점수를 저장하세요.
+
+    3. 학생들의 평균 점수를 계산하고 출력하세요.
+
+
+    <div>
+    <button type="button" class="collapsible">정답 보기</button>
+    <div class="content">
+    <p>
+    %rust%
+    use std::collections::HashMap;
+
+
+    fn main() {
+        let students = vec![
+            ("김철수", 80),
+            ("이영희", 90),
+            ("박지민", 85),
+            ("최영수", 95),
+        ];
+
+        let mut names = Vec::new();
+        let mut scores = HashMap::new();
+
+        for (name, score) in students {
+            // 이름 목록 Vec에 학생 이름을 추가합니다.
+            names.push(name);
+
+            // 이름과 점수를 HashMap에 저장합니다.
+            scores.insert(name, score);
+        }
+
+        // 학생들의 평균 점수를 계산하고 출력합니다.
+        let total_score: i32 = scores.values().sum();
+        let average_score: f64 = total_score as f64 / names.len() as f64;
+        println!("학생들의 평균 점수: {:.2}", average_score);
+    }
+    %end%
+    </div>
+    </div>

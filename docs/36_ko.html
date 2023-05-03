@@ -35,69 +35,42 @@
                 <span class="toc"><a href="TOC_ko.html">목차</a></span>
             </div>
             <div class="page">
-            <h1>해시맵(HashMap)</h1>
-            <p>해시맵은 키-값 쌍을 저장하는 데 사용되는 컬렉션입니다.</p>
-<p>해시 함수를 사용하여 키를 해싱하여 값을 빠르게 찾을 수 있습니다.</p>
-<p>해시맵은 삽입, 검색 및 삭제 작업에 대한 평균 시간 복잡도가 <code>O(1)</code>입니다.</p>
-<h2 id="a">a. 해시맵 생성 및 초기화</h2>
-<p>해시맵을 생성하려면 다음과 같은 방법을 사용할 수 있습니다.</p>
-<pre><code class="rust">use std::collections::HashMap;
+            <h1>이터레이터(Iterators) 소개</h1>
+            <p>이터레이터는 Rust에서 컬렉션의 요소를 순회하고 처리하는 데 중요한 역할을 하는 추상화 개념입니다.</p>
+<p>이터레이터는 컬렉션의 요소를 효율적이고 간결한 방법으로 처리할 수 있게 도와줍니다.</p>
+<h2 id="arust">a. 이터레이터 개념 및 Rust에서의 중요성</h2>
+<p>이터레이터는 데이터 집합을 순차적으로 접근하는 데 사용되는 개체입니다.</p>
+<p>Rust에서 이터레이터는 컬렉션의 요소를 처리하는 데 사용되며, 함수형 프로그래밍 패턴과 함께 사용할 수 있습니다.</p>
+<p>이터레이터는 함수형 프로그래밍을 지원하며, 일반적으로 Rust의 for 루프에서 사용됩니다.</p>
+<p>Rust에서 이터레이터의 중요성은 다음과 같습니다:</p>
+<ol>
+<li>코드의 간결성: 이터레이터를 사용하면 반복문을 사용하는 코드를 보다 간결하게 작성할 수 있습니다.</li>
+<li>느긋한 평가(Lazy evaluation): 이터레이터는 필요한 경우에만 요소를 처리하므로, 메모리 사용량과 실행 시간을 줄일 수 있습니다.</li>
+<li>컴포지션: 이터레이터를 사용하면 여러 이터레이터 메서드를 연결하여 작업을 쉽게 구성할 수 있습니다.</li>
+</ol>
+<h2 id="biteratornextcollect">b. Iterator 트레잇과 메서드 소개 (next, collect 등)</h2>
+<p><code>Iterator</code> 트레잇은 Rust의 이터레이터를 구현하는 데 사용되는 트레잇입니다.</p>
+<p>이 트레잇에는 다음과 같은 메서드가 정의되어 있습니다.</p>
+<h3 id="next">next</h3>
+<p><code>next</code> 메서드는 이터레이터의 다음 요소를 반환합니다.</p>
+<p>모든 요소를 순회한 경우, <code>None</code>을 반환합니다.</p>
+<pre><code class="rust">let mut numbers = vec![1, 2, 3, 4, 5].into_iter();
 
-// 빈 해시맵 생성
-let mut scores: HashMap&lt;String, u32> = HashMap::new();
-
-// 초기 값이 있는 해시맵 생성
-let scores = vec![("Alice", 50), ("Bob", 60)]
-    .into_iter()
-    .map(|(k, v)| (k.to_string(), v))
-    .collect::<HashMap<String, u32>>();</code></pre>
-<h2 id="b">b. 키-값 쌍 삽입 및 업데이트</h2>
-<p>해시맵에 키-값 쌍을 삽입하거나 업데이트하려면 <code>insert</code> 메서드를 사용합니다.</p>
-<pre><code class="rust">// 키-값 쌍 삽입
-scores.insert("Alice".to_string(), 50);
-scores.insert("Bob".to_string(), 60);
-
-// 키-값 쌍 업데이트
-scores.insert("Alice".to_string(), 55);</code></pre>
-<h2 id="c">c. 값에 접근하고 삭제하기</h2>
-<p>해시맵에서 값을 접근하거나 삭제하려면 <code>get</code> 또는 <code>remove</code> 메서드를 사용합니다.</p>
-<pre><code class="rust">// 값에 접근하기
-if let Some(score) = scores.get("Alice") {
-    println!("Alice의 점수: {}", score);
-}
-
-// 값 삭제하기
-scores.remove("Alice");</code></pre>
-<h2 id="d">d. 해시맵 순회하기</h2>
-<p>해시맵의 키-값 쌍을 반복하려면 <code>for</code> 루프를 사용합니다.</p>
-<pre><code class="rust">for (key, value) in &scores {
-    println!("{}: {}", key, value);
+while let Some(number) = numbers.next() {
+    println!("Number: {}", number);
 }</code></pre>
-<h2 id="e">e. 일반적인 해시맵 작업</h2>
-<p>해시맵에서 자주 사용되는 작업들은 다음과 같습니다.</p>
-<ul>
-<li><code>contains_key</code>: 특정 키가 해시맵에 있는지 확인합니다.</li>
-<li><code>keys</code>: 해시맵의 모든 키를 반환합니다.</li>
-<li><code>values</code>: 해시맵의 모든 값을 반환합니다.</li>
-</ul>
-<pre><code class="rust">// 키가 해시맵에 있는지 확인하기
-if scores.contains_key("Alice") {
-    println!("Alice의 점수가 있습니다.");
-}
+<h3 id="collect">collect</h3>
+<p><code>collect</code> 메서드는 이터레이터의 요소를 다른 컬렉션 타입으로 변환합니다.</p>
+<pre><code class="rust">let numbers = vec![1, 2, 3, 4, 5];
+let doubled_numbers: Vec&lt;_> = numbers.iter().map(|x| x * 2).collect();
 
-// 해시맵의 모든 키 출력하기
-for key in scores.keys() {
-    println!("키: {}", key);
-}
-
-// 해시맵의 모든 값 출력하기
-for value in scores.values() {
-    println!("값: {}", value);
-}</code></pre>
-<p>더 많은 메소드는 <a href="https://doc.rust-lang.org/std/collections/struct.HashMap.html" target="_blank" rel="noopener">공식 문서</a>를 참고하세요.</p>
+println!("Doubled numbers: {:?}", doubled_numbers);</code></pre>
+<p>이 외에도 다양한 이터레이터 메서드가 있습니다.</p>
+<p>예를 들어, <code>filter</code>, <code>map</code>, <code>fold</code>, <code>take</code>, <code>skip</code>, <code>all</code>, <code>any</code> 등의 메서드를 사용하여 이터레이터를 처리할 수 있습니다.</p>
+<p>더 많은 메소드는 <a href="https://doc.rust-lang.org/core/iter/trait.Iterator.html" target="_blank" rel="noopener">공식 문서</a>를 참고하세요.</p>
             <div class="bottomnav">
-                <span class="back"><a href="34_ko.html" rel="prev">❮ 이전</a></span>
-                <span class="next"><a href="36_ko.html" rel="next">다음 ❯</a></span>
+                <span class="back"><a href="35_ko.html" rel="prev">❮ 이전</a></span>
+                <span class="next"><a href="37_ko.html" rel="next">다음 ❯</a></span>
             </div>
             </div>
             <div class="code">

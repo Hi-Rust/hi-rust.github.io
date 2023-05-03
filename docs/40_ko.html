@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+    <html lang="ko">
+    <head>
+        <title>Rust 튜토리얼 - 자기주도프로젝트</title>
+
+        <meta charset="UTF-8">
+        <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+        <meta content="utf-8" http-equiv="encoding">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+        <meta name="keywords" content="Rust, Programming, Learning">
+        <meta name="description" content="Rust tutorial website based on tour_of_rust by 최석원">
+        <meta name="theme-color" content="#ff6801"/>
+        <meta http-equiv="Cache-Control" content="max-age=3600">
+        
+        <link rel="stylesheet" href="tour.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/night-owl.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
+        
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="/manifest" href="./site.webmanifest">
+        
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.7.0/highlight.min.js"></script>
+
+        <script src="./tour.js" defer></script>
+        <!-- <script>hljs.highlightAll();</script> -->
+        <script src="./highlight.badge.min.js"></script>
+    </head>
+    <body>
+        <div class="tour">
+            <div class="header">
+                <span class="title"><a href="index.html">Rust 튜토리얼</a></span>
+                <span class="nav">
+                <span class="toc"><a href="TOC_ko.html">목차</a></span>
+            </div>
+            <div class="page">
+            <h1>매크로(Macros)</h1>
+            <p>Rust의 매크로 시스템은 코드를 생성하고 추상화하는 강력한 방법을 제공합니다.</p>
+<h2 id="a">a. 매크로의 개념 및 사용 사례</h2>
+<p>매크로는 코드를 생성하거나 특정 패턴에 따라 코드를 변형하는 데 사용되는 메타 프로그래밍 기술입니다.</p>
+<p>Rust에서는 매크로를 사용하여 코드 중복을 줄이고, 가독성을 향상시키며, 유연한 추상화를 구현할 수 있습니다.</p>
+<p>매크로는 주로 컴파일 시간에 코드를 생성하거나 수정하는 작업에 사용됩니다. (ex. <code>println!</code>)</p>
+<h2 id="bdeclarativemacros">b. 선언형 매크로(Declarative Macros) 생성하기</h2>
+<p>선언형 매크로는 매크로 규칙을 사용하여 코드를 생성하는 매크로입니다.</p>
+<p><code>macro_rules!</code> 키워드를 사용하여 선언형 매크로를 정의할 수 있습니다.</p>
+<pre><code class="rust">macro_rules! vec {
+    ( $( $x:expr ),* ) => {
+        {
+            let mut temp_vec = Vec::new();
+            $(
+                temp_vec.push($x);
+            )*
+            temp_vec
+        }
+    };
+}
+
+fn main() {
+    let v = vec![1, 2, 3];
+    println!("v: {:?}", v);
+}</code></pre>
+<h2 id="cproceduralmacros">c. 프로시저 매크로(Procedural Macros) 생성하기</h2>
+<p>프로시저 매크로는 Rust의 컴파일러에 플러그인으로 동작하는 함수입니다.</p>
+<p>프로시저 매크로는 주로 속성(attribute)에 사용되며, 소스 코드를 받아 변형된 소스 코드를 반환합니다.</p>
+<p>프로시저 매크로를 정의하려면 <code>proc_macro</code> 라이브러리를 사용하고, 별도의 크레이트로 구성해야 합니다.</p>
+<pre><code class="rust">// 프로시저 매크로를 정의하는 크레이트입니다.
+use proc_macro::TokenStream;
+use quote::quote;
+use syn::{parse_macro_input, DeriveInput};
+
+#[proc_macro_derive(HelloMacro)]
+pub fn hello_macro_derive(input: TokenStream) -> TokenStream {
+    let ast = parse_macro_input!(input as DeriveInput);
+    let name = &ast.ident;
+    let gen = quote! {
+        impl HelloMacro for #name {
+            fn hello_macro() {
+                println!("안녕하세요, 여기는 {}입니다.", stringify!(#name));
+            }
+        }
+    };
+    gen.into()
+}</code></pre>
+<pre><code class="rust">// 프로시저 매크로를 사용하는 크레이트입니다.
+use hello_macro::HelloMacro;
+use hello_macro_derive::HelloMacro;
+
+#[derive(HelloMacro)]
+struct Pancakes;
+
+fn main() {
+    Pancakes::hello_macro();
+}</code></pre>
+<h2 id="d">d. 매크로 규칙 및 패턴 매칭</h2>
+<p>Rust의 매크로는 패턴 매칭을 통해 매개 변수를 추출하고, 규칙에 따라 코드를 생성합니다.</p>
+<p>매크로에서 패턴 매칭을 사용하려면 다음 구문을 사용합니다.</p>
+<ul>
+<li><code>$name:expr</code>: 표현식(Expressions) 매치</li>
+<li><code>$name:ident</code>: 식별자(Identifiers) 매치</li>
+<li><code>$name:ty</code>: 타입(Types) 매치</li>
+<li><code>$name:pat</code>: 패턴(Patterns) 매치</li>
+<li><code>$name:stmt</code>: 문장(Statements) 매치</li>
+<li><code>$name:block</code>: 블록(Blocks) 매치</li>
+<li><code>$name:meta</code>: 메타 데이터(Meta-data) 매치</li>
+<li><code>$name:tt</code>: 토큰 트리(Token Tree) 매치</li>
+<li><code>$name:item</code>: 항목(Items) 매치</li>
+</ul>
+<p>또한, 매크로에서 사용할 수 있는 반복자 구문도 있습니다.</p>
+<ul>
+<li><code>$(...)*</code>: 0회 이상 반복</li>
+<li><code>$(...)+</code>: 1회 이상 반복</li>
+</ul>
+<pre><code class="rust">macro_rules! create_function {
+    ($func_name:ident) => (
+        fn $func_name() {
+            println!("함수 {}가 호출되었습니다.", stringify!($func_name));
+        }
+    );
+}
+
+create_function!(foo);
+create_function!(bar);
+
+fn main() {
+    foo();
+    bar();
+}</code></pre>
+<p>이렇게 매크로를 사용하여 코드 생성 및 추상화를 구현하면, 유연한 프로그래밍을 할 수 있고, 가독성 및 유지보수성을 높일 수 있습니다.</p>
+<p>매크로의 핵심은 패턴 매칭과 규칙을 통해 코드를 재사용하고, 확장성을 높이는 것입니다.</p>
+            <div class="bottomnav">
+                <span class="back"><a href="39_ko.html" rel="prev">❮ 이전</a></span>
+                <span class="next"><a href="41_ko.html" rel="next">다음 ❯</a></span>
+            </div>
+            </div>
+            <div class="code">
+            <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=macro_rules%21+times+%7B%0D%0A++++%28%24num%3Aexpr%2C+%24body%3Ablock%29+%3D%3E+%7B%0D%0A++++++++times%21%28None%2C+%24num%2C+%24body%29%3B%0D%0A++++%7D%3B%0D%0A++++%28%24label%3Aexpr%2C+%24num%3Aexpr%2C+%24body%3Ablock%29+%3D%3E+%7B%0D%0A++++++++if+let+Some%28label%29+%3D+%24label+%7B%0D%0A++++++++++++println%21%28%22Task%3A+%7B%7D%22%2C+label%29%3B%0D%0A++++++++%7D%0D%0A%0D%0A++++++++let+mut+total_time+%3D+std%3A%3Atime%3A%3ADuration%3A%3Anew%280%2C+0%29%3B%0D%0A++++++++let+mut+min_time+%3D+std%3A%3Atime%3A%3ADuration%3A%3Afrom_secs%28u64%3A%3AMAX%29%3B%0D%0A++++++++let+mut+max_time+%3D+std%3A%3Atime%3A%3ADuration%3A%3Afrom_secs%280%29%3B%0D%0A%0D%0A++++++++for+_+in+0..%24num+%7B%0D%0A++++++++++++let+start_time+%3D+std%3A%3Atime%3A%3AInstant%3A%3Anow%28%29%3B%0D%0A++++++++++++%24body%0D%0A++++++++++++let+elapsed+%3D+start_time.elapsed%28%29%3B%0D%0A++++++++++++total_time+%2B%3D+elapsed%3B%0D%0A++++++++++++min_time+%3D+min_time.min%28elapsed%29%3B%0D%0A++++++++++++max_time+%3D+max_time.max%28elapsed%29%3B%0D%0A++++++++++++println%21%28%0D%0A++++++++++++++++%22Execution+time+for+iteration%3A+%7B%7D+ms%22%2C%0D%0A++++++++++++++++elapsed.as_millis%28%29%0D%0A++++++++++++%29%3B%0D%0A++++++++%7D%0D%0A%0D%0A++++++++let+avg_time+%3D+total_time+%2F+%24num%3B%0D%0A++++++++println%21%28%22Average+execution+time%3A+%7B%7D+ms%22%2C+avg_time.as_millis%28%29%29%3B%0D%0A++++++++println%21%28%22Minimum+execution+time%3A+%7B%7D+ms%22%2C+min_time.as_millis%28%29%29%3B%0D%0A++++++++println%21%28%22Maximum+execution+time%3A+%7B%7D+ms%22%2C+max_time.as_millis%28%29%29%3B%0D%0A++++%7D%3B%0D%0A%7D%0D%0A%0D%0Afn+is_prime%28n%3A+u64%29+-%3E+bool+%7B%0D%0A++++if+n+%3C%3D+1+%7B%0D%0A++++++++return+false%3B%0D%0A++++%7D%0D%0A++++for+i+in+2..%3D%28%28n+as+f64%29.sqrt%28%29+as+u64%29+%7B%0D%0A++++++++if+n+%25+i+%3D%3D+0+%7B%0D%0A++++++++++++return+false%3B%0D%0A++++++++%7D%0D%0A++++%7D%0D%0A++++true%0D%0A%7D%0D%0A%0D%0Afn+main%28%29+%7B%0D%0A++++times%21%28Some%28%22Prime+number+summation%22%29%2C+3%2C+%7B%0D%0A++++++++let+mut+sum+%3D+0u64%3B%0D%0A++++++++let+mut+num+%3D+2u64%3B%0D%0A++++++++let+mut+counter+%3D+0%3B%0D%0A%0D%0A++++++++while+counter+%3C+10_000+%7B%0D%0A++++++++++++if+is_prime%28num%29+%7B%0D%0A++++++++++++++++sum+%2B%3D+num%3B%0D%0A++++++++++++++++counter+%2B%3D+1%3B%0D%0A++++++++++++%7D%0D%0A++++++++++++num+%2B%3D+1%3B%0D%0A++++++++%7D%0D%0A++++++++println%21%28%22Sum+of+first+10%2C000+prime+numbers%3A+%7B%7D%22%2C+sum%29%3B%0D%0A++++%7D%29%3B%0D%0A%7D" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
+            </div>
+        </div>
+        <script>
+        var pres = document.querySelectorAll("pre>code");
+        for (var i = 0; i < pres.length; i++) {
+            hljs.highlightElement(pres[i]);
+        }
+        var options = {
+            loadDelay: 0,
+            copyIconClass: "far fa-clipboard",
+            checkIconClass: "fa fa-check text-success",
+            blogURL: "http://rust-study.ajousw.kr/"
+        };
+        window.highlightJsBadge(options);
+        </script>
+
+        <footer>
+          <p><a target="_blank" rel="noopener" href="https://www.youtube.com/c/SoftwareToolTime">아주대학교 Software Tool Time</a> - Rust 튜토리얼 (Basic)</p>
+        </footer>
+    </body>
+</html>

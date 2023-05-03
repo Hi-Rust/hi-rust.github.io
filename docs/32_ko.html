@@ -35,14 +35,40 @@
                 <span class="toc"><a href="TOC_ko.html">목차</a></span>
             </div>
             <div class="page">
-            <h1>Hey</h1>
-            <p>CSW</p>
+            <h1>주요 컬렉션 타입 소개</h1>
+            <p>러스트는 일반적인 목적의 프로그래밍 데이터 구조에 대한 효율적인 구현을 제공하는 표준 컬렉션 라이브러리를 갖추고 있습니다.</p>
+<p>표준 구현을 사용하면 두 라이브러리 간에 데이터 변환 없이 원활하게 통신할 수 있습니다.</p>
+<p>가장 일반적인 사용 사례를 위해 <code>Vec</code> 또는 <code>HashMap</code>을 사용하는 것이 좋습니다.</p>
+<p>이 두 컬렉션은 대부분의 일반 데이터 저장 및 처리에 사용되며, 뛰어난 성능을 제공합니다.</p>
+<p>표준 라이브러리의 다른 컬렉션들은 특정 사용 사례에서 최적의 선택이지만, 비교적 특수한 경우에 해당합니다.</p>
+<p>실제로 <code>Vec</code>과 <code>HashMap</code>이 기술적으로 최적이 아니더라도, 시작하기에 충분한 선택이 될 것입니다.</p>
+<p>러스트의 컬렉션은 크게 4가지 주요 카테고리로 분류할 수 있습니다.</p>
+<ol>
+<li><strong>Sequences</strong>: <code>Vec</code>, <code>VecDeque</code>, <code>LinkedList</code></li>
+<li><strong>Maps</strong>: <code>HashMap</code>, <code>BTreeMap</code></li>
+<li><strong>Sets</strong>: <code>HashSet</code>, <code>BTreeSet</code></li>
+<li><strong>Misc</strong>: <code>BinaryHeap</code></li>
+</ol>
+<p>여기서는 러스트의 주요 컬렉션 타입인 벡터(Vector), 문자열(String) 및 해시맵(HashMap)에 대해 간략하게 소개하겠습니다.</p>
+<h2 id="vector">벡터(Vector)</h2>
+<p>벡터는 동적 배열로, 연속된 메모리 공간에 저장되는 동일한 타입의 요소들을 가집니다.</p>
+<p>벡터는 크기를 자동으로 조절할 수 있으며, 요소에 빠르게 접근할 수 있는 장점이 있습니다.</p>
+<h2 id="string">문자열(String)</h2>
+<p>문자열은 UTF-8 인코딩된 문자의 연속으로 구성되어 있습니다.</p>
+<p>러스트의 문자열은 변경이 불가능한 <code>&amp;str</code> 타입과 변경 가능한 <code>String</code> 타입이 있습니다.</p>
+<p>문자열은 텍스트 데이터를 저장하고 처리하는데 사용됩니다.</p>
+<h2 id="hashmap">해시맵(HashMap)</h2>
+<p>해시맵은 키-값 쌍을 저장하는 데 사용되는 컬렉션입니다.</p>
+<p>해시 함수를 사용하여 키를 해싱하여 값을 빠르게 찾을 수 있습니다.</p>
+<p>해시맵은 삽입, 검색 및 삭제 작업에 대한 평균 시간 복잡도가 O(1)입니다.</p>
             <div class="bottomnav">
                 <span class="back"><a href="chapter_3_ko.html" rel="prev">❮ 이전</a></span>
-                <span class="next"><a href="chapter_4_ko.html" rel="next">다음 ❯</a></span>
+                <span class="next"><a href="33_ko.html" rel="next">다음 ❯</a></span>
             </div>
             </div>
-            <div class="code"><center><img src="/ferris_lofi.png" alt="Rust Tutorial" width="300" height="100%"></center></div>
+            <div class="code">
+            <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=%2F%2F+%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC+%EA%B0%80%EC%A0%B8%EC%98%A4%EA%B8%B0%0D%0Ause+std%3A%3Acollections%3A%3AHashMap%3B%0D%0A%0D%0Afn+main%28%29+%7B%0D%0A++++%2F%2F+%EB%B2%A1%ED%84%B0+%EC%83%9D%EC%84%B1%0D%0A++++let+mut+names%3A+Vec%3CString%3E+%3D+Vec%3A%3Anew%28%29%3B%0D%0A%0D%0A++++%2F%2F+%EB%AC%B8%EC%9E%90%EC%97%B4%EC%9D%84+%EB%B2%A1%ED%84%B0%EC%97%90+%EC%B6%94%EA%B0%80%0D%0A++++names.push%28%22%EC%B2%A0%EC%88%98%22.to_string%28%29%29%3B%0D%0A++++names.push%28%22%EC%98%81%ED%9D%AC%22.to_string%28%29%29%3B%0D%0A++++names.push%28%22%EB%AF%BC%EC%88%98%22.to_string%28%29%29%3B%0D%0A%0D%0A++++%2F%2F+%ED%95%B4%EC%8B%9C%EB%A7%B5+%EC%83%9D%EC%84%B1%0D%0A++++let+mut+ages%3A+HashMap%3CString%2C+u32%3E+%3D+HashMap%3A%3Anew%28%29%3B%0D%0A%0D%0A++++%2F%2F+%EB%AC%B8%EC%9E%90%EC%97%B4%EA%B3%BC+%EC%97%B0%EA%B4%80%EB%90%9C+%EA%B0%92%EC%9D%84+%ED%95%B4%EC%8B%9C%EB%A7%B5%EC%97%90+%EC%B6%94%EA%B0%80%0D%0A++++ages.insert%28%22%EC%B2%A0%EC%88%98%22.to_string%28%29%2C+25%29%3B%0D%0A++++ages.insert%28%22%EC%98%81%ED%9D%AC%22.to_string%28%29%2C+24%29%3B%0D%0A++++ages.insert%28%22%EB%AF%BC%EC%88%98%22.to_string%28%29%2C+26%29%3B%0D%0A%0D%0A++++%2F%2F+%EB%B2%A1%ED%84%B0%EC%9D%98+%EC%9A%94%EC%86%8C%EB%93%A4%EC%9D%84+%EB%B0%98%EB%B3%B5%ED%95%98%EB%A9%B0%2C+%EA%B0%81+%EC%9D%B4%EB%A6%84%EC%97%90+%EB%8C%80%ED%95%9C+%EB%82%98%EC%9D%B4%EB%A5%BC+%EC%B6%9C%EB%A0%A5%0D%0A++++for+name+in+names.iter%28%29+%7B%0D%0A++++++++%2F%2F+%ED%95%B4%EC%8B%9C%EB%A7%B5%EC%97%90%EC%84%9C+%EC%9D%B4%EB%A6%84%EC%97%90+%ED%95%B4%EB%8B%B9%ED%95%98%EB%8A%94+%EB%82%98%EC%9D%B4%EB%A5%BC+%EA%B0%80%EC%A0%B8%EC%98%B4%0D%0A++++++++let+age+%3D+ages.get%28name%29.unwrap%28%29%3B%0D%0A%0D%0A++++++++%2F%2F+%EA%B2%B0%EA%B3%BC+%EC%B6%9C%EB%A0%A5%0D%0A++++++++println%21%28%22%7B%7D%EB%8B%98%EC%9D%98+%EB%82%98%EC%9D%B4%EB%8A%94+%7B%7D%EC%82%B4%EC%9E%85%EB%8B%88%EB%8B%A4.%22%2C+name%2C+age%29%3B%0D%0A++++%7D%0D%0A%7D%0D%0A" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
+            </div>
         </div>
         <script>
         var pres = document.querySelectorAll("pre>code");

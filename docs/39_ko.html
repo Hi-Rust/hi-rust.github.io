@@ -35,11 +35,96 @@
                 <span class="toc"><a href="TOC_ko.html">목차</a></span>
             </div>
             <div class="page">
-            <h1>Hey</h1>
-            <p>CSW</p>
+            <h1>동시성(Concurrency)</h1>
+            <h2 id="a">a. 동시성의 개념 및 중요성</h2>
+<p>동시성(Concurrency)은 여러 작업이 동시에 실행되는 것처럼 보이게 만드는 프로그래밍 기법입니다.</p>
+<p>동시성을 사용하면 애플리케이션의 성능을 향상시킬 수 있으며, 멀티코어 프로세서와 같은 병렬 컴퓨팅 기술을 최대한 활용할 수 있습니다.</p>
+<p>Rust는 동시성 문제를 안전하게 다루기 위한 독특한 기능을 제공하며,</p>
+<p>이러한 기능 덕분에 데이터 경쟁이나 교착 상태와 같은 동시성 문제가 발생할 가능성을 줄일 수 있습니다.</p>
+<h2 id="bthread">b. 스레드(Thread) 사용하기</h2>
+<p>스레드는 프로세스 내에서 실행되는 독립적인 작업 단위입니다.</p>
+<p>Rust에서 스레드를 생성하고 관리하려면 <code>std::thread</code> 모듈을 사용합니다.</p>
+<pre><code class="rust">use std::thread;
+use std::time::Duration;
+
+fn main() {
+    let handle = thread::spawn(|| {
+        for i in 1..10 {
+            println!("스레드에서: {}", i);
+            thread::sleep(Duration::from_millis(1));
+        }
+    });
+
+    for i in 1..5 {
+        println!("메인 스레드에서: {}", i);
+        thread::sleep(Duration::from_millis(1));
+    }
+
+    handle.join().unwrap();
+}</code></pre>
+<h2 id="cchannels">c. 채널(Channels)을 사용한 통신</h2>
+<p>채널은 스레드 간에 메시지를 전달하는 동기화 primitive입니다.</p>
+<p>Rust에서는 <code>std::sync::mpsc</code>(multiple producer, single consumer) 모듈을 사용하여 채널을 구현할 수 있습니다.</p>
+<pre><code class="rust">use std::sync::mpsc;
+use std::thread;
+
+fn main() {
+    let (tx, rx) = mpsc::channel();
+
+    thread::spawn(move || {
+        let val = String::from("안녕하세요");
+        tx.send(val).unwrap();
+    });
+
+    let received = rx.recv().unwrap();
+    println!("수신: {}", received);
+}</code></pre>
+<h2 id="dmutex">d. 뮤텍스(Mutex) 및 동기화 프리미티브</h2>
+<p>뮤텍스(Mutex)는 한 번에 하나의 스레드만 데이터에 접근할 수 있도록 하는 동기화 프리미티브입니다.</p>
+<p>Rust에서 뮤텍스를 사용하려면 <code>std::sync::Mutex</code>를 사용합니다.</p>
+<pre><code class="rust">use std::sync::{Arc, Mutex};
+use std::thread;
+
+fn main() {
+    let counter = Arc::new(Mutex::new(0::new()));
+    let mut handles = vec![];
+    for _ in 0..10 {
+    let counter = Arc::clone(&counter);
+    let handle = thread::spawn(move || {
+          let mut num = counter.lock().unwrap();
+          *num += 1;
+      });
+      handles.push(handle);
+    }
+
+    for handle in handles {
+        handle.join().unwrap();
+    }
+
+    println!("결과: {}", *counter.lock().unwrap());
+}</code></pre>
+<h2 id="easyncawait">e. 비동기 프로그래밍 및 async/await</h2>
+<p>비동기 프로그래밍은 동시에 실행되어야 하는 작업을 더 효율적으로 관리할 수 있도록 합니다.</p>
+<p>Rust에서는 <code>async</code>와 <code>await</code> 키워드를 사용하여 비동기 코드를 작성할 수 있습니다.</p>
+<pre><code class="rust">use futures::executor::block_on;
+
+async fn hello_world() {
+    println!("안녕, 비동기 세계!");
+}
+
+fn main() {
+    let future = hello_world(); // async 함수는 호출되면 Future를 반환합니다.
+    block_on(future); // 비동기 함수를 실행하기 위해 블로킹 실행기 사용
+}</code></pre>
+<p>비동기 프로그래밍에서 주요한 것은 비동기 함수와 Future, 실행기(executor) 등의 개념입니다.</p>
+<p>비동기 함수는 async fn으로 정의되며, Future를 반환합니다.</p>
+<p>Future는 실행 결과를 나타내는 값으로, 실행기를 사용하여 평가할 수 있습니다.</p>
+<p>이를 통해 동시에 실행되어야 하는 작업을 효율적으로 관리할 수 있습니다.</p>
+<p>Rust에서는 주로 <code>tokio</code>라는 라이브러를 사용하여 async를 좀 더 쉽게 사용하고 더 많은 기능을 제공 받습니다.</p>
+<p>tokio를 공부하고 싶으신 분들은 <a href="https://tokio.rs/" target="_blank" rel="noopener">@여기</a>를 참고하세요.</p>
             <div class="bottomnav">
-                <span class="back"><a href="chapter_6_ko.html" rel="prev">❮ 이전</a></span>
-                <span class="next"><a href="chapter_7_ko.html" rel="next">다음 ❯</a></span>
+                <span class="back"><a href="chapter_4_ko.html" rel="prev">❮ 이전</a></span>
+                <span class="next"><a href="40_ko.html" rel="next">다음 ❯</a></span>
             </div>
             </div>
             <div class="code"><center><img src="/ferris_lofi.png" alt="Rust Tutorial" width="300" height="100%"></center></div>
