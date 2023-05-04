@@ -50,7 +50,7 @@
 
 
     이렇게 생성된 프로젝트는 바로 빌드 및 실행이 가능한 상태입니다.
-- title: cargo command
+- title: cargo build
   source: >-
     /ferris_lofi.webp
   content_markdown: >
@@ -140,7 +140,7 @@
 
 
     cargo-korea 프로젝트로 이름을 만들어서 배포하면 됩니다. [@만드는 법 참고](https://choiseokwon.tistory.com/376)
-- title: cargo command
+- title: cargo publish
   source: >-
     /ferris_lofi.webp
   content_markdown: |

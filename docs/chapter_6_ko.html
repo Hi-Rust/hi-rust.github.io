@@ -36,14 +36,26 @@
             </div>
             <div class="page">
             <h1>Chapter 6 - 웹 서버</h1>
-            <p>웹 프레임워크 actix-rs 소개</p>
-<p>간단 카카오톡 챗봇 제작</p>
+            <p>이번 챕터에서는 실제로 Rust로 무엇을 만들면서 배워보려고</p>
+<p>Rust의 웹 프레임워크 중 하나인 <a href="https://actix.rs/" target="_blank" rel="noopener">actix-rs</a>에 대해 소개하고자 합니다.</p>
+<p>actix-rs는 Rust의 강력한 타입 시스템과 속도를 활용하여 높은 성능과 안전성을 제공하는 웹 프레임워크입니다.</p>
+<p>actix-rs는 다음과 같은 특징을 가지고 있습니다.</p>
+<ul>
+<li>비동기적이고 멀티스레드인 웹 서버를 쉽게 구축할 수 있습니다.</li>
+<li>HTTP/1.x와 HTTP/2를 모두 지원합니다.</li>
+<li>웹소켓, 스트리밍, 파일 업로드 등 다양한 기능을 제공합니다.</li>
+<li>미들웨어, 플러그인, 데이터 추출기 등을 통해 확장성이 뛰어납니다.</li>
+<li>템플릿 엔진, 데이터베이스, 인증 등과 같은 다른 라이브러리와 쉽게 통합할 수 있습니다.</li>
+</ul>
+<p>실제 어떻게 만들 수 있는지 바로 보고 싶으시면 <a href="https://github.com/Alfex4936/Rust-Server/tree/main/chatbot" target="_blank" rel="noopener">아주대 카카오톡 챗봇을 actix-rs</a>로 만든 버전을 참고하세요.</p>
             <div class="bottomnav">
                 <span class="back"><a href="46_ko.html" rel="prev">❮ 이전</a></span>
                 <span class="next"><a href="48_ko.html" rel="next">다음 ❯</a></span>
             </div>
             </div>
-            <div class="code"><center><img src="/ajou.webp" alt="Rust Tutorial" width="300" height="100%"></center></div>
+            <div class="code">
+            <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=use+actix_web%3A%3A%7Bget%2C+post%2C+web%2C+App%2C+HttpResponse%2C+HttpServer%2C+Responder%7D%3B%0A%0A%23%5Bget%28%22%2F%22%29%5D%0Aasync+fn+hello%28%29+-%3E+impl+Responder+%7B%0A++++HttpResponse%3A%3AOk%28%29.body%28%22Hello+world%21%22%29%0A%7D%0A%0A%23%5Bpost%28%22%2Fecho%22%29%5D%0Aasync+fn+echo%28req_body%3A+String%29+-%3E+impl+Responder+%7B%0A++++HttpResponse%3A%3AOk%28%29.body%28req_body%29%0A%7D%0A%0Aasync+fn+manual_hello%28%29+-%3E+impl+Responder+%7B%0A++++HttpResponse%3A%3AOk%28%29.body%28%22Hey+there%21%22%29%0A%7D%0A%0A%23%5Bactix_web%3A%3Amain%5D%0Aasync+fn+main%28%29+-%3E+std%3A%3Aio%3A%3AResult%3C%28%29%3E+%7B%0A++++HttpServer%3A%3Anew%28%7C%7C+%7B%0A++++++++App%3A%3Anew%28%29%0A++++++++++++.service%28hello%29%0A++++++++++++.service%28echo%29%0A++++++++++++.route%28%22%2Fhey%22%2C+web%3A%3Aget%28%29.to%28manual_hello%29%29%0A++++%7D%29%0A++++.bind%28%28%220.0.0.0%22%2C+8080%29%29%3F+%2F%2F+0.0.0.0%EC%9D%80+%EB%AA%A8%EB%93%A0+IP%2C+%EC%A3%BC%EB%A1%9C+public%ED%95%98%EA%B2%8C+%EC%97%B4+%EB%95%8C+%EC%94%80%0A++++.run%28%29%0A++++.await%0A%7D%0A" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
+            </div>
         </div>
         <script>
         var pres = document.querySelectorAll("pre>code");

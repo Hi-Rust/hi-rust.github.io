@@ -60,7 +60,7 @@
 - title: 변수
   code: >-
     https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=fn%20main()%20%7B%0A%20%20%20%20%2F%2F%20let%20%ED%82%A4%EC%9B%8C%EB%93%9C%EB%A5%BC%20%EC%82%AC%EC%9A%A9%ED%95%98%EC%97%AC%20%EB%B3%80%EC%88%98%EB%A5%BC%20%EC%84%A0%EC%96%B8%ED%95%A9%EB%8B%88%EB%8B%A4.%0A%20%20%20%20let%20x%20%3D%205%3B%20%2F%2F%20x%EC%97%90%205%EB%9D%BC%EB%8A%94%20%EA%B0%92%EC%9D%84%20%ED%95%A0%EB%8B%B9%ED%95%A9%EB%8B%88%EB%8B%A4.%0A%20%20%20%20let%20y%3A%20f32%20%3D%203.14%3B%20%2F%2F%20y%EC%97%90%203.14%EB%9D%BC%EB%8A%94%20%EA%B0%92%EC%9D%84%20%ED%95%A0%EB%8B%B9%ED%95%98%EB%A9%B0%2C%20f32%20%ED%83%80%EC%9E%85%EC%9D%84%20%EB%AA%85%EC%8B%9C%EC%A0%81%EC%9C%BC%EB%A1%9C%20%EC%A7%80%EC%A0%95%ED%95%A9%EB%8B%88%EB%8B%A4.%0A%0A%20%20%20%20%2F%2F%20Rust%EB%8A%94%20%EB%8C%80%EB%B6%80%EB%B6%84%EC%9D%98%20%EA%B2%BD%EC%9A%B0%20%EB%B3%80%EC%88%98%EC%9D%98%20%ED%83%80%EC%9E%85%EC%9D%84%20%EC%B6%94%EB%A1%A0%ED%95%A0%20%EC%88%98%20%EC%9E%88%EC%8A%B5%EB%8B%88%EB%8B%A4.%0A%20%20%20%20%2F%2F%20%EB%A7%8C%EC%95%BD%20%ED%83%80%EC%9E%85%EC%9D%84%20%EB%AA%85%EC%8B%9C%EC%A0%81%EC%9C%BC%EB%A1%9C%20%EC%A7%80%EC%A0%95%ED%95%98%EA%B3%A0%20%EC%8B%B6%EB%8B%A4%EB%A9%B4%20%EB%8B%A4%EC%9D%8C%EA%B3%BC%20%EA%B0%99%EC%9D%B4%20%EC%9E%91%EC%84%B1%ED%95%A9%EB%8B%88%EB%8B%A4.%0A%20%20%20%20let%20z%3A%20i64%20%3D%20100%3B%0A%0A%20%20%20%20%2F%2F%20%EB%B3%80%EC%88%98%EC%9D%98%20%EC%9D%B4%EB%A6%84%EC%9D%84%20%EC%97%AC%EB%9F%AC%20%EB%B2%88%20%EC%82%AC%EC%9A%A9%ED%95%98%EC%97%AC%20%EA%B0%92%EC%9D%84%20%ED%95%A0%EB%8B%B9%ED%95%A0%20%EC%88%98%20%EC%9E%88%EC%8A%B5%EB%8B%88%EB%8B%A4.%0A%20%20%20%20let%20mut%20count%20%3D%200%3B%0A%20%20%20%20count%20%3D%201%3B%0A%20%20%20%20count%20%3D%202%3B%0A%0A%20%20%20%20%2F%2F%20%EB%B3%80%EC%88%98%EC%9D%98%20%ED%83%80%EC%9E%85%EC%9D%84%20%EB%B3%80%EA%B2%BD%ED%95%98%EC%97%AC%20%EC%9E%AC%EC%82%AC%EC%9A%A9%ED%95%A0%20%EC%88%98%20%EC%9E%88%EC%8A%B5%EB%8B%88%EB%8B%A4.%0A%20%20%20%20let%20x%20%3D%20%22hello%22%3B%20%2F%2F%20x%EB%8A%94%20%EB%AC%B8%EC%9E%90%EC%97%B4%20%ED%83%80%EC%9E%85%EC%9E%85%EB%8B%88%EB%8B%A4.%0A%20%20%20%20let%20x%20%3D%205%3B%20%2F%2F%20x%EB%8A%94%20%EC%A0%95%EC%88%98%20%ED%83%80%EC%9E%85%EC%9C%BC%EB%A1%9C%20%EB%B3%80%EA%B2%BD%EB%90%A9%EB%8B%88%EB%8B%A4.%0A%0A%20%20%20%20%2F%2F%20%EB%B3%80%EC%88%98%EC%9D%98%20%EC%9D%B4%EB%A6%84%EC%9D%80%20snake_case%EB%A1%9C%20%EC%9E%91%EC%84%B1%ED%95%A9%EB%8B%88%EB%8B%A4.%0A%20%20%20%20let%20first_name%20%3D%20%22Choi%22%3B%0A%20%20%20%20let%20last_name%20%3D%20%22Blah%22%3B%0A%0A%20%20%20%20%2F%2F%20%EB%B3%80%EC%88%98%EC%9D%98%20%EA%B0%92%EC%9D%84%20%EC%B6%9C%EB%A0%A5%ED%95%A9%EB%8B%88%EB%8B%A4.%0A%20%20%20%20println!(%22x%20is%20%7B%7D%22%2C%20x)%3B%20%2F%2F%20%22x%20is%205%22%EA%B0%80%20%EC%B6%9C%EB%A0%A5%EB%90%A9%EB%8B%88%EB%8B%A4.%0A%7D%0A
-  content_markdown: >
+  content_markdown: |
     Rust에서는 `let` 키워드를 사용하여 변수를 선언합니다.
 
     <div align="center">
@@ -71,17 +71,63 @@
 
     값을 할당할 때, Rust는 거의 대부분 변수의 타입을 추론할 수 있습니다.
 
-
     만약 Rust가 추론하지 못하면 변수의 선언 시 타입을 추가할 수 있습니다.
-
 
     변수의 이름을 여러 번 사용하여 값을 할당할 수 있습니다.
 
-
     이를 "shadowing"이라고 하며, 변수의 타입은 재할당될 때마다 변경됩니다.
 
-
     변수의 이름은 항상 `snake_case`로 작성합니다.
+
+
+    # 팁
+
+    Rust에서는 `let` 키워드를 사용하여 변수를 만들 때, 표현식을 사용할 수 있습니다.
+
+    표현식(expression)은 어떤 값을 반환하는 코드 조각을 의미합니다.
+
+    Rust의 `match`와 `if`문은 표현식입니다. 이런 표현식을 사용하여 변수의 값을 초기화할 수 있습니다.
+
+    ## match 표현식 사용하기
+
+    `match` 표현식은 여러 가지 패턴을 확인하고, 매치되는 패턴에 대한 값을 반환합니다. 예를 들면:
+
+    ```rust
+    let x = 3;
+
+    let a = match x {
+        1 => "one",
+        2 => "two",
+        3 => "three",
+        _ => "other",
+    };
+
+    println!("The value of a is: {}", a);
+    ```
+
+    위의 코드에서, `x` 값이 3이기 때문에 `a`의 값은 "three"가 됩니다.
+
+    ### if 표현식 사용하기
+
+    `if` 표현식을 사용하여 조건에 따라 다른 값을 반환할 수도 있습니다. 예를 들면:
+
+    ```rust
+    let condition = true;
+
+    let a = if condition {
+        "The condition is true"
+    } else {
+        "The condition is false"
+    };
+
+    println!("The value of a is: {}", a);
+    ```
+
+    위의 코드에서, `condition` 값이 `true`이므로 `a`의 값은 "The condition is true"가 됩니다.
+
+    이렇게 표현식을 사용하여 변수를 초기화하는 방식은 Rust에서 흔히 사용되는 문법입니다.
+
+    이를 통해 코드를 간결하게 작성할 수 있고, 변수의 값이 초기화되는 과정을 명확하게 이해할 수 있습니다.
 
 - title: 변수 업데이트
   code: >-
