@@ -36,14 +36,33 @@
             </div>
             <div class="page">
             <h1>Chapter 5 - Cargo</h1>
-            <p>모듈 사용</p>
-<p>간단한 모듈 제작 및 업로드</p>
+            <h2 id="cargo">Cargo 소개</h2>
+<p>Cargo는 Rust의 패키지 관리자 및 빌드 도구입니다.</p>
+<p>Cargo를 사용하면 프로젝트 생성, 의존성 관리, 빌드, 테스트 등의 작업을 쉽게 처리할 수 있습니다.</p>
+<h2 id="">프로젝트 생성 및 구조</h2>
+<h3 id="-1">프로젝트 생성</h3>
+<p><code>cargo new</code> 명령어를 사용하여 새로운 Rust 프로젝트를 생성할 수 있습니다.</p>
+<p>예를 들어, "my_project"라는 이름의 프로젝트를 만들고자 한다면 다음과 같이 입력하세요.</p>
+<p><code>cargo new my_project</code></p>
+<p>이렇게 하면 <code>my_project</code>라는 이름의 폴더가 생성되고, 그 안에 기본적인 Rust 프로젝트 구조가 자동으로 구성됩니다.</p>
+<p>(기본적으론 --bin 이 같이 넘어가서 바이너리 프로젝트 입니다. 라이브러리는 --lib)</p>
+<h3 id="-2">프로젝트 구조</h3>
+<p>생성된 프로젝트의 주요 폴더 및 파일은 다음과 같습니다.</p>
+<ul>
+<li><code>Cargo.toml</code>: 프로젝트의 메타데이터 및 의존성을 관리하는 파일입니다. 이 파일에는 프로젝트의 이름, 버전, 저자 정보와 외부 패키지 의존성 등이 포함됩니다.</li>
+<li><code>src</code>: 소스 코드가 위치하는 폴더입니다. 이 폴더 안에는 기본적으로 <code>main.rs</code> 또는 <code>lib.rs</code> 파일이 생성됩니다. 프로젝트의 메인 소스 코드를 작성하는 곳입니다.</li>
+<li><code>src/main.rs</code>: 바이너리 프로젝트의 메인 함수를 포함하는 소스 파일입니다. 프로젝트가 실행될 때 이 파일의 코드가 호출됩니다.</li>
+<li><code>src/lib.rs</code>: 라이브러리 프로젝트의 루트 모듈을 포함하는 소스 파일입니다. 여기에 라이브러리의 공개 API를 정의하고 구현할 수 있습니다.</li>
+<li><code>target</code>: 빌드 결과물이 저장되는 폴더입니다. Cargo는 이 폴더에 컴파일된 바이너리, 라이브러리, 테스트 결과 등을 저장합니다. (매우 큼)</li>
+</ul>
+<p>이 외에도 <code>.gitignore</code> 파일이 생성되어 Git을 사용할 때 무시해야 하는 파일 및 폴더를 정의합니다.</p>
+<p>이렇게 생성된 프로젝트는 바로 빌드 및 실행이 가능한 상태입니다.</p>
             <div class="bottomnav">
                 <span class="back"><a href="42_ko.html" rel="prev">❮ 이전</a></span>
                 <span class="next"><a href="44_ko.html" rel="next">다음 ❯</a></span>
             </div>
             </div>
-            <div class="code"><center><img src="/ajou.webp" alt="Rust Tutorial" width="300" height="100%"></center></div>
+            <div class="code"><center><img src="/ferris_lofi.webp" alt="Rust Tutorial" width="300" height="100%"></center></div>
         </div>
         <script>
         var pres = document.querySelectorAll("pre>code");

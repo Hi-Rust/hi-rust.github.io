@@ -1,13 +1,237 @@
 - title: Chapter 5 - Cargo
   source: >-
-    /ajou.webp
+    /ferris_lofi.webp
   content_markdown: >
-    모듈 사용
+    ## Cargo 소개
+
+    Cargo는 Rust의 패키지 관리자 및 빌드 도구입니다.
 
 
-    간단한 모듈 제작 및 업로드
-- title: Hey
+    Cargo를 사용하면 프로젝트 생성, 의존성 관리, 빌드, 테스트 등의 작업을 쉽게 처리할 수 있습니다.
+
+
+    ## 프로젝트 생성 및 구조
+
+    ### 프로젝트 생성
+
+    `cargo new` 명령어를 사용하여 새로운 Rust 프로젝트를 생성할 수 있습니다.
+
+
+    예를 들어, "my_project"라는 이름의 프로젝트를 만들고자 한다면 다음과 같이 입력하세요.
+
+
+    `
+    cargo new my_project
+    `
+
+
+    이렇게 하면 `my_project`라는 이름의 폴더가 생성되고, 그 안에 기본적인 Rust 프로젝트 구조가 자동으로 구성됩니다.
+
+
+    (기본적으론 --bin 이 같이 넘어가서 바이너리 프로젝트 입니다. 라이브러리는 --lib)
+
+
+    ### 프로젝트 구조
+
+    생성된 프로젝트의 주요 폴더 및 파일은 다음과 같습니다.
+
+    - `Cargo.toml`: 프로젝트의 메타데이터 및 의존성을 관리하는 파일입니다. 이 파일에는 프로젝트의 이름, 버전, 저자 정보와 외부 패키지 의존성 등이 포함됩니다.
+
+    - `src`: 소스 코드가 위치하는 폴더입니다. 이 폴더 안에는 기본적으로 `main.rs` 또는 `lib.rs` 파일이 생성됩니다. 프로젝트의 메인 소스 코드를 작성하는 곳입니다.
+
+    - `src/main.rs`: 바이너리 프로젝트의 메인 함수를 포함하는 소스 파일입니다. 프로젝트가 실행될 때 이 파일의 코드가 호출됩니다.
+
+    - `src/lib.rs`: 라이브러리 프로젝트의 루트 모듈을 포함하는 소스 파일입니다. 여기에 라이브러리의 공개 API를 정의하고 구현할 수 있습니다.
+
+    - `target`: 빌드 결과물이 저장되는 폴더입니다. Cargo는 이 폴더에 컴파일된 바이너리, 라이브러리, 테스트 결과 등을 저장합니다. (매우 큼)
+
+
+    이 외에도 `.gitignore` 파일이 생성되어 Git을 사용할 때 무시해야 하는 파일 및 폴더를 정의합니다.
+
+
+    이렇게 생성된 프로젝트는 바로 빌드 및 실행이 가능한 상태입니다.
+- title: cargo command
   source: >-
-    /ferris_lofi.png
+    /ferris_lofi.webp
   content_markdown: >
-    CSW
+    # 의존성 관리
+
+    ### Cargo.toml 파일을 사용한 외부 패키지 의존성 추가
+
+    `Cargo.toml` 파일을 사용하여 프로젝트에 외부 패키지 의존성을 추가할 수 있습니다.
+
+
+    `[dependencies]` 섹션에 패키지 이름과 원하는 버전을 기록하면 됩니다.
+
+
+    예를 들어, `serde` 패키지를 추가하려면 다음과 같이 `Cargo.toml` 파일에 기록합니다. (cargo add serde)
+
+    <pre><code class="toml">[dependencies]
+
+    serde = "1.0"
+    </code></pre>
+
+    이렇게 하면 Cargo는 프로젝트를 빌드할 때 자동으로 `serde` 패키지를 다운로드하고 컴파일하여 프로젝트와 함께 사용할 수 있게 합니다.
+
+
+    [@아주대학교 챗봇의 Cargo.tmol](https://github.com/Alfex4936/Rust-Server/blob/main/chatbot/Cargo.toml)
+
+
+    ### 의존성 업데이트와 관리 방법
+
+    `cargo update` 명령어를 사용하면 프로젝트의 의존성을 최신 상태로 업데이트할 수 있습니다.
+
+
+    이 명령어는 `Cargo.lock` 파일에 기록된 의존성 버전을 업데이트하며, 프로젝트 빌드 시 새로운 의존성 버전이 사용됩니다.
+
+    <pre><code class="bash">cargo update</code></pre>
+
+
+    # 빌드 및 실행
+
+    ### cargo 명령어를 사용한 프로젝트 빌드와 실행 방법
+
+
+    `cargo build` 명령어를 사용하여 프로젝트를 빌드할 수 있습니다.
+
+
+    이 명령어는 프로젝트와 그 의존성을 컴파일하고 빌드 결과물을 `target` 폴더에 저장합니다. (target/debug 폴더에 바이너리)
+
+
+    <pre><code class="bash">cargo build</code></pre>
+
+
+    `cargo run` 명령어를 사용하면 프로젝트를 빌드한 후 바로 실행할 수 있습니다. (단축은 r)
+
+
+    이 명령어는 `cargo build`와 동일한 빌드 과정을 거친 후 생성된 실행 파일을 호출합니다.
+
+
+    <pre><code class="bash">cargo r</code></pre>
+
+
+    ### 릴리즈 빌드와 디버그 빌드의 차이
+
+    Cargo는 기본적으로 디버그 빌드를 수행합니다.
+
+
+    디버그 빌드는 최적화되지 않은 상태로 컴파일되며, 디버깅 정보가 포함됩니다.
+
+
+    따라서 실행 속도는 느리지만 디버깅을 용이하게 합니다.
+
+
+    릴리즈 빌드는 최적화를 적용하여 더 빠른 실행 속도를 가지지만, 디버깅 정보가 포함되지 않습니다.
+
+
+    프로덕션 환경에 배포하기 전에 릴리즈 빌드를 사용하는 것이 좋습니다.
+
+
+    릴리즈 빌드를 수행하려면 `--release` 플래그를 사용하세요. (target/release 폴더에 바이너리)
+
+
+    <pre><code class="bash">cargo build -r</code></pre>
+
+
+    # 정보
+
+
+    cargo korea 처럼 원하는 cargo subcommand를 만들기 위해서는
+
+
+    cargo-korea 프로젝트로 이름을 만들어서 배포하면 됩니다. [@만드는 법 참고](https://choiseokwon.tistory.com/376)
+- title: cargo command
+  source: >-
+    /ferris_lofi.webp
+  content_markdown: |
+    # 테스트 작성 및 실행
+
+    ## cargo test 명령어를 사용한 테스트 코드 실행 방법
+
+    `cargo test` 명령어를 사용하여 프로젝트의 테스트 코드를 실행할 수 있습니다.
+
+    이 명령어는 프로젝트와 그 의존성을 컴파일한 후, 프로젝트 내의 모든 테스트 함수를 실행합니다.
+
+    ```sh
+    cargo test
+    ```
+
+    ## 테스트 코드 작성 가이드
+
+    테스트 코드는 `#[test]` 속성을 사용하여 작성할 수 있습니다.
+
+    일반적으로 테스트 함수는 프로젝트의 `src` 폴더와 같은 경로에 위치한 `tests` 폴더 내에 작성됩니다.
+
+    다음은 간단한 테스트 함수 예제입니다.
+
+    ```rust
+    #[cfg(test)]
+    mod tests {
+        #[test]
+        fn it_works() {
+            assert_eq!(2 + 2, 4);
+        }
+    }
+    ```
+
+    # Crates.io 소개
+
+    ## Rust의 패키지 저장소 및 사용 방법
+
+    Crates.io는 Rust의 공식 패키지 저장소로, Rust 라이브러리와 애플리케이션을 공유하고 검색할 수 있는 중앙 집중식 저장소입니다.
+
+    `Cargo.toml` 파일의 `[dependencies]` 섹션에 패키지 이름과 원하는 버전을 추가함으로써 저장소에서 패키지를 가져올 수 있습니다.
+
+
+    ## 자신의 라이브러리 공개 및 배포 방법
+
+    자신의 라이브러리를 Crates.io에 공개하고 배포하려면 다음 단계를 수행하세요.
+
+    1. 먼저, `Cargo.toml` 파일에 라이브러리에 대한 메타데이터를 작성하세요. 예를 들면:
+
+    ```toml
+    [package]
+    name = "your_library_name"
+    version = "0.1.0"
+    authors = ["Your Name <your.email@example.com>"]
+    edition = "2021"
+    description = "My app!!!!"
+    ```
+
+    2. 라이브러리를 Crates.io에 업로드하려면 먼저 [Crates.io](https://crates.io/)에서 계정을 생성하고,
+
+    Cargo CLI 도구를 사용하여 로그인하세요.
+
+    ```sh
+    cargo login your-api-token
+    ```
+
+    _API 토큰은 Crates.io 계정 설정 페이지에서 발급받을 수 있습니다._
+
+    3. 라이브러리를 Crates.io에 게시하세요.
+
+    ```sh
+    cargo publish
+    ```
+
+    이제 라이브러리가 Crates.io에 등록되었으며, 다른 사용자들이 이를 의존성으로 사용할 수 있습니다.
+
+    # 정보
+
+    라이브러리를 배포하고 IDE에서 함수 주석 같은 것을 만들 때는
+
+    `///` 나 `//!`로 마크다운 형식으로 만들면 됩니다.
+
+    ```rust
+    /// # Hello
+    fn hello() {}
+    ```
+- title: Chapter 5 - Conclusion
+  source: >-
+    /ferris_lofi.webp
+  content_markdown: |
+    자신만의 라이브러리를 만들고 퍼블릭에 업로드 해보았습니다.
+
+    여러분들의 독창적인 아이디어로 프로젝트를 만들어 Rust 커뮤니티에 기여하는
+
+    진정한 **Rustacean**이 되보세요!

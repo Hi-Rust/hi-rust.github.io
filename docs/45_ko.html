@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+    <html lang="ko">
+    <head>
+        <title>Rust 튜토리얼 - 자기주도프로젝트</title>
+
+        <meta charset="UTF-8">
+        <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+        <meta content="utf-8" http-equiv="encoding">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+        <meta name="keywords" content="Rust, Programming, Learning">
+        <meta name="description" content="Rust tutorial website based on tour_of_rust by 최석원">
+        <meta name="theme-color" content="#ff6801"/>
+        <meta http-equiv="Cache-Control" content="max-age=3600">
+        
+        <link rel="stylesheet" href="tour.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/night-owl.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
+        
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="/manifest" href="./site.webmanifest">
+        
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.7.0/highlight.min.js"></script>
+
+        <script src="./tour.js" defer></script>
+        <!-- <script>hljs.highlightAll();</script> -->
+        <script src="./highlight.badge.min.js"></script>
+    </head>
+    <body>
+        <div class="tour">
+            <div class="header">
+                <span class="title"><a href="index.html">Rust 튜토리얼</a></span>
+                <span class="nav">
+                <span class="toc"><a href="TOC_ko.html">목차</a></span>
+            </div>
+            <div class="page">
+            <h1>cargo command</h1>
+            <h1 id="">테스트 작성 및 실행</h1>
+<h2 id="cargotest">cargo test 명령어를 사용한 테스트 코드 실행 방법</h2>
+<p><code>cargo test</code> 명령어를 사용하여 프로젝트의 테스트 코드를 실행할 수 있습니다.</p>
+<p>이 명령어는 프로젝트와 그 의존성을 컴파일한 후, 프로젝트 내의 모든 테스트 함수를 실행합니다.</p>
+<pre><code class="sh">cargo test</code></pre>
+<h2 id="-1">테스트 코드 작성 가이드</h2>
+<p>테스트 코드는 <code>#[test]</code> 속성을 사용하여 작성할 수 있습니다.</p>
+<p>일반적으로 테스트 함수는 프로젝트의 <code>src</code> 폴더와 같은 경로에 위치한 <code>tests</code> 폴더 내에 작성됩니다.</p>
+<p>다음은 간단한 테스트 함수 예제입니다.</p>
+<pre><code class="rust">#[cfg(test)]
+mod tests {
+    #[test]
+    fn it_works() {
+        assert_eq!(2 + 2, 4);
+    }
+}</code></pre>
+<h1 id="cratesio">Crates.io 소개</h1>
+<h2 id="rust">Rust의 패키지 저장소 및 사용 방법</h2>
+<p>Crates.io는 Rust의 공식 패키지 저장소로, Rust 라이브러리와 애플리케이션을 공유하고 검색할 수 있는 중앙 집중식 저장소입니다.</p>
+<p><code>Cargo.toml</code> 파일의 <code>[dependencies]</code> 섹션에 패키지 이름과 원하는 버전을 추가함으로써 저장소에서 패키지를 가져올 수 있습니다.</p>
+<h2 id="-2">자신의 라이브러리 공개 및 배포 방법</h2>
+<p>자신의 라이브러리를 Crates.io에 공개하고 배포하려면 다음 단계를 수행하세요.</p>
+<ol>
+<li>먼저, <code>Cargo.toml</code> 파일에 라이브러리에 대한 메타데이터를 작성하세요. 예를 들면:</li>
+</ol>
+<pre><code class="toml">[package]
+name = "your_library_name"
+version = "0.1.0"
+authors = ["Your Name &lt;your.email@example.com>"]
+edition = "2021"
+description = "My app!!!!"</code></pre>
+<ol start="2">
+<li>라이브러리를 Crates.io에 업로드하려면 먼저 <a href="https://crates.io/" target="_blank" rel="noopener">Crates.io</a>에서 계정을 생성하고,</li>
+</ol>
+<p>Cargo CLI 도구를 사용하여 로그인하세요.</p>
+<pre><code class="sh">cargo login your-api-token</code></pre>
+<p><em>API 토큰은 Crates.io 계정 설정 페이지에서 발급받을 수 있습니다.</em></p>
+<ol start="3">
+<li>라이브러리를 Crates.io에 게시하세요.</li>
+</ol>
+<pre><code class="sh">cargo publish</code></pre>
+<p>이제 라이브러리가 Crates.io에 등록되었으며, 다른 사용자들이 이를 의존성으로 사용할 수 있습니다.</p>
+<h1 id="-3">정보</h1>
+<p>라이브러리를 배포하고 IDE에서 함수 주석 같은 것을 만들 때는</p>
+<p><code>///</code> 나 <code>//!</code>로 마크다운 형식으로 만들면 됩니다.</p>
+<pre><code class="rust">/// # Hello
+fn hello() {}</code></pre>
+            <div class="bottomnav">
+                <span class="back"><a href="44_ko.html" rel="prev">❮ 이전</a></span>
+                <span class="next"><a href="46_ko.html" rel="next">다음 ❯</a></span>
+            </div>
+            </div>
+            <div class="code"><center><img src="/ferris_lofi.webp" alt="Rust Tutorial" width="300" height="100%"></center></div>
+        </div>
+        <script>
+        var pres = document.querySelectorAll("pre>code");
+        for (var i = 0; i < pres.length; i++) {
+            hljs.highlightElement(pres[i]);
+        }
+        var options = {
+            loadDelay: 0,
+            copyIconClass: "far fa-clipboard",
+            checkIconClass: "fa fa-check text-success",
+            blogURL: "http://rust-study.ajousw.kr/"
+        };
+        window.highlightJsBadge(options);
+        </script>
+
+        <footer>
+          <p><a target="_blank" rel="noopener" href="https://www.youtube.com/c/SoftwareToolTime">아주대학교 Software Tool Time</a> - Rust 튜토리얼 (Basic)</p>
+        </footer>
+    </body>
+</html>

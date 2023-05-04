@@ -35,14 +35,45 @@
                 <span class="toc"><a href="TOC_ko.html">목차</a></span>
             </div>
             <div class="page">
-            <h1>Hey</h1>
-            <p>CSW</p>
+            <h1>cargo command</h1>
+            <h1 id="">의존성 관리</h1>
+<h3 id="cargotoml">Cargo.toml 파일을 사용한 외부 패키지 의존성 추가</h3>
+<p><code>Cargo.toml</code> 파일을 사용하여 프로젝트에 외부 패키지 의존성을 추가할 수 있습니다.</p>
+<p><code>[dependencies]</code> 섹션에 패키지 이름과 원하는 버전을 기록하면 됩니다.</p>
+<p>예를 들어, <code>serde</code> 패키지를 추가하려면 다음과 같이 <code>Cargo.toml</code> 파일에 기록합니다. (cargo add serde)</p>
+<pre><code class="toml">[dependencies]
+serde = "1.0" </code></pre>
+<p>이렇게 하면 Cargo는 프로젝트를 빌드할 때 자동으로 <code>serde</code> 패키지를 다운로드하고 컴파일하여 프로젝트와 함께 사용할 수 있게 합니다.</p>
+<p><a href="https://github.com/Alfex4936/Rust-Server/blob/main/chatbot/Cargo.toml" target="_blank" rel="noopener">@아주대학교 챗봇의 Cargo.tmol</a></p>
+<h3 id="-1">의존성 업데이트와 관리 방법</h3>
+<p><code>cargo update</code> 명령어를 사용하면 프로젝트의 의존성을 최신 상태로 업데이트할 수 있습니다.</p>
+<p>이 명령어는 <code>Cargo.lock</code> 파일에 기록된 의존성 버전을 업데이트하며, 프로젝트 빌드 시 새로운 의존성 버전이 사용됩니다.</p>
+<pre><code class="bash">cargo update</code></pre>
+<h1 id="-2">빌드 및 실행</h1>
+<h3 id="cargo">cargo 명령어를 사용한 프로젝트 빌드와 실행 방법</h3>
+<p><code>cargo build</code> 명령어를 사용하여 프로젝트를 빌드할 수 있습니다.</p>
+<p>이 명령어는 프로젝트와 그 의존성을 컴파일하고 빌드 결과물을 <code>target</code> 폴더에 저장합니다. (target/debug 폴더에 바이너리)</p>
+<pre><code class="bash">cargo build</code></pre>
+<p><code>cargo run</code> 명령어를 사용하면 프로젝트를 빌드한 후 바로 실행할 수 있습니다. (단축은 r)</p>
+<p>이 명령어는 <code>cargo build</code>와 동일한 빌드 과정을 거친 후 생성된 실행 파일을 호출합니다.</p>
+<pre><code class="bash">cargo r</code></pre>
+<h3 id="-3">릴리즈 빌드와 디버그 빌드의 차이</h3>
+<p>Cargo는 기본적으로 디버그 빌드를 수행합니다.</p>
+<p>디버그 빌드는 최적화되지 않은 상태로 컴파일되며, 디버깅 정보가 포함됩니다.</p>
+<p>따라서 실행 속도는 느리지만 디버깅을 용이하게 합니다.</p>
+<p>릴리즈 빌드는 최적화를 적용하여 더 빠른 실행 속도를 가지지만, 디버깅 정보가 포함되지 않습니다.</p>
+<p>프로덕션 환경에 배포하기 전에 릴리즈 빌드를 사용하는 것이 좋습니다.</p>
+<p>릴리즈 빌드를 수행하려면 <code>--release</code> 플래그를 사용하세요. (target/release 폴더에 바이너리)</p>
+<pre><code class="bash">cargo build -r</code></pre>
+<h1 id="-4">정보</h1>
+<p>cargo korea 처럼 원하는 cargo subcommand를 만들기 위해서는</p>
+<p>cargo-korea 프로젝트로 이름을 만들어서 배포하면 됩니다. <a href="https://choiseokwon.tistory.com/376" target="_blank" rel="noopener">@만드는 법 참고</a></p>
             <div class="bottomnav">
                 <span class="back"><a href="chapter_5_ko.html" rel="prev">❮ 이전</a></span>
-                <span class="next"><a href="chapter_6_ko.html" rel="next">다음 ❯</a></span>
+                <span class="next"><a href="45_ko.html" rel="next">다음 ❯</a></span>
             </div>
             </div>
-            <div class="code"><center><img src="/ferris_lofi.png" alt="Rust Tutorial" width="300" height="100%"></center></div>
+            <div class="code"><center><img src="/ferris_lofi.webp" alt="Rust Tutorial" width="300" height="100%"></center></div>
         </div>
         <script>
         var pres = document.querySelectorAll("pre>code");

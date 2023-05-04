@@ -12,6 +12,15 @@ const rustExtension = {
     `<pre><code class="rust">${match.trim().replace("<", "&lt;")}</code></pre>`,
 };
 
+const langExtension = {
+  type: "lang",
+  regex: /```(\w+)\s*([^]+?)```/gi,
+  replace: (s, lang, content) =>
+    `<pre><code class="${lang.trim()}">${content
+      .trim()
+      .replace("<", "&lt;")}</code></pre>`,
+};
+
 const centerImageExtension = {
   type: "lang",
   regex: /%center\s*-\s*([^\s%]+)(?:\s*,\s*([^%\n]+))?\s*%/gi,
@@ -91,7 +100,7 @@ const aBinder = [
 ];
 
 const converter = new showdown.Converter({
-  extensions: [...aBinder, rustExtension, centerImageExtension],
+  extensions: [...aBinder, rustExtension, centerImageExtension, langExtension],
 });
 converter.setOption("parseImgDimensions", true);
 converter.setOption("simpleLineBreaks", true);
