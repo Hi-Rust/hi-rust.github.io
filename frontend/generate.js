@@ -216,7 +216,7 @@ function template(
                 ? `<div class="code">
             <iframe id="rust-playground" width="100%" src="${code}" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
             </div>`
-                : `<div class="code"><center><img src="${source}" alt="Rust Tutorial" width="300" height="100%"></center></div>`
+                : `<div class="code"><center><img src="${source}" alt="Rust Tutorial" width="80%" height="100%"></center></div>`
             }
         </div>
         <script>

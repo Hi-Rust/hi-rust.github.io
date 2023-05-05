@@ -35,73 +35,55 @@
                 <span class="toc"><a href="TOC_ko.html">목차</a></span>
             </div>
             <div class="page">
-            <h1>해시맵(HashMap)</h1>
-            <p>해시맵은 키-값 쌍을 저장하는 데 사용되는 컬렉션입니다.</p>
-<p>해시 함수를 사용하여 키를 해싱하여 값을 빠르게 찾을 수 있습니다.</p>
-<p>해시맵은 삽입, 검색 및 삭제 작업에 대한 평균 시간 복잡도가 <code>O(1)</code>입니다.</p>
-<h2 id="a">a. 해시맵 생성 및 초기화</h2>
-<p>해시맵을 생성하려면 다음과 같은 방법을 사용할 수 있습니다.</p>
-<pre><code class="rust">use std::collections::HashMap;
+            <h1>벡터의 반복자(Iterators)</h1>
+            <p>벡터와 같은 Iterator trait가 구현된 것들에는 요소들을 반복하고 처리할 때 사용할 수 있는 여러 가지 반복자 메서드가 있습니다.</p>
+<p><code>iter()</code>, <code>iter_mut()</code>, <code>into_iter()</code>는 각각 불변 참조, 가변 참조, 소유권 이동을 수행하는 반복자를 생성합니다.</p>
+<h3 id="1iter">1. iter()</h3>
+<p><code>iter()</code> 메서드는 벡터의 각 요소에 대한 불변 참조를 생성하는 반복자를 반환합니다.</p>
+<p>이 반복자는 벡터의 요소를 읽기 전용으로 사용할 때 유용합니다.</p>
+<pre><code class="rust">let vec = vec![1, 2, 3, 4, 5];
 
-// 빈 해시맵 생성
-let mut scores: HashMap&lt;String, u32> = HashMap::new();
+for element in vec.iter() {
+    println!("요소: {}", element);
+}</code></pre>
+<h3 id="2iter_mut">2. iter_mut()</h3>
+<p><code>iter_mut()</code> 메서드는 벡터의 각 요소에 대한 가변 참조를 생성하는 반복자를 반환합니다.</p>
+<p>이 반복자는 벡터의 요소를 수정할 때 유용합니다.</p>
+<pre><code class="rust">let mut vec = vec![1, 2, 3, 4, 5];
 
-// 초기 값이 있는 해시맵 생성
-let scores = vec![("Alice", 50), ("Bob", 60)]
-    .into_iter()
-    .map(|(k, v)| (k.to_string(), v))
-    .collect::<HashMap<String, u32>>();</code></pre>
-<h2 id="b">b. 키-값 쌍 삽입 및 업데이트</h2>
-<p>해시맵에 키-값 쌍을 삽입하거나 업데이트하려면 <code>insert</code> 메서드를 사용합니다.</p>
-<pre><code class="rust">// 키-값 쌍 삽입
-scores.insert("Alice".to_string(), 50);
-scores.insert("Bob".to_string(), 60);
+for element in vec.iter_mut() {
+    *element *= 2; // 각 요소에 2를 곱함
+}
+println!("변경된 벡터: {:?}", vec);</code></pre>
+<h3 id="3into_iter">3. into_iter()</h3>
+<p><code>into_iter()</code> 메서드는 벡터의 각 요소의 소유권을 이동하는 반복자를 반환합니다.</p>
+<p>이 반복자는 벡터의 요소를 소유권을 이동시키며 처리할 때 유용합니다.</p>
+<p>이를 통해 벡터의 요소를 다른 데이터 구조로 쉽게 옮길 수 있습니다.</p>
+<pre><code class="rust">let vec = vec!["a".to_string(), "b".to_string(), "c".to_string()];
 
-// 키-값 쌍 업데이트
-scores.insert("Alice".to_string(), 55);</code></pre>
-<h2 id="c">c. 값에 접근하고 삭제하기</h2>
-<p>해시맵에서 값을 접근하거나 삭제하려면 <code>get</code> 또는 <code>remove</code> 메서드를 사용합니다.</p>
-<pre><code class="rust">// 값에 접근하기
-if let Some(score) = scores.get("Alice") {
-    println!("Alice의 점수: {}", score);
+let mut uppercased_vec: Vec&lt;String> = Vec::new();
+
+for element in vec.into_iter() {
+    uppercased_vec.push(element.to_uppercase());
 }
 
-// 값 삭제하기
-scores.remove("Alice");</code></pre>
-<h2 id="d">d. 해시맵 순회하기</h2>
-<p>해시맵의 키-값 쌍을 반복하려면 <code>for</code> 루프를 사용합니다.</p>
-<pre><code class="rust">for (key, value) in &scores {
-    println!("{}: {}", key, value);
-}</code></pre>
-<h2 id="e">e. 일반적인 해시맵 작업</h2>
-<p>해시맵에서 자주 사용되는 작업들은 다음과 같습니다.</p>
+println!("대문자로 변경된 벡터: {:?}", uppercased_vec);</code></pre>
+<p><code>into_iter()</code>를 사용할 때 원래의 벡터는 더 이상 사용할 수 없습니다.</p>
+<p>소유권이 이동되어 원래 벡터에 대한 참조가 무효화되기 때문입니다.</p>
+<h2 id="">차이점</h2>
 <ul>
-<li><code>contains_key</code>: 특정 키가 해시맵에 있는지 확인합니다.</li>
-<li><code>keys</code>: 해시맵의 모든 키를 반환합니다.</li>
-<li><code>values</code>: 해시맵의 모든 값을 반환합니다.</li>
+<li><code>iter()</code>: 벡터의 요소에 대한 불변 참조를 생성하는 반복자를 반환합니다. 요소를 읽기 전용으로 사용할 때 사용됩니다.</li>
+<li><code>iter_mut()</code>: 벡터의 요소에 대한 가변 참조를 생성하는 반복자를 반환합니다. 요소를 수정할 때 사용됩니다.</li>
+<li><code>into_iter()</code>: 벡터의 요소의 소유권을 이동하는 반복자를 반환합니다. 요소를 소유권을 이동시키며 처리할 때 사용됩니다.</li>
 </ul>
-<pre><code class="rust">// 키가 해시맵에 있는지 확인하기
-if scores.contains_key("Alice") {
-    println!("Alice의 점수가 있습니다.");
-}
-
-// 해시맵의 모든 키 출력하기
-for key in scores.keys() {
-    println!("키: {}", key);
-}
-
-// 해시맵의 모든 값 출력하기
-for value in scores.values() {
-    println!("값: {}", value);
-}</code></pre>
-<p>더 많은 메소드는 <a href="https://doc.rust-lang.org/std/collections/struct.HashMap.html" target="_blank" rel="noopener">공식 문서</a>를 참고하세요.</p>
+<p>이러한 반복자들은 각각 다양한 상황에 따라 벡터를 처리할 수 있습니다.</p>
             <div class="bottomnav">
                 <span class="back"><a href="34_ko.html" rel="prev">❮ 이전</a></span>
                 <span class="next"><a href="36_ko.html" rel="next">다음 ❯</a></span>
             </div>
             </div>
             <div class="code">
-            <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=%2F%2F+%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC+%EA%B0%80%EC%A0%B8%EC%98%A4%EA%B8%B0%0D%0Ause+std%3A%3Acollections%3A%3AHashMap%3B%0D%0A%0D%0Afn+main%28%29+%7B%0D%0A++++%2F%2F+%EB%B2%A1%ED%84%B0+%EC%83%9D%EC%84%B1%0D%0A++++let+mut+names%3A+Vec%3CString%3E+%3D+Vec%3A%3Anew%28%29%3B%0D%0A%0D%0A++++%2F%2F+%EB%AC%B8%EC%9E%90%EC%97%B4%EC%9D%84+%EB%B2%A1%ED%84%B0%EC%97%90+%EC%B6%94%EA%B0%80%0D%0A++++names.push%28%22%EC%B2%A0%EC%88%98%22.to_string%28%29%29%3B%0D%0A++++names.push%28%22%EC%98%81%ED%9D%AC%22.to_string%28%29%29%3B%0D%0A++++names.push%28%22%EB%AF%BC%EC%88%98%22.to_string%28%29%29%3B%0D%0A%0D%0A++++%2F%2F+%ED%95%B4%EC%8B%9C%EB%A7%B5+%EC%83%9D%EC%84%B1%0D%0A++++let+mut+ages%3A+HashMap%3CString%2C+u32%3E+%3D+HashMap%3A%3Anew%28%29%3B%0D%0A%0D%0A++++%2F%2F+%EB%AC%B8%EC%9E%90%EC%97%B4%EA%B3%BC+%EC%97%B0%EA%B4%80%EB%90%9C+%EA%B0%92%EC%9D%84+%ED%95%B4%EC%8B%9C%EB%A7%B5%EC%97%90+%EC%B6%94%EA%B0%80%0D%0A++++ages.insert%28%22%EC%B2%A0%EC%88%98%22.to_string%28%29%2C+25%29%3B%0D%0A++++ages.insert%28%22%EC%98%81%ED%9D%AC%22.to_string%28%29%2C+24%29%3B%0D%0A++++ages.insert%28%22%EB%AF%BC%EC%88%98%22.to_string%28%29%2C+26%29%3B%0D%0A%0D%0A++++%2F%2F+%EB%B2%A1%ED%84%B0%EC%9D%98+%EC%9A%94%EC%86%8C%EB%93%A4%EC%9D%84+%EB%B0%98%EB%B3%B5%ED%95%98%EB%A9%B0%2C+%EA%B0%81+%EC%9D%B4%EB%A6%84%EC%97%90+%EB%8C%80%ED%95%9C+%EB%82%98%EC%9D%B4%EB%A5%BC+%EC%B6%9C%EB%A0%A5%0D%0A++++for+name+in+names.iter%28%29+%7B%0D%0A++++++++%2F%2F+%ED%95%B4%EC%8B%9C%EB%A7%B5%EC%97%90%EC%84%9C+%EC%9D%B4%EB%A6%84%EC%97%90+%ED%95%B4%EB%8B%B9%ED%95%98%EB%8A%94+%EB%82%98%EC%9D%B4%EB%A5%BC+%EA%B0%80%EC%A0%B8%EC%98%B4%0D%0A++++++++let+age+%3D+ages.get%28name%29.unwrap%28%29%3B%0D%0A%0D%0A++++++++%2F%2F+%EA%B2%B0%EA%B3%BC+%EC%B6%9C%EB%A0%A5%0D%0A++++++++println%21%28%22%7B%7D%EB%8B%98%EC%9D%98+%EB%82%98%EC%9D%B4%EB%8A%94+%7B%7D%EC%82%B4%EC%9E%85%EB%8B%88%EB%8B%A4.%22%2C+name%2C+age%29%3B%0D%0A++++%7D%0D%0A%7D%0D%0A" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
+            <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=fn+main%28%29+%7B%0A++++let+vec+%3D+vec%21%5B1%2C+2%2C+3%2C+4%2C+5%5D%3B%0A++++println%21%28%22%EB%B3%80%EA%B2%BD+%EC%A0%84+%EB%B2%A1%ED%84%B0%3A+%7B%3A%3F%7D%22%2C+vec%29%3B%0A%0A++++for+element+in+vec.iter%28%29+%7B%0A++++++++println%21%28%22%EC%9A%94%EC%86%8C%3A+%7B%7D%22%2C+element%29%3B%0A++++%7D%0A%0A++++let+mut+vec+%3D+vec%21%5B1%2C+2%2C+3%2C+4%2C+5%5D%3B%0A%0A++++for+element+in+vec.iter_mut%28%29+%7B%0A++++++++*element+*%3D+2%3B+%2F%2F+%EA%B0%81+%EC%9A%94%EC%86%8C%EC%97%90+2%EB%A5%BC+%EA%B3%B1%ED%95%A8%0A++++%7D%0A++++%0A++++println%21%28%22%EB%B3%80%EA%B2%BD%EB%90%9C+%EB%B2%A1%ED%84%B0%3A+%7B%3A%3F%7D%22%2C+vec%29%3B%0A%0A++++let+vec+%3D+vec%21%5B%22a%22.to_string%28%29%2C+%22b%22.to_string%28%29%2C+%22c%22.to_string%28%29%5D%3B%0A%0A++++let+mut+uppercased_vec%3A+Vec%3CString%3E+%3D+Vec%3A%3Anew%28%29%3B%0A%0A++++for+element+in+vec.into_iter%28%29+%7B%0A++++++++uppercased_vec.push%28element.to_uppercase%28%29%29%3B%0A++++%7D%0A++++%0A++++%2F%2F+vec%EC%9D%98+%EC%86%8C%EC%9C%A0%EA%B6%8C%EC%9D%B4+%EB%84%98%EC%96%B4%EA%B0%80%EC%84%9C+%EC%82%AC%EC%9A%A9%ED%95%A0+%EC%88%98+%EC%97%86%EC%8A%B5%EB%8B%88%EB%8B%A4%0A++++println%21%28%22%EB%8C%80%EB%AC%B8%EC%9E%90%EB%A1%9C+%EB%B3%80%EA%B2%BD%EB%90%9C+%EB%B2%A1%ED%84%B0%3A+%7B%3A%3F%7D%22%2C+uppercased_vec%29%3B%0A%7D%0A" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
             </div>
         </div>
         <script>

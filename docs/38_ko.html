@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+    <html lang="ko">
+    <head>
+        <title>Rust 튜토리얼 - 자기주도프로젝트</title>
+
+        <meta charset="UTF-8">
+        <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+        <meta content="utf-8" http-equiv="encoding">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+        <meta name="keywords" content="Rust, Programming, Learning">
+        <meta name="description" content="Rust tutorial website based on tour_of_rust by 최석원">
+        <meta name="theme-color" content="#ff6801"/>
+        <meta http-equiv="Cache-Control" content="max-age=3600">
+        
+        <link rel="stylesheet" href="tour.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/night-owl.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
+        
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="/manifest" href="./site.webmanifest">
+        
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.7.0/highlight.min.js"></script>
+
+        <script src="./tour.js" defer></script>
+        <!-- <script>hljs.highlightAll();</script> -->
+        <script src="./highlight.badge.min.js"></script>
+    </head>
+    <body>
+        <div class="tour">
+            <div class="header">
+                <span class="title"><a href="index.html">Rust 튜토리얼</a></span>
+                <span class="nav">
+                <span class="toc"><a href="TOC_ko.html">목차</a></span>
+            </div>
+            <div class="page">
+            <h1>Chapter 3 - Conclusion</h1>
+            <p>다음은 여러분들이 Vec와 HashMap을 사용하여 문제를 해결해 보는 고급 문제입니다.</p>
+<p>아래 주석을 참고하여 코드를 완성해보세요.</p>
+<p>문제 설명:<br />
+이름과 점수가 주어진 학생들의 정보를 Vec와 HashMap을 사용해 관리하고, 평균 점수를 계산하고 출력하는 프로그램을 작성하세요.</p>
+<ol>
+<li>Vec를 사용하여 학생들의 이름 목록을 저장하세요.</li>
+<li>HashMap을 사용하여 학생들의 이름과 점수를 저장하세요.</li>
+<li>학생들의 평균 점수를 계산하고 출력하세요.</li>
+</ol>
+<div> <button type="button" class="collapsible">정답 보기</button> <div class="content"> <p> <pre><code class="rust">use std::collections::HashMap;
+
+fn main() {
+    let students = vec![
+        ("김철수", 80),
+        ("이영희", 90),
+        ("박지민", 85),
+        ("최영수", 95),
+    ];
+
+    let mut names = Vec::new();
+    let mut scores = HashMap::new();
+
+    for (name, score) in students {
+        // 이름 목록 Vec에 학생 이름을 추가합니다.
+        names.push(name);
+
+        // 이름과 점수를 HashMap에 저장합니다.
+        scores.insert(name, score);
+    }
+
+    // 학생들의 평균 점수를 계산하고 출력합니다.
+    let total_score: i32 = scores.values().sum();
+    let average_score: f64 = total_score as f64 / names.len() as f64;
+    println!("학생들의 평균 점수: {:.2}", average_score);
+}</code></pre> </div> </div>
+            <div class="bottomnav">
+                <span class="back"><a href="37_ko.html" rel="prev">❮ 이전</a></span>
+                <span class="next"><a href="chapter_4_ko.html" rel="next">다음 ❯</a></span>
+            </div>
+            </div>
+            <div class="code">
+            <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=use+std%3A%3Acollections%3A%3AHashMap%3B%0D%0A%0D%0Afn+main%28%29+%7B%0D%0A++++let+students+%3D+vec%21%5B%0D%0A++++++++%28%22%EA%B9%80%EC%B2%A0%EC%88%98%22%2C+80%29%2C%0D%0A++++++++%28%22%EC%9D%B4%EC%98%81%ED%9D%AC%22%2C+90%29%2C%0D%0A++++++++%28%22%EB%B0%95%EC%A7%80%EB%AF%BC%22%2C+85%29%2C%0D%0A++++++++%28%22%EC%B5%9C%EC%98%81%EC%88%98%22%2C+95%29%2C%0D%0A++++%5D%3B%0D%0A%0D%0A++++let+mut+names+%3D+Vec%3A%3Anew%28%29%3B%0D%0A++++let+mut+scores+%3D+HashMap%3A%3Anew%28%29%3B%0D%0A%0D%0A++++for+%28name%2C+score%29+in+students+%7B%0D%0A++++++++%2F%2F+TODO+1%3A+%EC%9D%B4%EB%A6%84+%EB%AA%A9%EB%A1%9D+Vec%EC%97%90+%ED%95%99%EC%83%9D+%EC%9D%B4%EB%A6%84%EC%9D%84+%EC%B6%94%EA%B0%80%ED%95%98%EC%84%B8%EC%9A%94.%0D%0A++++++++%2F%2F+%EC%B1%84%EC%9B%8C%EB%B3%B4%EC%84%B8%EC%9A%94.%0D%0A%0D%0A++++++++%2F%2F+TODO+2%3A+%EC%9D%B4%EB%A6%84%EA%B3%BC+%EC%A0%90%EC%88%98%EB%A5%BC+HashMap%EC%97%90+%EC%A0%80%EC%9E%A5%ED%95%98%EC%84%B8%EC%9A%94.%0D%0A++++++++%2F%2F+%EC%B1%84%EC%9B%8C%EB%B3%B4%EC%84%B8%EC%9A%94.%0D%0A++++%7D%0D%0A%0D%0A++++%2F%2F+TODO+3%3A+%ED%95%99%EC%83%9D%EB%93%A4%EC%9D%98+%ED%8F%89%EA%B7%A0+%EC%A0%90%EC%88%98%EB%A5%BC+%EA%B3%84%EC%82%B0%ED%95%98%EA%B3%A0+%EC%B6%9C%EB%A0%A5%ED%95%98%EC%84%B8%EC%9A%94.%0D%0A++++%2F%2F+%EC%B1%84%EC%9B%8C%EB%B3%B4%EC%84%B8%EC%9A%94.%0D%0A%7D%0D%0A" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
+            </div>
+        </div>
+        <script>
+        var pres = document.querySelectorAll("pre>code");
+        for (var i = 0; i < pres.length; i++) {
+            hljs.highlightElement(pres[i]);
+        }
+        var options = {
+            loadDelay: 0,
+            copyIconClass: "far fa-clipboard",
+            checkIconClass: "fa fa-check text-success",
+            blogURL: "http://rust-study.ajousw.kr/"
+        };
+        window.highlightJsBadge(options);
+        </script>
+
+        <footer>
+          <p><a target="_blank" rel="noopener" href="https://www.youtube.com/c/SoftwareToolTime">아주대학교 Software Tool Time</a> - Rust 튜토리얼 (Basic)</p>
+        </footer>
+    </body>
+</html>

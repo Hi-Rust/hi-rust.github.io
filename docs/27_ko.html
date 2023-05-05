@@ -35,33 +35,57 @@
                 <span class="toc"><a href="TOC_ko.html">목차</a></span>
             </div>
             <div class="page">
-            <h1>빌림</h1>
-            <p><strong>🎯 Borrowing</strong></p>
-<p>빌림(borrowing) 개념은 Rust에서 소유권을 이전하지 않고, 값을 참조하거나 사용할 수 있게 해주는 기능입니다.</p>
-<p>빌림은 두 가지 종류: 불변 빌림(immutable borrow), 가변 빌림(mutable borrow)</p>
-<p>빌림(borrowing)에 대한 기본적인 규칙은 다음과 같습니다:</p>
-<p>한 번에 <code>여러 개의 불변 참조</code>를 가져올 수 있지만,</p>
-<p>가변 참조를 가져올 때는 해당 변수의 다른 참조가 없어야 합니다. (<code>오직 한 개의 가변 참조</code>)</p>
-<p>이러한 규칙을 통해 Rust는 컴파일 시점에 데이터 경쟁 문제를 방지합니다.</p>
-<p>가변 빌림의 예제 (mutable borrow):</p>
-<pre><code class="rust">fn main() {
-    let mut s = String::from("hello");
-    change(&mut s);
-    println!("The new string is '{}'.", s);
+            <h1>소유권</h1>
+            <p><strong>🎯 Ownership</strong></p>
+<p>소유권 정의: Rust에서 각 값은 하나의 소유자를 가지며, 소유자가 범위를 벗어나면 값이 할당 해제됩니다.</p>
+<p>소유권 이전 방법을 예제를 통해 설명합니다 (예: 값을 새 변수에 할당하거나 함수에 전달할 때).</p>
+<p>값이 범위를 벗어날 때 자동으로 호출되는 drop 함수를 소개합니다.</p>
+<p>소유권 정의:</p>
+<p>Rust에서는 각 값에 대해 하나의 소유자가 존재하며, 소유자가 해당 값을 관리합니다.</p>
+<p>소유자가 범위를 벗어나면 Rust는 자동으로 해당 값의 메모리를 해제합니다.</p>
+<p>소유권 이전 예제:</p>
+<p>예제 1: 값을 새 변수에 할당할 때</p>
+<p>s1이 가리키는 값의 소유권이 s2로 이전되어 s1은 사용할 수 없습니다.</p>
+<pre><code class="rust">let s1 = String::from("hello");
+let s2 = s1;</code></pre>
+<p>예제 2: 함수에 값을 전달할 때</p>
+<p>s가 takes_ownership 함수에 전달되면서 소유권이 이전되고 함수 내에서 값의 메모리가 해제됩니다.</p>
+<pre><code class="rust">fn takes_ownership(s: String) {
+    println!("{}", s);
 }
 
-fn change(s: &mut String) {
-    s.push_str(", world!");
+fn main() {
+    let s = String::from("hello");
+    takes_ownership(s);
+    // 여기에서 s는 사용할 수 없습니다.
 }</code></pre>
-<p>빌림(borrowing) 개념을 이해하면, Rust에서 소유권을 이전하지 않고도 값을 안전하게 사용할 수 있습니다.</p>
-<p>이를 통해 데이터 경쟁 문제를 방지하고, 메모리 관리에 대한 안전성을 높일 수 있습니다.</p>
+<p><code>drop</code> 함수 소개:</p>
+<p>Rust에서는 값이 범위를 벗어날 때 자동으로 drop 함수가 호출됩니다.</p>
+<p>drop 함수는 메모리를 안전하게 해제하는 역할을 합니다.</p>
+<p>이를 통해 개발자가 직접 메모리 해제를 관리할 필요가 없습니다.</p>
+<p>소유권, 소유권 이전 방법, 그리고 drop 함수를 통해 Rust는 메모리 관리를 단순화하고 안전하게 할 수 있습니다.</p>
+<p>이로 인해 메모리 누수나 세그멘테이션 폴트와 같은 문제를 효과적으로 방지할 수 있습니다.</p>
+<hr />
+<h1 id="advanced">Advanced</h1>
+<h2 id="clone"><code>clone</code> 메서드를 사용한 소유권 이전 방지</h2>
+<pre><code class="rust">let s1 = String::from("hello"); let s2 = s1.clone();</code></pre>
+<h2 id="">함수로 소유권 이전 후 반환</h2>
+<pre><code class="rust">fn takes_and_gives_back(s: String) -> String {
+    s
+}
+
+fn main() {
+    let s1 = String::from("hello");
+    let s2 = takes_and_gives_back(s1);
+    // 이제 s2를 사용할 수 있지만, s1은 여전히 사용할 수 없습니다.
+}</code></pre>
             <div class="bottomnav">
                 <span class="back"><a href="26_ko.html" rel="prev">❮ 이전</a></span>
                 <span class="next"><a href="28_ko.html" rel="next">다음 ❯</a></span>
             </div>
             </div>
             <div class="code">
-            <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=fn+main%28%29+%7B%0D%0A++++let+mut+s+%3D+String%3A%3Afrom%28%22hello%22%29%3B%0D%0A++++let+s_immutable_borrow+%3D+%26s%3B%0D%0A++++%7B%0D%0A++++++++let+s_mutable_borrow+%3D+%26mut+s%3B+%2F%2F+%EB%B6%88%EB%B3%80+%EC%B0%B8%EC%A1%B0%EA%B0%80+%EC%A1%B4%EC%9E%AC%ED%95%98%EB%8A%94+%EB%8F%99%EC%95%88+%EA%B0%80%EB%B3%80+%EC%B0%B8%EC%A1%B0%EB%A5%BC+%EB%A7%8C%EB%93%AD%EB%8B%88%EB%8B%A4.%0D%0A++++++++replace_content%28s_mutable_borrow%2C+%22world%22%29%3B%0D%0A++++%7D%0D%0A++++println%21%28%22New+String+%27%7B%7D%27.%22%2C+s_immutable_borrow%29%3B+%2F%2F+%EB%B6%88%EB%B3%80+%EC%B0%B8%EC%A1%B0%EA%B0%80+%EC%97%AC%EC%A0%84%ED%9E%88+%EC%9C%A0%ED%9A%A8%ED%95%9C+%EC%83%81%ED%83%9C%EC%97%90%EC%84%9C+%EC%82%AC%EC%9A%A9%EB%90%A9%EB%8B%88%EB%8B%A4.%0D%0A%7D%0D%0A%0D%0Afn+replace_content%28s%3A+%26mut+String%2C+new_content%3A+%26str%29+%7B%0D%0A++++s.clear%28%29%3B%0D%0A++++s.push_str%28new_content%29%3B%0D%0A%7D%0D%0A" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
+            <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=%2F%2F+%60drop%60+%ED%95%A8%EC%88%98+%EC%86%8C%EA%B0%9C%3A%0A%2F%2F+Rust%EC%97%90%EC%84%9C%EB%8A%94+%EA%B0%92%EC%9D%B4+%EB%B2%94%EC%9C%84%EB%A5%BC+%EB%B2%97%EC%96%B4%EB%82%A0+%EB%95%8C+%EC%9E%90%EB%8F%99%EC%9C%BC%EB%A1%9C+drop+%ED%95%A8%EC%88%98%EA%B0%80+%ED%98%B8%EC%B6%9C%EB%90%A9%EB%8B%88%EB%8B%A4.%0A%2F%2F+drop+%ED%95%A8%EC%88%98%EB%8A%94+%EB%A9%94%EB%AA%A8%EB%A6%AC%EB%A5%BC+%EC%95%88%EC%A0%84%ED%95%98%EA%B2%8C+%ED%95%B4%EC%A0%9C%ED%95%98%EB%8A%94+%EC%97%AD%ED%95%A0%EC%9D%84+%ED%95%A9%EB%8B%88%EB%8B%A4.%0A%2F%2F+%EC%9D%B4%EB%A5%BC+%ED%86%B5%ED%95%B4+%EA%B0%9C%EB%B0%9C%EC%9E%90%EA%B0%80+%EC%A7%81%EC%A0%91+%EB%A9%94%EB%AA%A8%EB%A6%AC+%ED%95%B4%EC%A0%9C%EB%A5%BC+%EA%B4%80%EB%A6%AC%ED%95%A0+%ED%95%84%EC%9A%94%EA%B0%80+%EC%97%86%EC%8A%B5%EB%8B%88%EB%8B%A4.%0Astruct+CustomStruct+%7B%0A++++data%3A+String%2C%0A%7D%0A%0Aimpl+Drop+for+CustomStruct+%7B%0A++++fn+drop%28%26mut+self%29+%7B%0A++++++++println%21%28%22Dropping+CustomStruct+with+data%3A+%7B%7D%22%2C+self.data%29%3B%0A++++%7D%0A%7D%0A%0Afn+main%28%29+%7B%0A++++let+custom+%3D+CustomStruct+%7B%0A++++++++data%3A+String%3A%3Afrom%28%22hello%22%29%2C%0A++++%7D%3B%0A++++println%21%28%22Created+CustomStruct+with+data%3A+%7B%7D%22%2C+custom.data%29%3B%0A++++%2F%2F+custom%EC%9D%80+%EC%9D%B4+%EC%8A%A4%EC%BD%94%ED%94%84%EB%A5%BC+%EB%B2%97%EC%96%B4%EB%82%98%EB%A9%B4%EC%84%9C+drop+%ED%95%A8%EC%88%98%EA%B0%80+%ED%98%B8%EC%B6%9C%EB%90%98%EC%96%B4+%EB%A9%94%EB%AA%A8%EB%A6%AC%EA%B0%80+%EC%95%88%EC%A0%84%ED%95%98%EA%B2%8C+%ED%95%B4%EC%A0%9C%EB%90%A9%EB%8B%88%EB%8B%A4.%0A%7D%0A" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
             </div>
         </div>
         <script>

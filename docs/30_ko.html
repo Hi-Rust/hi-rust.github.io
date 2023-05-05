@@ -35,37 +35,39 @@
                 <span class="toc"><a href="TOC_ko.html">목차</a></span>
             </div>
             <div class="page">
-            <h1>Chapter 2 - Conclusion</h1>
-            <p>Rust의 핵심 개념인 소유권, 빌림, 그리고 빌림 검사기에 대해 배웠습니다.</p>
-<p>이러한 개념들은 Rust의 메모리 관리 체계의 핵심이며, 이를 이해하고 올바르게 사용함으로써 메모리 안전성과 효율성을 높일 수 있습니다.</p>
-<p>Rust의 강력한 컴파일러와 빌림 검사기는 코드가 메모리 안전성을 보장하도록 도와줍니다.</p>
-<div> <button type="button" class="collapsible">정답 보기</button> <div class="content"> <p>오류의 원인은 변수 s에 대한 변경 가능한 참조(r3)와 변경 불가능한 참조(r1과 r2)가 동시에 존재하기 때문입니다.
-
-Rust의 빌림 규칙에 따라, 한 번에 여러 개의 변경 불가능한 참조가 허용되지만, 변경 가능한 참조가 있는 동안에는 다른 참조가 허용되지 않습니다.</p>
-
+            <h1>빌림 검사기</h1>
+            <p><strong>🎯 Borrow checker</strong></p>
+<p>빌림 검사기가 컴파일 시간에 빌림 규칙을 적용하여 메모리 안전성을 보장하는 방법을 설명합니다.</p>
+<p>빌림 검사기는 초기화와 이동을 추적할 뿐 아니라 수명 추론(lifetime inference)도 처리합니다. </p>
+<p>Rust는 lifetime이라는 단어를 두 가지 다른 방식으로 사용합니다.</p>
+<ol>
+<li>첫 번째는 값을 가리키는 수명입: 값이 해제되기 전까지의 시간을 의미</li>
+<li>값의 수명을 가리키는 또 다른 단어는 변수 범위(scope)</li>
+</ol>
+<p>빌림 검사기가 컴파일 시간에 빌림 규칙을 적용하는 방법 설명:</p>
+<p>Rust의 빌림 검사기는 컴파일 시간에 참조 규칙을 적용하여 메모리 안전성을 보장합니다.</p>
+<p>이를 통해 런타임에 발생할 수 있는 메모리 누수, 데이터 경쟁 등의 문제를 사전에 방지할 수 있습니다.</p>
+<p>빌림 검사기가 코드 내 참조의 수명을 분석하는 방법 설명:</p>
+<p>빌림 검사기는 함수, 구조체 및 코드 내에서 참조의 수명을 추적하고 분석합니다.</p>
+<p>이를 통해, 참조의 수명이 끝난 이후에도 사용되거나, 다른 참조가 유효하지 않은 상태에서 접근하는 것을 방지합니다.</p>
+<p>빌림 검사기가 컴파일 시간에 메모리 관리 오류를 포착하는 예제:</p>
 <pre><code class="rust">fn main() {
-    let mut s = String::from("hello");
-    {
-        let r1 = &s;
-        let r2 = &s;
-        println!("r1: {}, r2: {}", r1, r2);
-    }
-    let r3 = &mut s;
-    println!("r3: {}", r3);
+    let mut x = 5;
+    let y = &mut x;
+    let z = &x;
+    println!("x: {}, y: {}, z: {}", x, y, z);
 }</code></pre>
-<p> 위 수정된 코드에서는 r1과 r2가 사용되는 범위를 별도의 블록으로 감싸서 변경 불가능한 참조들의 수명을 줄였습니다.
-
-이렇게 하면 r3를 선언할 때 변경 불가능한 참조들이 이미 끝났기 때문에 컴파일 오류가 발생하지 않습니다.
-
-이렇게 수명을 조절하면 Rust의 빌림 규칙을 준수하면서 안전한 코드를 작성할 수 있습니다. </p> </div> </div>
+<ul>
+<li>위 코드는 컴파일 시간에 오류를 발생시킵니다.</li>
+<li>빌림 검사기는 x가 변경 가능한 참조와 불변 참조가 동시에 존재하는 것을 감지합니다.</li>
+<li>빌림 검사기의 오류 메시지를 통해 개발자는 문제가 발생한 원인을 파악하고 코드를 수정할 수 있습니다.</li>
+</ul>
             <div class="bottomnav">
                 <span class="back"><a href="29_ko.html" rel="prev">❮ 이전</a></span>
-                <span class="next"><a href="chapter_3_ko.html" rel="next">다음 ❯</a></span>
+                <span class="next"><a href="31_ko.html" rel="next">다음 ❯</a></span>
             </div>
             </div>
-            <div class="code">
-            <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=fn+main%28%29+%7B%0D%0A++++let+mut+s+%3D+String%3A%3Afrom%28%22hello%22%29%3B%0D%0A++++let+r1+%3D+%26s%3B%0D%0A++++let+r2+%3D+%26s%3B%0D%0A++++let+r3+%3D+%26mut+s%3B+%2F%2F+%EC%BB%B4%ED%8C%8C%EC%9D%BC+%EC%98%A4%EB%A5%98+%EC%97%AC%EB%B6%80+%ED%99%95%EC%9D%B8%0D%0A++++println%21%28%22r1%3A+%7B%7D%2C+r2%3A+%7B%7D%2C+r3%3A+%7B%7D%22%2C+r1%2C+r2%2C+r3%29%3B%0D%0A%7D%0D%0A%0D%0Afn+modify_string%28s%3A+%26mut+String%29+%7B%0D%0A++++s.push_str%28%22+world%22%29%3B%0D%0A%7D%0D%0A" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
-            </div>
+            <div class="code"><center><img src="/ajou.webp" alt="Rust Tutorial" width="80%" height="100%"></center></div>
         </div>
         <script>
         var pres = document.querySelectorAll("pre>code");

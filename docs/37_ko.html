@@ -35,49 +35,46 @@
                 <span class="toc"><a href="TOC_ko.html">목차</a></span>
             </div>
             <div class="page">
-            <h1>Chapter 3 - Conclusion</h1>
-            <p>다음은 여러분들이 Vec와 HashMap을 사용하여 문제를 해결해 보는 고급 문제입니다.</p>
-<p>아래 주석을 참고하여 코드를 완성해보세요.</p>
-<p>문제 설명:<br />
-이름과 점수가 주어진 학생들의 정보를 Vec와 HashMap을 사용해 관리하고, 평균 점수를 계산하고 출력하는 프로그램을 작성하세요.</p>
+            <h1>이터레이터(Iterators) 소개</h1>
+            <p>이터레이터는 Rust에서 컬렉션의 요소를 순회하고 처리하는 데 중요한 역할을 하는 추상화 개념입니다.</p>
+<p>이터레이터는 컬렉션의 요소를 효율적이고 간결한 방법으로 처리할 수 있게 도와줍니다.</p>
+<h2 id="arust">a. 이터레이터 개념 및 Rust에서의 중요성</h2>
+<p>이터레이터는 데이터 집합을 순차적으로 접근하는 데 사용되는 개체입니다.</p>
+<p>Rust에서 이터레이터는 컬렉션의 요소를 처리하는 데 사용되며, 함수형 프로그래밍 패턴과 함께 사용할 수 있습니다.</p>
+<p>이터레이터는 함수형 프로그래밍을 지원하며, 일반적으로 Rust의 for 루프에서 사용됩니다.</p>
+<p>Rust에서 이터레이터의 중요성은 다음과 같습니다:</p>
 <ol>
-<li>Vec를 사용하여 학생들의 이름 목록을 저장하세요.</li>
-<li>HashMap을 사용하여 학생들의 이름과 점수를 저장하세요.</li>
-<li>학생들의 평균 점수를 계산하고 출력하세요.</li>
+<li>코드의 간결성: 이터레이터를 사용하면 반복문을 사용하는 코드를 보다 간결하게 작성할 수 있습니다.</li>
+<li>느긋한 평가(Lazy evaluation): 이터레이터는 필요한 경우에만 요소를 처리하므로, 메모리 사용량과 실행 시간을 줄일 수 있습니다.</li>
+<li>컴포지션: 이터레이터를 사용하면 여러 이터레이터 메서드를 연결하여 작업을 쉽게 구성할 수 있습니다.</li>
 </ol>
-<div> <button type="button" class="collapsible">정답 보기</button> <div class="content"> <p> <pre><code class="rust">use std::collections::HashMap;
+<h2 id="biteratornextcollect">b. Iterator 트레잇과 메서드 소개 (next, collect 등)</h2>
+<p><code>Iterator</code> 트레잇은 Rust의 이터레이터를 구현하는 데 사용되는 트레잇입니다.</p>
+<p>이 트레잇에는 다음과 같은 메서드가 정의되어 있습니다.</p>
+<h3 id="next">next</h3>
+<p><code>next</code> 메서드는 이터레이터의 다음 요소를 반환합니다.</p>
+<p>모든 요소를 순회한 경우, <code>None</code>을 반환합니다.</p>
+<pre><code class="rust">let mut numbers = vec![1, 2, 3, 4, 5].into_iter();
 
-fn main() {
-    let students = vec![
-        ("김철수", 80),
-        ("이영희", 90),
-        ("박지민", 85),
-        ("최영수", 95),
-    ];
+while let Some(number) = numbers.next() {
+    println!("Number: {}", number);
+}</code></pre>
+<h3 id="collect">collect</h3>
+<p><code>collect</code> 메서드는 이터레이터의 요소를 다른 컬렉션 타입으로 변환합니다.</p>
+<pre><code class="rust">let numbers = vec![1, 2, 3, 4, 5];
+let doubled_numbers: Vec&lt;_> = numbers.iter().map(|x| x * 2).collect();
 
-    let mut names = Vec::new();
-    let mut scores = HashMap::new();
-
-    for (name, score) in students {
-        // 이름 목록 Vec에 학생 이름을 추가합니다.
-        names.push(name);
-
-        // 이름과 점수를 HashMap에 저장합니다.
-        scores.insert(name, score);
-    }
-
-    // 학생들의 평균 점수를 계산하고 출력합니다.
-    let total_score: i32 = scores.values().sum();
-    let average_score: f64 = total_score as f64 / names.len() as f64;
-    println!("학생들의 평균 점수: {:.2}", average_score);
-}</code></pre> </div> </div>
+println!("Doubled numbers: {:?}", doubled_numbers);</code></pre>
+<p>이 외에도 다양한 이터레이터 메서드가 있습니다.</p>
+<p>예를 들어, <code>filter</code>, <code>map</code>, <code>fold</code>, <code>take</code>, <code>skip</code>, <code>all</code>, <code>any</code> 등의 메서드를 사용하여 이터레이터를 처리할 수 있습니다.</p>
+<p>더 많은 메소드는 <a href="https://doc.rust-lang.org/core/iter/trait.Iterator.html" target="_blank" rel="noopener">공식 문서</a>를 참고하세요.</p>
             <div class="bottomnav">
                 <span class="back"><a href="36_ko.html" rel="prev">❮ 이전</a></span>
-                <span class="next"><a href="chapter_4_ko.html" rel="next">다음 ❯</a></span>
+                <span class="next"><a href="38_ko.html" rel="next">다음 ❯</a></span>
             </div>
             </div>
             <div class="code">
-            <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=use+std%3A%3Acollections%3A%3AHashMap%3B%0D%0A%0D%0Afn+main%28%29+%7B%0D%0A++++let+students+%3D+vec%21%5B%0D%0A++++++++%28%22%EA%B9%80%EC%B2%A0%EC%88%98%22%2C+80%29%2C%0D%0A++++++++%28%22%EC%9D%B4%EC%98%81%ED%9D%AC%22%2C+90%29%2C%0D%0A++++++++%28%22%EB%B0%95%EC%A7%80%EB%AF%BC%22%2C+85%29%2C%0D%0A++++++++%28%22%EC%B5%9C%EC%98%81%EC%88%98%22%2C+95%29%2C%0D%0A++++%5D%3B%0D%0A%0D%0A++++let+mut+names+%3D+Vec%3A%3Anew%28%29%3B%0D%0A++++let+mut+scores+%3D+HashMap%3A%3Anew%28%29%3B%0D%0A%0D%0A++++for+%28name%2C+score%29+in+students+%7B%0D%0A++++++++%2F%2F+TODO+1%3A+%EC%9D%B4%EB%A6%84+%EB%AA%A9%EB%A1%9D+Vec%EC%97%90+%ED%95%99%EC%83%9D+%EC%9D%B4%EB%A6%84%EC%9D%84+%EC%B6%94%EA%B0%80%ED%95%98%EC%84%B8%EC%9A%94.%0D%0A++++++++%2F%2F+%EC%B1%84%EC%9B%8C%EB%B3%B4%EC%84%B8%EC%9A%94.%0D%0A%0D%0A++++++++%2F%2F+TODO+2%3A+%EC%9D%B4%EB%A6%84%EA%B3%BC+%EC%A0%90%EC%88%98%EB%A5%BC+HashMap%EC%97%90+%EC%A0%80%EC%9E%A5%ED%95%98%EC%84%B8%EC%9A%94.%0D%0A++++++++%2F%2F+%EC%B1%84%EC%9B%8C%EB%B3%B4%EC%84%B8%EC%9A%94.%0D%0A++++%7D%0D%0A%0D%0A++++%2F%2F+TODO+3%3A+%ED%95%99%EC%83%9D%EB%93%A4%EC%9D%98+%ED%8F%89%EA%B7%A0+%EC%A0%90%EC%88%98%EB%A5%BC+%EA%B3%84%EC%82%B0%ED%95%98%EA%B3%A0+%EC%B6%9C%EB%A0%A5%ED%95%98%EC%84%B8%EC%9A%94.%0D%0A++++%2F%2F+%EC%B1%84%EC%9B%8C%EB%B3%B4%EC%84%B8%EC%9A%94.%0D%0A%7D%0D%0A" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
+            <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=struct+MyNumbers+%7B%0A++++numbers%3A+Vec%3Ci32%3E%2C%0A%7D%0A%0A%2F%2F+Iterator+for+%60iter%28%29%60%0Astruct+MyNumbersIter%3C%27a%3E+%7B%0A++++inner%3A+std%3A%3Aslice%3A%3AIter%3C%27a%2C+i32%3E%2C%0A%7D%0A%0Aimpl%3C%27a%3E+Iterator+for+MyNumbersIter%3C%27a%3E+%7B%0A++++type+Item+%3D+%26%27a+i32%3B%0A%0A++++fn+next%28%26mut+self%29+-%3E+Option%3CSelf%3A%3AItem%3E+%7B%0A++++++++self.inner.next%28%29%0A++++%7D%0A%7D%0A%0A%2F%2F+Iterator+for+%60iter_mut%28%29%60%0Astruct+MyNumbersIterMut%3C%27a%3E+%7B%0A++++inner%3A+std%3A%3Aslice%3A%3AIterMut%3C%27a%2C+i32%3E%2C%0A%7D%0A%0Aimpl%3C%27a%3E+Iterator+for+MyNumbersIterMut%3C%27a%3E+%7B%0A++++type+Item+%3D+%26%27a+mut+i32%3B%0A%0A++++fn+next%28%26mut+self%29+-%3E+Option%3CSelf%3A%3AItem%3E+%7B%0A++++++++self.inner.next%28%29%0A++++%7D%0A%7D%0A%0A%2F%2F+Iterator+for+%60into_iter%28%29%60%0Astruct+MyNumbersIntoIter+%7B%0A++++inner%3A+std%3A%3Avec%3A%3AIntoIter%3Ci32%3E%2C%0A%7D%0A%0Aimpl+Iterator+for+MyNumbersIntoIter+%7B%0A++++type+Item+%3D+i32%3B%0A%0A++++fn+next%28%26mut+self%29+-%3E+Option%3CSelf%3A%3AItem%3E+%7B%0A++++++++self.inner.next%28%29%0A++++%7D%0A%7D%0A%0Aimpl+MyNumbers+%7B%0A++++fn+iter%28%26self%29+-%3E+MyNumbersIter+%7B%0A++++++++MyNumbersIter+%7B%0A++++++++++++inner%3A+self.numbers.iter%28%29%2C%0A++++++++%7D%0A++++%7D%0A%0A++++fn+iter_mut%28%26mut+self%29+-%3E+MyNumbersIterMut+%7B%0A++++++++MyNumbersIterMut+%7B%0A++++++++++++inner%3A+self.numbers.iter_mut%28%29%2C%0A++++++++%7D%0A++++%7D%0A%7D%0A%0Aimpl+IntoIterator+for+MyNumbers+%7B%0A++++type+Item+%3D+i32%3B%0A++++type+IntoIter+%3D+MyNumbersIntoIter%3B%0A%0A++++fn+into_iter%28self%29+-%3E+Self%3A%3AIntoIter+%7B%0A++++++++MyNumbersIntoIter+%7B%0A++++++++++++inner%3A+self.numbers.into_iter%28%29%2C%0A++++++++%7D%0A++++%7D%0A%7D%0A%0Aimpl%3C%27a%3E+IntoIterator+for+%26%27a+MyNumbers+%7B%0A++++type+Item+%3D+%26%27a+i32%3B%0A++++type+IntoIter+%3D+MyNumbersIter%3C%27a%3E%3B%0A%0A++++fn+into_iter%28self%29+-%3E+Self%3A%3AIntoIter+%7B%0A++++++++self.iter%28%29%0A++++%7D%0A%7D%0A%0Aimpl%3C%27a%3E+IntoIterator+for+%26%27a+mut+MyNumbers+%7B%0A++++type+Item+%3D+%26%27a+mut+i32%3B%0A++++type+IntoIter+%3D+MyNumbersIterMut%3C%27a%3E%3B%0A%0A++++fn+into_iter%28self%29+-%3E+Self%3A%3AIntoIter+%7B%0A++++++++self.iter_mut%28%29%0A++++%7D%0A%7D%0A%0A%0Afn+main%28%29+%7B%0A++++let+my+%3D+MyNumbers+%7B+numbers%3A+vec%21%5B1%2C2%2C3%2C4%2C5%5D+%7D%3B%0A++++%0A++++%2F%2F+%EB%82%B4%EA%B0%80+%EB%A7%8C%EB%93%A0+Itertaor%0A++++for+a+in+my.iter%28%29+%7B%0A++++++++println%21%28%22a+%7Ba%7D%22%29%3B%0A++++%7D%0A++++%0A++++let+data+%3D+vec%21%5B1%2C+2%2C+3%2C+4%2C+5%2C+6%5D%3B%0A++++let+filtered_data%3A+Vec%3C_%3E+%3D+data.into_iter%28%29.filter%28%7Cx%7C+x+%25+2+%3D%3D+0%29.collect%28%29%3B%0A++++println%21%28%22Filtered%3A+%7B%3A%23%3F%7D%22%2C+filtered_data%29%3B+%2F%2F+Debug+Format+%EC%B6%9C%EB%A0%A5%0A%0A++++%0A++++let+items+%3D+vec%21%5B%22apple%22%2C+%22banana%22%2C+%22orange%22%5D%3B%0A%0A++++%2F%2F+%EB%AC%B4%ED%95%9C+Iterator%0A++++let+cycle_iter+%3D+items.into_iter%28%29.cycle%28%29%3B%0A%0A++++%2F%2F+Create+an+infinite+iterator+of+incrementing+numbers+starting+from+1%0A++++let+count_iter+%3D+1..%3B%0A%0A++++%2F%2F+Zip+the+two+iterators+to+create+pairs%0A++++let+result_iter+%3D+cycle_iter.zip%28count_iter%29%3B%0A%0A++++%2F%2F+Take+the+first+10+pairs+and+print+them%0A++++for+%28item%2C+count%29+in+result_iter.take%2810%29+%7B%0A++++++++println%21%28%22%7B%7D%3A+%7B%7D%22%2C+count%2C+item%29%3B%0A++++%7D%0A%7D%0A" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
             </div>
         </div>
         <script>

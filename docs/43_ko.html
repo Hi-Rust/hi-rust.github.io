@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+    <html lang="ko">
+    <head>
+        <title>Rust 튜토리얼 - 자기주도프로젝트</title>
+
+        <meta charset="UTF-8">
+        <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+        <meta content="utf-8" http-equiv="encoding">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+        <meta name="keywords" content="Rust, Programming, Learning">
+        <meta name="description" content="Rust tutorial website based on tour_of_rust by 최석원">
+        <meta name="theme-color" content="#ff6801"/>
+        <meta http-equiv="Cache-Control" content="max-age=3600">
+        
+        <link rel="stylesheet" href="tour.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/night-owl.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
+        
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="/manifest" href="./site.webmanifest">
+        
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.7.0/highlight.min.js"></script>
+
+        <script src="./tour.js" defer></script>
+        <!-- <script>hljs.highlightAll();</script> -->
+        <script src="./highlight.badge.min.js"></script>
+    </head>
+    <body>
+        <div class="tour">
+            <div class="header">
+                <span class="title"><a href="index.html">Rust 튜토리얼</a></span>
+                <span class="nav">
+                <span class="toc"><a href="TOC_ko.html">목차</a></span>
+            </div>
+            <div class="page">
+            <h1>Chapter 4 - Conclusion</h1>
+            <p>다음은 여러분들이 unsafe와 macro를 사용하여 문제를 해결해 보는 고급 문제입니다.</p>
+<p>아래 주석을 참고하여 코드를 완성해보세요.</p>
+<p>문제 설명:<br />
+두 개의 Vec<i32> 벡터를 더하는 프로그램을 작성하세요.</p>
+<p>이때, 매크로를 사용하여 덧셈 작업을 수행하고, 벡터의 내부 데이터에 직접 접근하기 위해 unsafe를 사용하세요.</p>
+<ol>
+<li>매크로를 사용하여 두 벡터의 덧셈을 수행하는 함수를 작성하세요.</li>
+<li>unsafe를 사용하여 벡터의 내부 데이터에 접근하고 값을 더하세요.</li>
+</ol>
+<div> <button type="button" class="collapsible">정답 보기</button> <div class="content"> <p> <pre><code class="rust">// 매크로를 사용하여 두 벡터의 덧셈을 수행하는 함수를 작성합니다.
+macro_rules! add_vectors {
+    ($vec1:expr, $vec2:expr) => {
+        add_vectors_unsafe(&$vec1, &$vec2)
+    };
+}
+
+fn main() {
+    let vec1 = vec![1, 2, 3];
+    let vec2 = vec![4, 5, 6];
+    let result = add_vectors!(vec1, vec2);
+
+    println!("벡터 덧셈 결과: {:?}", result);
+}
+
+fn add_vectors_unsafe(vec1: &[i32], vec2: &[i32]) -> Vec&lt;i32> {
+    // 벡터의 길이가 같은지 확인합니다.
+    assert_eq!(vec1.len(), vec2.len());
+
+    let mut result = Vec::with_capacity(vec1.len());
+
+    // unsafe를 사용하여 벡터의 내부 데이터에 접근하고 값을 더합니다.
+    let ptr1 = vec1.as_ptr();
+    let ptr2 = vec2.as_ptr();
+    for i in 0..vec1.len() {
+        unsafe {
+            result.push(*ptr1.add(i) + *ptr2.add(i));
+        }
+    }
+
+    result
+}</code></pre> </div> </div>
+            <div class="bottomnav">
+                <span class="back"><a href="42_ko.html" rel="prev">❮ 이전</a></span>
+                <span class="next"><a href="chapter_5_ko.html" rel="next">다음 ❯</a></span>
+            </div>
+            </div>
+            <div class="code">
+            <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=%2F%2F+TODO+1%3A+%EB%A7%A4%ED%81%AC%EB%A1%9C%EB%A5%BC+%EC%82%AC%EC%9A%A9%ED%95%98%EC%97%AC+%EB%91%90+%EB%B2%A1%ED%84%B0%EC%9D%98+%EB%8D%A7%EC%85%88%EC%9D%84+%EC%88%98%ED%96%89%ED%95%98%EB%8A%94+%ED%95%A8%EC%88%98%EB%A5%BC+%EC%9E%91%EC%84%B1%ED%95%98%EC%84%B8%EC%9A%94.%0D%0A%2F%2F+%EC%B1%84%EC%9B%8C%EB%B3%B4%EC%84%B8%EC%9A%94.%0D%0Amacro_rules%21+...%0D%0A%0D%0A%0D%0Afn+main%28%29+%7B%0D%0A++++let+vec1+%3D+vec%21%5B1%2C+2%2C+3%5D%3B%0D%0A++++let+vec2+%3D+vec%21%5B4%2C+5%2C+6%5D%3B%0D%0A++++let+result+%3D+add_vectors%21%28vec1%2C+vec2%29%3B%0D%0A%0D%0A++++println%21%28%22%EB%B2%A1%ED%84%B0+%EB%8D%A7%EC%85%88+%EA%B2%B0%EA%B3%BC%3A+%7B%3A%3F%7D%22%2C+result%29%3B%0D%0A%7D%0D%0A%0D%0A%0D%0Afn+add_vectors_unsafe%28vec1%3A+%26%5Bi32%5D%2C+vec2%3A+%26%5Bi32%5D%29+-%3E+Vec%3Ci32%3E+%7B%0D%0A++++%2F%2F+%EB%B2%A1%ED%84%B0%EC%9D%98+%EA%B8%B8%EC%9D%B4%EA%B0%80+%EA%B0%99%EC%9D%80%EC%A7%80+%ED%99%95%EC%9D%B8%ED%95%A9%EB%8B%88%EB%8B%A4.%0D%0A++++assert_eq%21%28vec1.len%28%29%2C+vec2.len%28%29%29%3B%0D%0A%0D%0A++++let+mut+result+%3D+Vec%3A%3Awith_capacity%28vec1.len%28%29%29%3B%0D%0A%0D%0A++++%2F%2F+TODO+2%3A+unsafe%EB%A5%BC+%EC%82%AC%EC%9A%A9%ED%95%98%EC%97%AC+%EB%B2%A1%ED%84%B0%EC%9D%98+%EB%82%B4%EB%B6%80+%EB%8D%B0%EC%9D%B4%ED%84%B0%EC%97%90+%EC%A0%91%EA%B7%BC%ED%95%98%EA%B3%A0+%EA%B0%92%EC%9D%84+%EB%8D%94%ED%95%98%EC%84%B8%EC%9A%94.%0D%0A++++%2F%2F+%EC%B1%84%EC%9B%8C%EB%B3%B4%EC%84%B8%EC%9A%94.%0D%0A%0D%0A++++result%0D%0A%7D%0D%0A" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
+            </div>
+        </div>
+        <script>
+        var pres = document.querySelectorAll("pre>code");
+        for (var i = 0; i < pres.length; i++) {
+            hljs.highlightElement(pres[i]);
+        }
+        var options = {
+            loadDelay: 0,
+            copyIconClass: "far fa-clipboard",
+            checkIconClass: "fa fa-check text-success",
+            blogURL: "http://rust-study.ajousw.kr/"
+        };
+        window.highlightJsBadge(options);
+        </script>
+
+        <footer>
+          <p><a target="_blank" rel="noopener" href="https://www.youtube.com/c/SoftwareToolTime">아주대학교 Software Tool Time</a> - Rust 튜토리얼 (Basic)</p>
+        </footer>
+    </body>
+</html>

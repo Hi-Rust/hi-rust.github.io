@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+    <html lang="ko">
+    <head>
+        <title>Rust 튜토리얼 - 자기주도프로젝트</title>
+
+        <meta charset="UTF-8">
+        <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+        <meta content="utf-8" http-equiv="encoding">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+        <meta name="keywords" content="Rust, Programming, Learning">
+        <meta name="description" content="Rust tutorial website based on tour_of_rust by 최석원">
+        <meta name="theme-color" content="#ff6801"/>
+        <meta http-equiv="Cache-Control" content="max-age=3600">
+        
+        <link rel="stylesheet" href="tour.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/night-owl.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
+        
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="/manifest" href="./site.webmanifest">
+        
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.7.0/highlight.min.js"></script>
+
+        <script src="./tour.js" defer></script>
+        <!-- <script>hljs.highlightAll();</script> -->
+        <script src="./highlight.badge.min.js"></script>
+    </head>
+    <body>
+        <div class="tour">
+            <div class="header">
+                <span class="title"><a href="index.html">Rust 튜토리얼</a></span>
+                <span class="nav">
+                <span class="toc"><a href="TOC_ko.html">목차</a></span>
+            </div>
+            <div class="page">
+            <h1>Chapter 1 - 마무리</h1>
+            <p>Rust의 기초는 그렇게 나쁘지 않죠?</p>
+<p>시스템 프로그래밍 언어로서, Rust는 메모리 내 값을 매우 신경쓰며,</p>
+<p>수정이 가능한지 불가능한지 여부, 그리고 수학 연산이 의도한 대로 수행되는지 확인합니다.</p>
+<p>참고:</p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=n5TRBkbystY" target="_blank" rel="noopener">Youtube: Rust Cast - Rust의 기본 숫자 유형에 대한 더 깊은 이해</a></li>
+<li><a href="https://doc.rust-lang.org/1.30.0/book/2018-edition/ch03-02-data-types.html" target="_blank" rel="noopener">Website: Rust Book 2018 - 기본 데이터 유형에 대한 자세한 설명</a></li>
+<li><a href="https://cheats.rs/#basic-types" target="_blank" rel="noopener">Website: Rust Cheat Sheet - Data Types</a></li>
+</ul>
+<div> <button type="button" class="collapsible">정답 보기</button> <div class="content"> <pre><code class="rust">enum Shape {
+    Circle(f64),             // 반지름
+    Rectangle(f64, f64),     // 가로, 세로
+    Triangle(f64, f64, f64), // 세 변의 길이
+}
+
+// 넓이를 계산하는 함수
+fn area(shape: &Shape) -> f64 {
+    match shape {
+        Shape::Circle(r) => 3.14 * r * r,
+        Shape::Rectangle(w, h) => w * h,
+        Shape::Triangle(a, b, c) => {
+            // 삼각형의 넓이 공식
+            let s = (a + b + c) / 2.0;
+            let area = s * (s - a) * (s - b) * (s - c);
+            // 넓이가 음수면 에러 발생
+            if area &lt; 0.0 {
+                panic!("Invalid triangle");
+            } else {
+                area.sqrt()
+            }
+        }
+    }
+}
+
+// 둘레를 계산하는 함수
+fn perimeter(shape: &Shape) -> f64 {
+    match shape {
+        Shape::Circle(r) => 2.0 * 3.14 * r,
+        Shape::Rectangle(w, h) => 2.0 * (w + h),
+        Shape::Triangle(a, b, c) => {
+            // 삼각형의 둘레 공식
+            let p = a + b + c;
+            // 둘레가 음수면 에러 발생
+            if p < 0.0 {
+                panic!("Invalid triangle");
+            } else {
+                p
+            }
+        }
+    }
+}
+
+// 정사각형인지 판별하는 함수
+fn is_square(shape: &Shape) -> bool {
+    match shape {
+        Shape::Circle(_) => false,
+        Shape::Rectangle(w, h) => w == h,
+        Shape::Triangle(_, _, _) => false,
+    }
+}
+
+// 결과
+/*
+원 넓이: 12.56
+사각형 넓이: 12
+삼각형 넓이: 6
+원 둘레: 12.56
+사각형 둘레: 14
+삼각형 둘레: 12
+원이 정사각형인가? false
+사각형이 정사각형인가? false
+삼각형이 정사각형인가? false
+*/
+fn main() {
+    // Shape 타입의 값들을 생성합니다.
+    let circle = Shape::Circle(2.0);
+    let rectangle = Shape::Rectangle(3.0, 4.0);
+    let triangle = Shape::Triangle(3.0, 4.0, 5.0);
+
+    // 각 도형의 넓이를 출력합니다.
+    println!("원 넓이: {}", area(&circle));
+    println!("사각형 넓이: {}", area(&rectangle));
+    println!("삼각형 넓이: {}", area(&triangle));
+
+    // 각 도형의 둘레를 출력합니다.
+    println!("원 둘레: {}", perimeter(&circle));
+    println!("사각형 둘레: {}", perimeter(&rectangle));
+    println!("삼각형 둘레: {}", perimeter(&triangle));
+
+    // 각 도형이 정사각형인지 출력합니다.
+    println!("원이 정사각형인가? {}", is_square(&circle));
+    println!("사각형이 정사각형인가? {}", is_square(&rectangle));
+    println!("삼각형이 정사각형인가? {}", is_square(&triangle));
+}</code></pre> </div> </div>
+            <div class="bottomnav">
+                <span class="back"><a href="23_ko.html" rel="prev">❮ 이전</a></span>
+                <span class="next"><a href="chapter_2_ko.html" rel="next">다음 ❯</a></span>
+            </div>
+            </div>
+            <div class="code">
+            <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=%2F*%0A%EB%AC%B8%EC%A0%9C+1%0A%0A%3E+area%28shape%3A+Shape%29+-%3E+f64%0A%0A%ED%83%80%EC%9E%85%EC%9D%98+%EA%B0%92%EC%9D%B4+%EC%A3%BC%EC%96%B4%EC%A1%8C%EC%9D%84+%EB%95%8C%2C+%EA%B7%B8+%EB%8F%84%ED%98%95%EC%9D%98+%EB%84%93%EC%9D%B4%EB%A5%BC+%EA%B3%84%EC%82%B0%ED%95%B4%EC%84%9C+%EB%B0%98%ED%99%98%ED%95%98%EB%8A%94+%ED%95%A8%EC%88%98%EC%9E%85%EB%8B%88%EB%8B%A4.%0A%0A%EB%84%93%EC%9D%B4%EB%A5%BC+%EA%B3%84%EC%82%B0%ED%95%A0+%EB%95%8C%EB%8A%94+%ED%8C%8C%EC%9D%B4%28pi%29%EB%A5%BC+3.14%EB%A1%9C+%EA%B0%80%EC%A0%95%ED%95%A9%EB%8B%88%EB%8B%A4.+%EB%A7%8C%EC%95%BD+%EB%8F%84%ED%98%95%EC%9D%B4+%EC%82%BC%EA%B0%81%ED%98%95%EC%9D%B4%EA%B3%A0%0A%0A%EC%82%BC%EA%B0%81%ED%98%95%EC%9D%98+%EC%84%B8+%EB%B3%80%EC%9D%98+%EA%B8%B8%EC%9D%B4%EA%B0%80+%EC%82%BC%EA%B0%81%ED%98%95%EC%9D%84+%EB%A7%8C%EB%93%A4+%EC%88%98+%EC%97%86%EB%8A%94+%EA%B2%BD%EC%9A%B0%EC%97%90%EB%8A%94+%EC%97%90%EB%9F%AC%EB%A5%BC+%EB%B0%9C%EC%83%9D%EC%8B%9C%ED%82%A4%EC%84%B8%EC%9A%94.%0A%0A%3E+perimeter%28shape%3A+Shape%29+-%3E+f64%0A%0A%ED%83%80%EC%9E%85%EC%9D%98+%EA%B0%92%EC%9D%B4+%EC%A3%BC%EC%96%B4%EC%A1%8C%EC%9D%84+%EB%95%8C%2C+%EA%B7%B8+%EB%8F%84%ED%98%95%EC%9D%98+%EB%91%98%EB%A0%88%EB%A5%BC+%EA%B3%84%EC%82%B0%ED%95%B4%EC%84%9C+%EB%B0%98%ED%99%98%ED%95%98%EB%8A%94+%ED%95%A8%EC%88%98%EC%9E%85%EB%8B%88%EB%8B%A4.%0A%0A%EB%A7%8C%EC%95%BD+%EB%8F%84%ED%98%95%EC%9D%B4+%EC%82%BC%EA%B0%81%ED%98%95%EC%9D%B4%EA%B3%A0+%EC%82%BC%EA%B0%81%ED%98%95%EC%9D%98+%EC%84%B8+%EB%B3%80%EC%9D%98+%EA%B8%B8%EC%9D%B4%EA%B0%80+%EC%82%BC%EA%B0%81%ED%98%95%EC%9D%84+%EB%A7%8C%EB%93%A4+%EC%88%98+%EC%97%86%EB%8A%94+%EA%B2%BD%EC%9A%B0%EC%97%90%EB%8A%94+%EC%97%90%EB%9F%AC%EB%A5%BC+%EB%B0%9C%EC%83%9D%EC%8B%9C%ED%82%A4%EC%84%B8%EC%9A%94.%0A%0Ais_square%28shape%3A+Shape%29+-%3E+bool%0A%0A%ED%83%80%EC%9E%85%EC%9D%98+%EA%B0%92%EC%9D%B4+%EC%A3%BC%EC%96%B4%EC%A1%8C%EC%9D%84+%EB%95%8C%2C+%EA%B7%B8+%EB%8F%84%ED%98%95%EC%9D%B4+%EC%A0%95%EC%82%AC%EA%B0%81%ED%98%95%EC%9D%B8%EC%A7%80+%ED%8C%90%EB%B3%84%ED%95%B4%EC%84%9C+%EB%B0%98%ED%99%98%ED%95%98%EB%8A%94+%ED%95%A8%EC%88%98%EC%9E%85%EB%8B%88%EB%8B%A4.%0A%0A%EB%A7%8C%EC%95%BD+%EB%8F%84%ED%98%95%EC%9D%B4+%EC%82%AC%EA%B0%81%ED%98%95%EC%9D%B4+%EC%95%84%EB%8B%88%EB%A9%B4+false%EB%A5%BC+%EB%B0%98%ED%99%98%ED%95%98%EC%84%B8%EC%9A%94.%0A%0A%EB%8B%B5%EC%9D%80+%EB%A7%88%EC%A7%80%EB%A7%89+%EC%B1%95%ED%84%B0+%EB%B6%80%EB%A1%9D%EC%9D%84+%ED%99%95%EC%9D%B8%ED%95%98%EC%84%B8%EC%9A%94.%0A*%2F%0A%0Aenum+Shape+%7B%0A++++Circle%28f64%29%2C+++++++++++++%2F%2F+%EB%B0%98%EC%A7%80%EB%A6%84%0A++++Rectangle%28f64%2C+f64%29%2C+++++%2F%2F+%EA%B0%80%EB%A1%9C%2C+%EC%84%B8%EB%A1%9C%0A++++Triangle%28f64%2C+f64%2C+f64%29%2C+%2F%2F+%EC%84%B8+%EB%B3%80%EC%9D%98+%EA%B8%B8%EC%9D%B4%0A%7D%0A%0A%2F%2F+%EB%84%93%EC%9D%B4%EB%A5%BC+%EA%B3%84%EC%82%B0%ED%95%98%EB%8A%94+%ED%95%A8%EC%88%98%0Afn+area%28shape%3A+%26Shape%29+-%3E+f64+%7B%0A++++%2F%2F+FIXME%0A++++%2F%2F+perimeter+%ED%95%A8%EC%88%98%EB%A5%BC+%EC%B0%B8%EA%B3%A0%ED%95%98%EC%84%B8%EC%9A%94.%0A++++%2F%2F+%EC%97%90%EB%9F%AC+%EB%B0%9C%EC%83%9D%EC%9D%80+panic%21+%EB%A7%A4%ED%81%AC%EB%A1%9C%EB%A5%BC+%EC%82%AC%EC%9A%A9%ED%95%A0+%EC%88%98+%EC%9E%88%EC%8A%B5%EB%8B%88%EB%8B%A4.%0A%7D%0A%0A%2F%2F+%EB%91%98%EB%A0%88%EB%A5%BC+%EA%B3%84%EC%82%B0%ED%95%98%EB%8A%94+%ED%95%A8%EC%88%98%0Afn+perimeter%28shape%3A+%26Shape%29+-%3E+f64+%7B%0A++++match+shape+%7B%0A++++++++Shape%3A%3ACircle%28r%29+%3D%3E+2.0+*+3.14+*+r%2C%0A++++++++Shape%3A%3ARectangle%28w%2C+h%29+%3D%3E+2.0+*+%28w+%2B+h%29%2C%0A++++++++Shape%3A%3ATriangle%28a%2C+b%2C+c%29+%3D%3E+%7B%0A++++++++++++%2F%2F+%EC%82%BC%EA%B0%81%ED%98%95%EC%9D%98+%EB%91%98%EB%A0%88+%EA%B3%B5%EC%8B%9D%0A++++++++++++let+p+%3D+a+%2B+b+%2B+c%3B%0A++++++++++++%2F%2F+%EB%91%98%EB%A0%88%EA%B0%80+%EC%9D%8C%EC%88%98%EB%A9%B4+%EC%97%90%EB%9F%AC+%EB%B0%9C%EC%83%9D%0A++++++++++++if+p+%3C+0.0+%7B%0A++++++++++++++++panic%21%28%22Invalid+triangle%22%29%3B%0A++++++++++++%7D+else+%7B%0A++++++++++++++++p%0A++++++++++++%7D%0A++++++++%7D%0A++++%7D%0A%7D%0A%0A%2F%2F+%EC%A0%95%EC%82%AC%EA%B0%81%ED%98%95%EC%9D%B8%EC%A7%80+%ED%8C%90%EB%B3%84%ED%95%98%EB%8A%94+%ED%95%A8%EC%88%98%0Afn+is_square%28shape%3A+%26Shape%29+-%3E+bool+%7B%0A++++match+shape+%7B%0A++++++++Shape%3A%3ACircle%28_%29+%3D%3E+false%2C%0A++++++++%2F%2F+FIXME+%EB%8B%A4%EB%A5%B8+%EB%8F%84%ED%98%95...%0A++++%7D%0A%7D%0A%0A%2F%2F+%EA%B2%B0%EA%B3%BC%0A%2F*%0A%EC%9B%90+%EB%84%93%EC%9D%B4%3A+12.56%0A%EC%82%AC%EA%B0%81%ED%98%95+%EB%84%93%EC%9D%B4%3A+12%0A%EC%82%BC%EA%B0%81%ED%98%95+%EB%84%93%EC%9D%B4%3A+6%0A%EC%9B%90+%EB%91%98%EB%A0%88%3A+12.56%0A%EC%82%AC%EA%B0%81%ED%98%95+%EB%91%98%EB%A0%88%3A+14%0A%EC%82%BC%EA%B0%81%ED%98%95+%EB%91%98%EB%A0%88%3A+12%0A%EC%9B%90%EC%9D%B4+%EC%A0%95%EC%82%AC%EA%B0%81%ED%98%95%EC%9D%B8%EA%B0%80%3F+false%0A%EC%82%AC%EA%B0%81%ED%98%95%EC%9D%B4+%EC%A0%95%EC%82%AC%EA%B0%81%ED%98%95%EC%9D%B8%EA%B0%80%3F+false%0A%EC%82%BC%EA%B0%81%ED%98%95%EC%9D%B4+%EC%A0%95%EC%82%AC%EA%B0%81%ED%98%95%EC%9D%B8%EA%B0%80%3F+false%0A*%2F%0Afn+main%28%29+%7B%0A++++%2F%2F+Shape+%ED%83%80%EC%9E%85%EC%9D%98+%EA%B0%92%EB%93%A4%EC%9D%84+%EC%83%9D%EC%84%B1%ED%95%A9%EB%8B%88%EB%8B%A4.%0A++++let+circle+%3D+Shape%3A%3ACircle%282.0%29%3B%0A++++let+rectangle+%3D+Shape%3A%3ARectangle%283.0%2C+4.0%29%3B%0A++++let+triangle+%3D+%2F%2F+FIXME%3B%0A%0A++++%2F%2F+%EA%B0%81+%EB%8F%84%ED%98%95%EC%9D%98+%EB%84%93%EC%9D%B4%EB%A5%BC+%EC%B6%9C%EB%A0%A5%ED%95%A9%EB%8B%88%EB%8B%A4.%0A++++println%21%28%22%EC%9B%90+%EB%84%93%EC%9D%B4%3A+%7B%7D%22%2C+area%28%26circle%29%29%3B%0A++++println%21%28%22%EC%82%AC%EA%B0%81%ED%98%95+%EB%84%93%EC%9D%B4%3A+%7B%7D%22%2C+area%28%26rectangle%29%29%3B%0A++++println%21%28%22%EC%82%BC%EA%B0%81%ED%98%95+%EB%84%93%EC%9D%B4%3A+%7B%7D%22%2C+area%28%26triangle%29%29%3B%0A%0A++++%2F%2F+%EA%B0%81+%EB%8F%84%ED%98%95%EC%9D%98+%EB%91%98%EB%A0%88%EB%A5%BC+%EC%B6%9C%EB%A0%A5%ED%95%A9%EB%8B%88%EB%8B%A4.%0A++++println%21%28%22%EC%9B%90+%EB%91%98%EB%A0%88%3A+%7B%7D%22%2C+perimeter%28%26circle%29%29%3B%0A++++println%21%28%22%EC%82%AC%EA%B0%81%ED%98%95+%EB%91%98%EB%A0%88%3A+%7B%7D%22%2C+perimeter%28%26rectangle%29%29%3B%0A++++println%21%28%22%EC%82%BC%EA%B0%81%ED%98%95+%EB%91%98%EB%A0%88%3A+%7B%7D%22%2C+perimeter%28%26triangle%29%29%3B%0A%0A++++%2F%2F+%EA%B0%81+%EB%8F%84%ED%98%95%EC%9D%B4+%EC%A0%95%EC%82%AC%EA%B0%81%ED%98%95%EC%9D%B8%EC%A7%80+%EC%B6%9C%EB%A0%A5%ED%95%A9%EB%8B%88%EB%8B%A4.%0A++++println%21%28%22%EC%9B%90%EC%9D%B4+%EC%A0%95%EC%82%AC%EA%B0%81%ED%98%95%EC%9D%B8%EA%B0%80%3F+%7B%7D%22%2C+is_square%28%26circle%29%29%3B%0A++++println%21%28%22%EC%82%AC%EA%B0%81%ED%98%95%EC%9D%B4+%EC%A0%95%EC%82%AC%EA%B0%81%ED%98%95%EC%9D%B8%EA%B0%80%3F+%7B%7D%22%2C+is_square%28%26rectangle%29%29%3B%0A++++println%21%28%22%EC%82%BC%EA%B0%81%ED%98%95%EC%9D%B4+%EC%A0%95%EC%82%AC%EA%B0%81%ED%98%95%EC%9D%B8%EA%B0%80%3F+%7B%7D%22%2C+is_square%28%26triangle%29%29%3B%0A%7D%0A" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
+            </div>
+        </div>
+        <script>
+        var pres = document.querySelectorAll("pre>code");
+        for (var i = 0; i < pres.length; i++) {
+            hljs.highlightElement(pres[i]);
+        }
+        var options = {
+            loadDelay: 0,
+            copyIconClass: "far fa-clipboard",
+            checkIconClass: "fa fa-check text-success",
+            blogURL: "http://rust-study.ajousw.kr/"
+        };
+        window.highlightJsBadge(options);
+        </script>
+
+        <footer>
+          <p><a target="_blank" rel="noopener" href="https://www.youtube.com/c/SoftwareToolTime">아주대학교 Software Tool Time</a> - Rust 튜토리얼 (Basic)</p>
+        </footer>
+    </body>
+</html>

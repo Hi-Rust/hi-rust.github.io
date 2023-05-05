@@ -1,6 +1,6 @@
 - title: Chapter 1 - The Basics
   source: >-
-    /ferris_lofi.png
+    /ferris_lofi.webp
   content_markdown: >
     무슨 언어를 배우든 똑같이 기본부터 살펴보겠습니다. (변수, 함수, 클래스 등)
 
@@ -903,6 +903,56 @@
 
 
     이러한 고급 기능을 배우는 것도 도움이 될 것입니다.
+- title: ref
+  code: >-
+    https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=fn+main%28%29+%7B%0D%0A++++let+x+%3D+Some%28String%3A%3Afrom%28%22text%22%29%29%3B%0D%0A%0D%0A++++%2F%2F+if+let+%EA%B5%AC%EB%AC%B8%EC%97%90%EC%84%9C+ref+%ED%82%A4%EC%9B%8C%EB%93%9C%EB%A5%BC+%EC%82%AC%EC%9A%A9%ED%95%98%EC%97%AC+%EC%B0%B8%EC%A1%B0%EB%A5%BC+%EC%83%9D%EC%84%B1%ED%95%A9%EB%8B%88%EB%8B%A4.%0D%0A++++if+let+Some%28ref+y%29+%3D+x+%7B%0D%0A++++++++println%21%28%22x+contains%3A+%7B%7D%22%2C+y%29%3B%0D%0A++++%7D%0D%0A%0D%0A++++%2F%2F+x%EC%9D%98+%EC%86%8C%EC%9C%A0%EA%B6%8C%EC%9D%B4+%EC%9D%B4%EB%8F%99%ED%95%98%EC%A7%80+%EC%95%8A%EC%95%98%EA%B8%B0+%EB%95%8C%EB%AC%B8%EC%97%90+%EC%97%AC%EC%A0%84%ED%9E%88+%EC%82%AC%EC%9A%A9%ED%95%A0+%EC%88%98+%EC%9E%88%EC%8A%B5%EB%8B%88%EB%8B%A4.%0D%0A++++println%21%28%22x+is+still+available%3A+%7B%3A%3F%7D%22%2C+x%29%3B%0D%0A%7D%0D%0A
+  content_markdown: |
+    `ref` 키워드는 패턴 매칭 과정에서 값의 참조를 만들어 해당 값을 이동(move)하는 대신 빌려오도록(bind by reference) 하는 데 사용됩니다.
+
+    패턴 매칭에 관해서는 매칭 여부에 영향을 주지 않으며, 값이 어떻게 매치되는지만 제어합니다.
+
+    기본적으로, `match` 문은 사용 가능한 모든 값을 소비합니다.
+
+    따라서 값의 소유권이 필요하지 않은 경우에도 문제가 될 수 있습니다.
+
+    ```rust
+    let maybe_name = Some(String::from("Alice"));
+
+    // 변수 'maybe_name'이 여기서 소비됩니다...
+    match maybe_name {
+        Some(n) => println!("Hello, {}", n),
+        _ => println!("Hello, world"),
+    }
+
+    // ... 이제 사용할 수 없습니다.
+    println!("Hello again, {}", maybe_name.unwrap_or("world".into()));
+    ```
+
+    `ref` 키워드를 사용하면 값이 빌려온 것이지만 이동하지 않으므로, `match` 문 이후에도 사용할 수 있습니다.
+
+    ```rust
+    let maybe_name = Some(String::from("Alice"));
+
+    // `ref`를 사용하여 값이 빌려오고 이동하지 않습니다...
+    match maybe_name {
+        Some(ref n) => println!("Hello, {}", n),
+        _ => println!("Hello, world"),
+    }
+
+    // ... 그래서 여기에서 사용할 수 있습니다!
+    println!("Hello again, {}", maybe_name.unwrap_or("world".into()));
+    ```
+
+    `&`와 `ref`의 차이점:
+
+    - `&`는 패턴이 객체에 대한 참조를 기대함을 나타냅니다. 따라서 `&`는 해당 패턴의 일부분입니다. `&Foo`는 `Foo`와 다른 객체와 매치됩니다.
+    - `ref`는 값의 참조를 얻기를 원함을 나타냅니다. 매치 대상이 아닙니다. `Foo(ref foo)`는 `Foo(foo)`와 동일한 객체와 매치됩니다.
+
+    우측 예제에서는 String 타입을 사용하고 있습니다.
+
+    ref 키워드를 사용하지 않을 경우, if let 구문에서 소유권이 이동하게 되어 이후에 x를 사용할 수 없게 됩니다.
+
+    그러나 ref 키워드를 사용함으로써 소유권이 이동하지 않고 참조가 생성되어 이후에도 x를 사용할 수 있습니다.
 - title: Chapter 1 - 마무리
   code: >-
     https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=%2F*%0A%EB%AC%B8%EC%A0%9C+1%0A%0A%3E+area%28shape%3A+Shape%29+-%3E+f64%0A%0A%ED%83%80%EC%9E%85%EC%9D%98+%EA%B0%92%EC%9D%B4+%EC%A3%BC%EC%96%B4%EC%A1%8C%EC%9D%84+%EB%95%8C%2C+%EA%B7%B8+%EB%8F%84%ED%98%95%EC%9D%98+%EB%84%93%EC%9D%B4%EB%A5%BC+%EA%B3%84%EC%82%B0%ED%95%B4%EC%84%9C+%EB%B0%98%ED%99%98%ED%95%98%EB%8A%94+%ED%95%A8%EC%88%98%EC%9E%85%EB%8B%88%EB%8B%A4.%0A%0A%EB%84%93%EC%9D%B4%EB%A5%BC+%EA%B3%84%EC%82%B0%ED%95%A0+%EB%95%8C%EB%8A%94+%ED%8C%8C%EC%9D%B4%28pi%29%EB%A5%BC+3.14%EB%A1%9C+%EA%B0%80%EC%A0%95%ED%95%A9%EB%8B%88%EB%8B%A4.+%EB%A7%8C%EC%95%BD+%EB%8F%84%ED%98%95%EC%9D%B4+%EC%82%BC%EA%B0%81%ED%98%95%EC%9D%B4%EA%B3%A0%0A%0A%EC%82%BC%EA%B0%81%ED%98%95%EC%9D%98+%EC%84%B8+%EB%B3%80%EC%9D%98+%EA%B8%B8%EC%9D%B4%EA%B0%80+%EC%82%BC%EA%B0%81%ED%98%95%EC%9D%84+%EB%A7%8C%EB%93%A4+%EC%88%98+%EC%97%86%EB%8A%94+%EA%B2%BD%EC%9A%B0%EC%97%90%EB%8A%94+%EC%97%90%EB%9F%AC%EB%A5%BC+%EB%B0%9C%EC%83%9D%EC%8B%9C%ED%82%A4%EC%84%B8%EC%9A%94.%0A%0A%3E+perimeter%28shape%3A+Shape%29+-%3E+f64%0A%0A%ED%83%80%EC%9E%85%EC%9D%98+%EA%B0%92%EC%9D%B4+%EC%A3%BC%EC%96%B4%EC%A1%8C%EC%9D%84+%EB%95%8C%2C+%EA%B7%B8+%EB%8F%84%ED%98%95%EC%9D%98+%EB%91%98%EB%A0%88%EB%A5%BC+%EA%B3%84%EC%82%B0%ED%95%B4%EC%84%9C+%EB%B0%98%ED%99%98%ED%95%98%EB%8A%94+%ED%95%A8%EC%88%98%EC%9E%85%EB%8B%88%EB%8B%A4.%0A%0A%EB%A7%8C%EC%95%BD+%EB%8F%84%ED%98%95%EC%9D%B4+%EC%82%BC%EA%B0%81%ED%98%95%EC%9D%B4%EA%B3%A0+%EC%82%BC%EA%B0%81%ED%98%95%EC%9D%98+%EC%84%B8+%EB%B3%80%EC%9D%98+%EA%B8%B8%EC%9D%B4%EA%B0%80+%EC%82%BC%EA%B0%81%ED%98%95%EC%9D%84+%EB%A7%8C%EB%93%A4+%EC%88%98+%EC%97%86%EB%8A%94+%EA%B2%BD%EC%9A%B0%EC%97%90%EB%8A%94+%EC%97%90%EB%9F%AC%EB%A5%BC+%EB%B0%9C%EC%83%9D%EC%8B%9C%ED%82%A4%EC%84%B8%EC%9A%94.%0A%0Ais_square%28shape%3A+Shape%29+-%3E+bool%0A%0A%ED%83%80%EC%9E%85%EC%9D%98+%EA%B0%92%EC%9D%B4+%EC%A3%BC%EC%96%B4%EC%A1%8C%EC%9D%84+%EB%95%8C%2C+%EA%B7%B8+%EB%8F%84%ED%98%95%EC%9D%B4+%EC%A0%95%EC%82%AC%EA%B0%81%ED%98%95%EC%9D%B8%EC%A7%80+%ED%8C%90%EB%B3%84%ED%95%B4%EC%84%9C+%EB%B0%98%ED%99%98%ED%95%98%EB%8A%94+%ED%95%A8%EC%88%98%EC%9E%85%EB%8B%88%EB%8B%A4.%0A%0A%EB%A7%8C%EC%95%BD+%EB%8F%84%ED%98%95%EC%9D%B4+%EC%82%AC%EA%B0%81%ED%98%95%EC%9D%B4+%EC%95%84%EB%8B%88%EB%A9%B4+false%EB%A5%BC+%EB%B0%98%ED%99%98%ED%95%98%EC%84%B8%EC%9A%94.%0A%0A%EB%8B%B5%EC%9D%80+%EB%A7%88%EC%A7%80%EB%A7%89+%EC%B1%95%ED%84%B0+%EB%B6%80%EB%A1%9D%EC%9D%84+%ED%99%95%EC%9D%B8%ED%95%98%EC%84%B8%EC%9A%94.%0A*%2F%0A%0Aenum+Shape+%7B%0A++++Circle%28f64%29%2C+++++++++++++%2F%2F+%EB%B0%98%EC%A7%80%EB%A6%84%0A++++Rectangle%28f64%2C+f64%29%2C+++++%2F%2F+%EA%B0%80%EB%A1%9C%2C+%EC%84%B8%EB%A1%9C%0A++++Triangle%28f64%2C+f64%2C+f64%29%2C+%2F%2F+%EC%84%B8+%EB%B3%80%EC%9D%98+%EA%B8%B8%EC%9D%B4%0A%7D%0A%0A%2F%2F+%EB%84%93%EC%9D%B4%EB%A5%BC+%EA%B3%84%EC%82%B0%ED%95%98%EB%8A%94+%ED%95%A8%EC%88%98%0Afn+area%28shape%3A+%26Shape%29+-%3E+f64+%7B%0A++++%2F%2F+FIXME%0A++++%2F%2F+perimeter+%ED%95%A8%EC%88%98%EB%A5%BC+%EC%B0%B8%EA%B3%A0%ED%95%98%EC%84%B8%EC%9A%94.%0A++++%2F%2F+%EC%97%90%EB%9F%AC+%EB%B0%9C%EC%83%9D%EC%9D%80+panic%21+%EB%A7%A4%ED%81%AC%EB%A1%9C%EB%A5%BC+%EC%82%AC%EC%9A%A9%ED%95%A0+%EC%88%98+%EC%9E%88%EC%8A%B5%EB%8B%88%EB%8B%A4.%0A%7D%0A%0A%2F%2F+%EB%91%98%EB%A0%88%EB%A5%BC+%EA%B3%84%EC%82%B0%ED%95%98%EB%8A%94+%ED%95%A8%EC%88%98%0Afn+perimeter%28shape%3A+%26Shape%29+-%3E+f64+%7B%0A++++match+shape+%7B%0A++++++++Shape%3A%3ACircle%28r%29+%3D%3E+2.0+*+3.14+*+r%2C%0A++++++++Shape%3A%3ARectangle%28w%2C+h%29+%3D%3E+2.0+*+%28w+%2B+h%29%2C%0A++++++++Shape%3A%3ATriangle%28a%2C+b%2C+c%29+%3D%3E+%7B%0A++++++++++++%2F%2F+%EC%82%BC%EA%B0%81%ED%98%95%EC%9D%98+%EB%91%98%EB%A0%88+%EA%B3%B5%EC%8B%9D%0A++++++++++++let+p+%3D+a+%2B+b+%2B+c%3B%0A++++++++++++%2F%2F+%EB%91%98%EB%A0%88%EA%B0%80+%EC%9D%8C%EC%88%98%EB%A9%B4+%EC%97%90%EB%9F%AC+%EB%B0%9C%EC%83%9D%0A++++++++++++if+p+%3C+0.0+%7B%0A++++++++++++++++panic%21%28%22Invalid+triangle%22%29%3B%0A++++++++++++%7D+else+%7B%0A++++++++++++++++p%0A++++++++++++%7D%0A++++++++%7D%0A++++%7D%0A%7D%0A%0A%2F%2F+%EC%A0%95%EC%82%AC%EA%B0%81%ED%98%95%EC%9D%B8%EC%A7%80+%ED%8C%90%EB%B3%84%ED%95%98%EB%8A%94+%ED%95%A8%EC%88%98%0Afn+is_square%28shape%3A+%26Shape%29+-%3E+bool+%7B%0A++++match+shape+%7B%0A++++++++Shape%3A%3ACircle%28_%29+%3D%3E+false%2C%0A++++++++%2F%2F+FIXME+%EB%8B%A4%EB%A5%B8+%EB%8F%84%ED%98%95...%0A++++%7D%0A%7D%0A%0A%2F%2F+%EA%B2%B0%EA%B3%BC%0A%2F*%0A%EC%9B%90+%EB%84%93%EC%9D%B4%3A+12.56%0A%EC%82%AC%EA%B0%81%ED%98%95+%EB%84%93%EC%9D%B4%3A+12%0A%EC%82%BC%EA%B0%81%ED%98%95+%EB%84%93%EC%9D%B4%3A+6%0A%EC%9B%90+%EB%91%98%EB%A0%88%3A+12.56%0A%EC%82%AC%EA%B0%81%ED%98%95+%EB%91%98%EB%A0%88%3A+14%0A%EC%82%BC%EA%B0%81%ED%98%95+%EB%91%98%EB%A0%88%3A+12%0A%EC%9B%90%EC%9D%B4+%EC%A0%95%EC%82%AC%EA%B0%81%ED%98%95%EC%9D%B8%EA%B0%80%3F+false%0A%EC%82%AC%EA%B0%81%ED%98%95%EC%9D%B4+%EC%A0%95%EC%82%AC%EA%B0%81%ED%98%95%EC%9D%B8%EA%B0%80%3F+false%0A%EC%82%BC%EA%B0%81%ED%98%95%EC%9D%B4+%EC%A0%95%EC%82%AC%EA%B0%81%ED%98%95%EC%9D%B8%EA%B0%80%3F+false%0A*%2F%0Afn+main%28%29+%7B%0A++++%2F%2F+Shape+%ED%83%80%EC%9E%85%EC%9D%98+%EA%B0%92%EB%93%A4%EC%9D%84+%EC%83%9D%EC%84%B1%ED%95%A9%EB%8B%88%EB%8B%A4.%0A++++let+circle+%3D+Shape%3A%3ACircle%282.0%29%3B%0A++++let+rectangle+%3D+Shape%3A%3ARectangle%283.0%2C+4.0%29%3B%0A++++let+triangle+%3D+%2F%2F+FIXME%3B%0A%0A++++%2F%2F+%EA%B0%81+%EB%8F%84%ED%98%95%EC%9D%98+%EB%84%93%EC%9D%B4%EB%A5%BC+%EC%B6%9C%EB%A0%A5%ED%95%A9%EB%8B%88%EB%8B%A4.%0A++++println%21%28%22%EC%9B%90+%EB%84%93%EC%9D%B4%3A+%7B%7D%22%2C+area%28%26circle%29%29%3B%0A++++println%21%28%22%EC%82%AC%EA%B0%81%ED%98%95+%EB%84%93%EC%9D%B4%3A+%7B%7D%22%2C+area%28%26rectangle%29%29%3B%0A++++println%21%28%22%EC%82%BC%EA%B0%81%ED%98%95+%EB%84%93%EC%9D%B4%3A+%7B%7D%22%2C+area%28%26triangle%29%29%3B%0A%0A++++%2F%2F+%EA%B0%81+%EB%8F%84%ED%98%95%EC%9D%98+%EB%91%98%EB%A0%88%EB%A5%BC+%EC%B6%9C%EB%A0%A5%ED%95%A9%EB%8B%88%EB%8B%A4.%0A++++println%21%28%22%EC%9B%90+%EB%91%98%EB%A0%88%3A+%7B%7D%22%2C+perimeter%28%26circle%29%29%3B%0A++++println%21%28%22%EC%82%AC%EA%B0%81%ED%98%95+%EB%91%98%EB%A0%88%3A+%7B%7D%22%2C+perimeter%28%26rectangle%29%29%3B%0A++++println%21%28%22%EC%82%BC%EA%B0%81%ED%98%95+%EB%91%98%EB%A0%88%3A+%7B%7D%22%2C+perimeter%28%26triangle%29%29%3B%0A%0A++++%2F%2F+%EA%B0%81+%EB%8F%84%ED%98%95%EC%9D%B4+%EC%A0%95%EC%82%AC%EA%B0%81%ED%98%95%EC%9D%B8%EC%A7%80+%EC%B6%9C%EB%A0%A5%ED%95%A9%EB%8B%88%EB%8B%A4.%0A++++println%21%28%22%EC%9B%90%EC%9D%B4+%EC%A0%95%EC%82%AC%EA%B0%81%ED%98%95%EC%9D%B8%EA%B0%80%3F+%7B%7D%22%2C+is_square%28%26circle%29%29%3B%0A++++println%21%28%22%EC%82%AC%EA%B0%81%ED%98%95%EC%9D%B4+%EC%A0%95%EC%82%AC%EA%B0%81%ED%98%95%EC%9D%B8%EA%B0%80%3F+%7B%7D%22%2C+is_square%28%26rectangle%29%29%3B%0A++++println%21%28%22%EC%82%BC%EA%B0%81%ED%98%95%EC%9D%B4+%EC%A0%95%EC%82%AC%EA%B0%81%ED%98%95%EC%9D%B8%EA%B0%80%3F+%7B%7D%22%2C+is_square%28%26triangle%29%29%3B%0A%7D%0A

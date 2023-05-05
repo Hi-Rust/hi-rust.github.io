@@ -35,64 +35,106 @@
                 <span class="toc"><a href="TOC_ko.html">목차</a></span>
             </div>
             <div class="page">
-            <h1>unsafe 코드</h1>
-            <p>Rust는 기본적으로 안전한 프로그래밍을 위한 다양한 기능을 제공합니다.</p>
-<p>하지만, 때로는 안전성을 포기하고, 저수준의 시스템 작업을 수행해야 하는 경우가 있습니다.</p>
-<p>이 때 <code>unsafe</code> 키워드를 사용합니다.</p>
-<h2 id="aunsafe">a. unsafe의 개념 및 필요성</h2>
-<p><code>unsafe</code>는 Rust 컴파일러가 안전성을 보장할 수 없는 코드를 표시하는 키워드입니다.</p>
-<p>이를 사용하면 Rust의 안전성 검사를 우회하고, 저수준의 시스템 작업을 수행할 수 있습니다.</p>
-<p>주로 외부 함수, 원시 포인터, 정적 변수에 접근하는 등의 작업에 사용됩니다.</p>
-<h2 id="bunsafe">b. unsafe 함수 및 메서드</h2>
-<p><code>unsafe</code> 키워드를 사용하여 함수와 메서드를 정의할 수 있습니다.</p>
-<p>이를 사용하면 안전하지 않은 작업을 수행할 수 있습니다.</p>
-<p>호출하는 쪽에서도 <code>unsafe</code> 블록 내에서 호출해야 합니다.</p>
-<pre><code class="rust">unsafe fn dangerous_function() {
-    // 안전하지 않은 작업 수행
+            <h1>매크로(Macros)</h1>
+            <p>Rust의 매크로 시스템은 코드를 생성하고 추상화하는 강력한 방법을 제공합니다.</p>
+<h2 id="a">a. 매크로의 개념 및 사용 사례</h2>
+<p>매크로는 코드를 생성하거나 특정 패턴에 따라 코드를 변형하는 데 사용되는 메타 프로그래밍 기술입니다.</p>
+<p>Rust에서는 매크로를 사용하여 코드 중복을 줄이고, 가독성을 향상시키며, 유연한 추상화를 구현할 수 있습니다.</p>
+<p>매크로는 주로 컴파일 시간에 코드를 생성하거나 수정하는 작업에 사용됩니다. (ex. <code>println!</code>)</p>
+<h2 id="bdeclarativemacros">b. 선언형 매크로(Declarative Macros) 생성하기</h2>
+<p>선언형 매크로는 매크로 규칙을 사용하여 코드를 생성하는 매크로입니다.</p>
+<p><code>macro_rules!</code> 키워드를 사용하여 선언형 매크로를 정의할 수 있습니다.</p>
+<pre><code class="rust">macro_rules! vec {
+    ( $( $x:expr ),* ) => {
+        {
+            let mut temp_vec = Vec::new();
+            $(
+                temp_vec.push($x);
+            )*
+            temp_vec
+        }
+    };
 }
 
 fn main() {
-    unsafe {
-        dangerous_function();
-    }
+    let v = vec![1, 2, 3];
+    println!("v: {:?}", v);
 }</code></pre>
-<h2 id="crawpointers">c. 원시 포인터(Raw Pointers) 사용하기</h2>
-<p>원시 포인터는 메모리 주소를 직접 가리키는 포인터로, Rust의 안전성을 보장하지 않습니다.</p>
-<p><code>*const T</code>와 <code>*mut T</code> 형식으로 사용할 수 있습니다.</p>
-<p>원시 포인터는 <code>unsafe</code> 블록 내에서 사용해야 합니다.</p>
-<pre><code class="rust">fn main() {
-    let mut num = 5;
-    let r1 = &num as *const i32;
-    let r2 = &mut num as *mut i32;
+<h2 id="cproceduralmacros">c. 프로시저 매크로(Procedural Macros) 생성하기</h2>
+<p>프로시저 매크로는 Rust의 컴파일러에 플러그인으로 동작하는 함수입니다.</p>
+<p>프로시저 매크로는 주로 속성(attribute)에 사용되며, 소스 코드를 받아 변형된 소스 코드를 반환합니다.</p>
+<p>프로시저 매크로를 정의하려면 <code>proc_macro</code> 라이브러리를 사용하고, 별도의 크레이트로 구성해야 합니다.</p>
+<pre><code class="rust">// 프로시저 매크로를 정의하는 크레이트입니다.
+use proc_macro::TokenStream;
+use quote::quote;
+use syn::{parse_macro_input, DeriveInput};
 
-    unsafe {
-        println!("r1 가리키는 값: {}", *r1);
-        println!("r2 가리키는 값: {}", *r2);
-    }
+#[proc_macro_derive(HelloMacro)]
+pub fn hello_macro_derive(input: TokenStream) -> TokenStream {
+    let ast = parse_macro_input!(input as DeriveInput);
+    let name = &ast.ident;
+    let gen = quote! {
+        impl HelloMacro for #name {
+            fn hello_macro() {
+                println!("안녕하세요, 여기는 {}입니다.", stringify!(#name));
+            }
+        }
+    };
+    gen.into()
 }</code></pre>
-<h2 id="dffiforeignfunctioninterface">d. 외부 함수 및 FFI(Foreign Function Interface) 사용하기</h2>
-<p>외부 함수는 다른 프로그래밍 언어로 작성된 함수를 Rust에서 호출할 수 있도록 해주는 인터페이스입니다.</p>
-<p>외부 함수를 사용하려면 <code>extern</code> 키워드와 <code>unsafe</code>를 사용해야 합니다.</p>
-<pre><code class="rust">// C 언어의 함수를 호출하는 예시
-extern "C" {
-    fn abs(input: i32) -> i32;
-}
+<pre><code class="rust">// 프로시저 매크로를 사용하는 크레이트입니다.
+use hello_macro::HelloMacro;
+use hello_macro_derive::HelloMacro;
+
+#[derive(HelloMacro)]
+struct Pancakes;
 
 fn main() {
-    let x = -3;
-    let result = unsafe { abs(x) };
-    println!("{}의 절댓값은 {}입니다.", x, result);
+    Pancakes::hello_macro();
 }</code></pre>
-<p>이렇게 <code>unsafe</code>를 사용하여 Rust의 안전성 검사를 우회할 수 있습니다.</p>
-<p>하지만 가능한 한 <code>unsafe</code>를 사용하지 않고, 안전한 코드를 작성하는 것이 좋습니다.</p>
-<p>정말 필요한 경우에만 사용하고, 주의해서 사용해야 합니다.</p>
+<h2 id="d">d. 매크로 규칙 및 패턴 매칭</h2>
+<p>Rust의 매크로는 패턴 매칭을 통해 매개 변수를 추출하고, 규칙에 따라 코드를 생성합니다.</p>
+<p>매크로에서 패턴 매칭을 사용하려면 다음 구문을 사용합니다.</p>
+<ul>
+<li><code>$name:expr</code>: 표현식(Expressions) 매치</li>
+<li><code>$name:ident</code>: 식별자(Identifiers) 매치</li>
+<li><code>$name:ty</code>: 타입(Types) 매치</li>
+<li><code>$name:pat</code>: 패턴(Patterns) 매치</li>
+<li><code>$name:stmt</code>: 문장(Statements) 매치</li>
+<li><code>$name:block</code>: 블록(Blocks) 매치</li>
+<li><code>$name:meta</code>: 메타 데이터(Meta-data) 매치</li>
+<li><code>$name:tt</code>: 토큰 트리(Token Tree) 매치</li>
+<li><code>$name:item</code>: 항목(Items) 매치</li>
+</ul>
+<p>또한, 매크로에서 사용할 수 있는 반복자 구문도 있습니다.</p>
+<ul>
+<li><code>$(...)*</code>: 0회 이상 반복</li>
+<li><code>$(...)+</code>: 1회 이상 반복</li>
+</ul>
+<pre><code class="rust">macro_rules! create_function {
+    ($func_name:ident) => (
+        fn $func_name() {
+            println!("함수 {}가 호출되었습니다.", stringify!($func_name));
+        }
+    );
+}
+
+create_function!(foo);
+create_function!(bar);
+
+fn main() {
+    foo();
+    bar();
+}</code></pre>
+<p>이렇게 매크로를 사용하여 코드 생성 및 추상화를 구현하면, 유연한 프로그래밍을 할 수 있고, 가독성 및 유지보수성을 높일 수 있습니다.</p>
+<p>매크로의 핵심은 패턴 매칭과 규칙을 통해 코드를 재사용하고, 확장성을 높이는 것입니다.</p>
             <div class="bottomnav">
                 <span class="back"><a href="40_ko.html" rel="prev">❮ 이전</a></span>
                 <span class="next"><a href="42_ko.html" rel="next">다음 ❯</a></span>
             </div>
             </div>
             <div class="code">
-            <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=fn+main%28%29+%7B%0A++++let+mut+vec1+%3D+vec%21%5B1%2C+2%2C+3%5D%3B%0A++++let+mut+vec2+%3D+vec%21%5B4%2C+5%2C+6%5D%3B%0A%0A++++println%21%28%22%EA%B5%90%ED%99%98+%EC%A0%84%3A+vec1+%3D+%7B%3A%3F%7D%2C+vec2+%3D+%7B%3A%3F%7D%22%2C+vec1%2C+vec2%29%3B%0A%0A++++unsafe+%7B%0A++++++++unsafe_swap%28%26mut+vec1%2C+%26mut+vec2%29%3B%0A++++%7D%0A%0A++++println%21%28%22%EA%B5%90%ED%99%98+%ED%9B%84%3A+vec1+%3D+%7B%3A%3F%7D%2C+vec2+%3D+%7B%3A%3F%7D%22%2C+vec1%2C+vec2%29%3B%0A%7D%0A%0A%2F%2F+%EB%B2%A1%ED%84%B0%EC%9D%98+%EB%82%B4%EB%B6%80+%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%A5%BC+%EC%A7%81%EC%A0%91+%EA%B5%90%ED%99%98%ED%95%98%EA%B8%B0+%EC%9C%84%ED%95%B4+%EC%9B%90%EC%8B%9C+%ED%8F%AC%EC%9D%B8%ED%84%B0%EC%99%80+unsafe%EB%A5%BC+%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94+%ED%95%A8%EC%88%98%0Aunsafe+fn+unsafe_swap%28vec1%3A+%26mut+%5Bi32%5D%2C+vec2%3A+%26mut+%5Bi32%5D%29+%7B%0A++++%2F%2F+%EB%B2%A1%ED%84%B0%EC%9D%98+%EA%B8%B8%EC%9D%B4%EA%B0%80+%EA%B0%99%EC%9D%80%EC%A7%80+%ED%99%95%EC%9D%B8%0A++++assert_eq%21%28vec1.len%28%29%2C+vec2.len%28%29%29%3B%0A%0A++++%2F%2F+%EB%B2%A1%ED%84%B0%EC%9D%98+%EB%82%B4%EB%B6%80+%EB%8D%B0%EC%9D%B4%ED%84%B0%EC%97%90+%EC%A0%91%EA%B7%BC%ED%95%98%EA%B8%B0+%EC%9C%84%ED%95%B4+%EC%9B%90%EC%8B%9C+%ED%8F%AC%EC%9D%B8%ED%84%B0%EB%A5%BC+%EC%83%9D%EC%84%B1%ED%95%A9%EB%8B%88%EB%8B%A4.%0A++++let+ptr1+%3D+vec1.as_mut_ptr%28%29%3B%0A++++let+ptr2+%3D+vec2.as_mut_ptr%28%29%3B%0A%0A++++%2F%2F+%EC%9B%90%EC%8B%9C+%ED%8F%AC%EC%9D%B8%ED%84%B0%EB%A5%BC+%EC%82%AC%EC%9A%A9%ED%95%98%EC%97%AC+%EB%B2%A1%ED%84%B0%EC%9D%98+%EC%9B%90%EC%86%8C%EB%A5%BC+%EA%B5%90%ED%99%98%ED%95%A9%EB%8B%88%EB%8B%A4.%0A++++for+i+in+0..vec1.len%28%29+%7B%0A++++++++%2F%2F+%EC%9B%90%EC%8B%9C+%ED%8F%AC%EC%9D%B8%ED%84%B0%EB%A5%BC+%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94+%EC%97%B0%EC%82%B0%EC%9D%80+unsafe+%EB%B8%94%EB%A1%9D+%EB%82%B4%EC%97%90%EC%84%9C+%EC%88%98%ED%96%89%ED%95%B4%EC%95%BC+%ED%95%A9%EB%8B%88%EB%8B%A4.%0A++++++++let+temp+%3D+*ptr1.add%28i%29%3B%0A++++++++*ptr1.add%28i%29+%3D+*ptr2.add%28i%29%3B%0A++++++++*ptr2.add%28i%29+%3D+temp%3B%0A++++%7D%0A%7D%0A" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
+            <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=macro_rules%21+times+%7B%0D%0A++++%28%24num%3Aexpr%2C+%24body%3Ablock%29+%3D%3E+%7B%0D%0A++++++++times%21%28None%2C+%24num%2C+%24body%29%3B%0D%0A++++%7D%3B%0D%0A++++%28%24label%3Aexpr%2C+%24num%3Aexpr%2C+%24body%3Ablock%29+%3D%3E+%7B%0D%0A++++++++if+let+Some%28label%29+%3D+%24label+%7B%0D%0A++++++++++++println%21%28%22Task%3A+%7B%7D%22%2C+label%29%3B%0D%0A++++++++%7D%0D%0A%0D%0A++++++++let+mut+total_time+%3D+std%3A%3Atime%3A%3ADuration%3A%3Anew%280%2C+0%29%3B%0D%0A++++++++let+mut+min_time+%3D+std%3A%3Atime%3A%3ADuration%3A%3Afrom_secs%28u64%3A%3AMAX%29%3B%0D%0A++++++++let+mut+max_time+%3D+std%3A%3Atime%3A%3ADuration%3A%3Afrom_secs%280%29%3B%0D%0A%0D%0A++++++++for+_+in+0..%24num+%7B%0D%0A++++++++++++let+start_time+%3D+std%3A%3Atime%3A%3AInstant%3A%3Anow%28%29%3B%0D%0A++++++++++++%24body%0D%0A++++++++++++let+elapsed+%3D+start_time.elapsed%28%29%3B%0D%0A++++++++++++total_time+%2B%3D+elapsed%3B%0D%0A++++++++++++min_time+%3D+min_time.min%28elapsed%29%3B%0D%0A++++++++++++max_time+%3D+max_time.max%28elapsed%29%3B%0D%0A++++++++++++println%21%28%0D%0A++++++++++++++++%22Execution+time+for+iteration%3A+%7B%7D+ms%22%2C%0D%0A++++++++++++++++elapsed.as_millis%28%29%0D%0A++++++++++++%29%3B%0D%0A++++++++%7D%0D%0A%0D%0A++++++++let+avg_time+%3D+total_time+%2F+%24num%3B%0D%0A++++++++println%21%28%22Average+execution+time%3A+%7B%7D+ms%22%2C+avg_time.as_millis%28%29%29%3B%0D%0A++++++++println%21%28%22Minimum+execution+time%3A+%7B%7D+ms%22%2C+min_time.as_millis%28%29%29%3B%0D%0A++++++++println%21%28%22Maximum+execution+time%3A+%7B%7D+ms%22%2C+max_time.as_millis%28%29%29%3B%0D%0A++++%7D%3B%0D%0A%7D%0D%0A%0D%0Afn+is_prime%28n%3A+u64%29+-%3E+bool+%7B%0D%0A++++if+n+%3C%3D+1+%7B%0D%0A++++++++return+false%3B%0D%0A++++%7D%0D%0A++++for+i+in+2..%3D%28%28n+as+f64%29.sqrt%28%29+as+u64%29+%7B%0D%0A++++++++if+n+%25+i+%3D%3D+0+%7B%0D%0A++++++++++++return+false%3B%0D%0A++++++++%7D%0D%0A++++%7D%0D%0A++++true%0D%0A%7D%0D%0A%0D%0Afn+main%28%29+%7B%0D%0A++++times%21%28Some%28%22Prime+number+summation%22%29%2C+3%2C+%7B%0D%0A++++++++let+mut+sum+%3D+0u64%3B%0D%0A++++++++let+mut+num+%3D+2u64%3B%0D%0A++++++++let+mut+counter+%3D+0%3B%0D%0A%0D%0A++++++++while+counter+%3C+10_000+%7B%0D%0A++++++++++++if+is_prime%28num%29+%7B%0D%0A++++++++++++++++sum+%2B%3D+num%3B%0D%0A++++++++++++++++counter+%2B%3D+1%3B%0D%0A++++++++++++%7D%0D%0A++++++++++++num+%2B%3D+1%3B%0D%0A++++++++%7D%0D%0A++++++++println%21%28%22Sum+of+first+10%2C000+prime+numbers%3A+%7B%7D%22%2C+sum%29%3B%0D%0A++++%7D%29%3B%0D%0A%7D" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
             </div>
         </div>
         <script>

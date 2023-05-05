@@ -17,11 +17,24 @@
     - 템플릿 엔진, 데이터베이스, 인증 등과 같은 다른 라이브러리와 쉽게 통합할 수 있습니다.
 
     실제 어떻게 만들 수 있는지 바로 보고 싶으시면 [아주대 카카오톡 챗봇을 actix-rs](https://github.com/Alfex4936/Rust-Server/tree/main/chatbot)로 만든 버전을 참고하세요.
-- title: Hey
+- title: 프로젝트 준비
   source: >-
-    /ferris_lofi.png
+    https://user-images.githubusercontent.com/2356749/236372807-0c1afba9-11b0-45f3-8f32-63c6566b7097.png
   content_markdown: |
-    CSW
+    우선 actix-rs로 카카오톡 챗봇을 위한 서버를 만들 것입니다.
+
+    우측처럼 플러스 친구로 추가해서 메시지를 보내면 특정 응답을 받는 봇을 자주 보셨을 겁니다.
+
+    이 강의에서는 간단하게 [BasicCard](https://i.kakao.com/docs/skill-response-format#basiccard) 포맷을 이용해 자신의 정보를 만들어 볼 것 입니다.
+
+
+    ![BasicCard](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbGZOnJ%2Fbtra8y6n31j%2FZyIuDLgVyQPqzknNrIXqSk%2Fimg.png)
+
+    # 준비물:
+
+    1. public에서 접속 가능한 주소 (포트포워딩이나 AWS EC2를 이용)
+    2. 카카오 i 챗봇 만들기 [@링크](https://i.kakao.com/)
+    3. 카카오톡 채널 만들기 [@링크](https://center-pf.kakao.com/profiles)
 - title: Chapter 6 - Conclusion
   source: >-
     /ferris_lofi.png

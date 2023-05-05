@@ -35,55 +35,64 @@
                 <span class="toc"><a href="TOC_ko.html">목차</a></span>
             </div>
             <div class="page">
-            <h1>Chapter 4 - Conclusion</h1>
-            <p>다음은 여러분들이 unsafe와 macro를 사용하여 문제를 해결해 보는 고급 문제입니다.</p>
-<p>아래 주석을 참고하여 코드를 완성해보세요.</p>
-<p>문제 설명:<br />
-두 개의 Vec<i32> 벡터를 더하는 프로그램을 작성하세요.</p>
-<p>이때, 매크로를 사용하여 덧셈 작업을 수행하고, 벡터의 내부 데이터에 직접 접근하기 위해 unsafe를 사용하세요.</p>
-<ol>
-<li>매크로를 사용하여 두 벡터의 덧셈을 수행하는 함수를 작성하세요.</li>
-<li>unsafe를 사용하여 벡터의 내부 데이터에 접근하고 값을 더하세요.</li>
-</ol>
-<div> <button type="button" class="collapsible">정답 보기</button> <div class="content"> <p> <pre><code class="rust">// 매크로를 사용하여 두 벡터의 덧셈을 수행하는 함수를 작성합니다.
-macro_rules! add_vectors {
-    ($vec1:expr, $vec2:expr) => {
-        add_vectors_unsafe(&$vec1, &$vec2)
-    };
+            <h1>unsafe 코드</h1>
+            <p>Rust는 기본적으로 안전한 프로그래밍을 위한 다양한 기능을 제공합니다.</p>
+<p>하지만, 때로는 안전성을 포기하고, 저수준의 시스템 작업을 수행해야 하는 경우가 있습니다.</p>
+<p>이 때 <code>unsafe</code> 키워드를 사용합니다.</p>
+<h2 id="aunsafe">a. unsafe의 개념 및 필요성</h2>
+<p><code>unsafe</code>는 Rust 컴파일러가 안전성을 보장할 수 없는 코드를 표시하는 키워드입니다.</p>
+<p>이를 사용하면 Rust의 안전성 검사를 우회하고, 저수준의 시스템 작업을 수행할 수 있습니다.</p>
+<p>주로 외부 함수, 원시 포인터, 정적 변수에 접근하는 등의 작업에 사용됩니다.</p>
+<h2 id="bunsafe">b. unsafe 함수 및 메서드</h2>
+<p><code>unsafe</code> 키워드를 사용하여 함수와 메서드를 정의할 수 있습니다.</p>
+<p>이를 사용하면 안전하지 않은 작업을 수행할 수 있습니다.</p>
+<p>호출하는 쪽에서도 <code>unsafe</code> 블록 내에서 호출해야 합니다.</p>
+<pre><code class="rust">unsafe fn dangerous_function() {
+    // 안전하지 않은 작업 수행
 }
 
 fn main() {
-    let vec1 = vec![1, 2, 3];
-    let vec2 = vec![4, 5, 6];
-    let result = add_vectors!(vec1, vec2);
+    unsafe {
+        dangerous_function();
+    }
+}</code></pre>
+<h2 id="crawpointers">c. 원시 포인터(Raw Pointers) 사용하기</h2>
+<p>원시 포인터는 메모리 주소를 직접 가리키는 포인터로, Rust의 안전성을 보장하지 않습니다.</p>
+<p><code>*const T</code>와 <code>*mut T</code> 형식으로 사용할 수 있습니다.</p>
+<p>원시 포인터는 <code>unsafe</code> 블록 내에서 사용해야 합니다.</p>
+<pre><code class="rust">fn main() {
+    let mut num = 5;
+    let r1 = &num as *const i32;
+    let r2 = &mut num as *mut i32;
 
-    println!("벡터 덧셈 결과: {:?}", result);
+    unsafe {
+        println!("r1 가리키는 값: {}", *r1);
+        println!("r2 가리키는 값: {}", *r2);
+    }
+}</code></pre>
+<h2 id="dffiforeignfunctioninterface">d. 외부 함수 및 FFI(Foreign Function Interface) 사용하기</h2>
+<p>외부 함수는 다른 프로그래밍 언어로 작성된 함수를 Rust에서 호출할 수 있도록 해주는 인터페이스입니다.</p>
+<p>외부 함수를 사용하려면 <code>extern</code> 키워드와 <code>unsafe</code>를 사용해야 합니다.</p>
+<pre><code class="rust">// C 언어의 함수를 호출하는 예시
+extern "C" {
+    fn abs(input: i32) -> i32;
 }
 
-fn add_vectors_unsafe(vec1: &[i32], vec2: &[i32]) -> Vec&lt;i32> {
-    // 벡터의 길이가 같은지 확인합니다.
-    assert_eq!(vec1.len(), vec2.len());
-
-    let mut result = Vec::with_capacity(vec1.len());
-
-    // unsafe를 사용하여 벡터의 내부 데이터에 접근하고 값을 더합니다.
-    let ptr1 = vec1.as_ptr();
-    let ptr2 = vec2.as_ptr();
-    for i in 0..vec1.len() {
-        unsafe {
-            result.push(*ptr1.add(i) + *ptr2.add(i));
-        }
-    }
-
-    result
-}</code></pre> </div> </div>
+fn main() {
+    let x = -3;
+    let result = unsafe { abs(x) };
+    println!("{}의 절댓값은 {}입니다.", x, result);
+}</code></pre>
+<p>이렇게 <code>unsafe</code>를 사용하여 Rust의 안전성 검사를 우회할 수 있습니다.</p>
+<p>하지만 가능한 한 <code>unsafe</code>를 사용하지 않고, 안전한 코드를 작성하는 것이 좋습니다.</p>
+<p>정말 필요한 경우에만 사용하고, 주의해서 사용해야 합니다.</p>
             <div class="bottomnav">
                 <span class="back"><a href="41_ko.html" rel="prev">❮ 이전</a></span>
-                <span class="next"><a href="chapter_5_ko.html" rel="next">다음 ❯</a></span>
+                <span class="next"><a href="43_ko.html" rel="next">다음 ❯</a></span>
             </div>
             </div>
             <div class="code">
-            <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=%2F%2F+TODO+1%3A+%EB%A7%A4%ED%81%AC%EB%A1%9C%EB%A5%BC+%EC%82%AC%EC%9A%A9%ED%95%98%EC%97%AC+%EB%91%90+%EB%B2%A1%ED%84%B0%EC%9D%98+%EB%8D%A7%EC%85%88%EC%9D%84+%EC%88%98%ED%96%89%ED%95%98%EB%8A%94+%ED%95%A8%EC%88%98%EB%A5%BC+%EC%9E%91%EC%84%B1%ED%95%98%EC%84%B8%EC%9A%94.%0D%0A%2F%2F+%EC%B1%84%EC%9B%8C%EB%B3%B4%EC%84%B8%EC%9A%94.%0D%0Amacro_rules%21+...%0D%0A%0D%0A%0D%0Afn+main%28%29+%7B%0D%0A++++let+vec1+%3D+vec%21%5B1%2C+2%2C+3%5D%3B%0D%0A++++let+vec2+%3D+vec%21%5B4%2C+5%2C+6%5D%3B%0D%0A++++let+result+%3D+add_vectors%21%28vec1%2C+vec2%29%3B%0D%0A%0D%0A++++println%21%28%22%EB%B2%A1%ED%84%B0+%EB%8D%A7%EC%85%88+%EA%B2%B0%EA%B3%BC%3A+%7B%3A%3F%7D%22%2C+result%29%3B%0D%0A%7D%0D%0A%0D%0A%0D%0Afn+add_vectors_unsafe%28vec1%3A+%26%5Bi32%5D%2C+vec2%3A+%26%5Bi32%5D%29+-%3E+Vec%3Ci32%3E+%7B%0D%0A++++%2F%2F+%EB%B2%A1%ED%84%B0%EC%9D%98+%EA%B8%B8%EC%9D%B4%EA%B0%80+%EA%B0%99%EC%9D%80%EC%A7%80+%ED%99%95%EC%9D%B8%ED%95%A9%EB%8B%88%EB%8B%A4.%0D%0A++++assert_eq%21%28vec1.len%28%29%2C+vec2.len%28%29%29%3B%0D%0A%0D%0A++++let+mut+result+%3D+Vec%3A%3Awith_capacity%28vec1.len%28%29%29%3B%0D%0A%0D%0A++++%2F%2F+TODO+2%3A+unsafe%EB%A5%BC+%EC%82%AC%EC%9A%A9%ED%95%98%EC%97%AC+%EB%B2%A1%ED%84%B0%EC%9D%98+%EB%82%B4%EB%B6%80+%EB%8D%B0%EC%9D%B4%ED%84%B0%EC%97%90+%EC%A0%91%EA%B7%BC%ED%95%98%EA%B3%A0+%EA%B0%92%EC%9D%84+%EB%8D%94%ED%95%98%EC%84%B8%EC%9A%94.%0D%0A++++%2F%2F+%EC%B1%84%EC%9B%8C%EB%B3%B4%EC%84%B8%EC%9A%94.%0D%0A%0D%0A++++result%0D%0A%7D%0D%0A" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
+            <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=fn+main%28%29+%7B%0A++++let+mut+vec1+%3D+vec%21%5B1%2C+2%2C+3%5D%3B%0A++++let+mut+vec2+%3D+vec%21%5B4%2C+5%2C+6%5D%3B%0A%0A++++println%21%28%22%EA%B5%90%ED%99%98+%EC%A0%84%3A+vec1+%3D+%7B%3A%3F%7D%2C+vec2+%3D+%7B%3A%3F%7D%22%2C+vec1%2C+vec2%29%3B%0A%0A++++unsafe+%7B%0A++++++++unsafe_swap%28%26mut+vec1%2C+%26mut+vec2%29%3B%0A++++%7D%0A%0A++++println%21%28%22%EA%B5%90%ED%99%98+%ED%9B%84%3A+vec1+%3D+%7B%3A%3F%7D%2C+vec2+%3D+%7B%3A%3F%7D%22%2C+vec1%2C+vec2%29%3B%0A%7D%0A%0A%2F%2F+%EB%B2%A1%ED%84%B0%EC%9D%98+%EB%82%B4%EB%B6%80+%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%A5%BC+%EC%A7%81%EC%A0%91+%EA%B5%90%ED%99%98%ED%95%98%EA%B8%B0+%EC%9C%84%ED%95%B4+%EC%9B%90%EC%8B%9C+%ED%8F%AC%EC%9D%B8%ED%84%B0%EC%99%80+unsafe%EB%A5%BC+%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94+%ED%95%A8%EC%88%98%0Aunsafe+fn+unsafe_swap%28vec1%3A+%26mut+%5Bi32%5D%2C+vec2%3A+%26mut+%5Bi32%5D%29+%7B%0A++++%2F%2F+%EB%B2%A1%ED%84%B0%EC%9D%98+%EA%B8%B8%EC%9D%B4%EA%B0%80+%EA%B0%99%EC%9D%80%EC%A7%80+%ED%99%95%EC%9D%B8%0A++++assert_eq%21%28vec1.len%28%29%2C+vec2.len%28%29%29%3B%0A%0A++++%2F%2F+%EB%B2%A1%ED%84%B0%EC%9D%98+%EB%82%B4%EB%B6%80+%EB%8D%B0%EC%9D%B4%ED%84%B0%EC%97%90+%EC%A0%91%EA%B7%BC%ED%95%98%EA%B8%B0+%EC%9C%84%ED%95%B4+%EC%9B%90%EC%8B%9C+%ED%8F%AC%EC%9D%B8%ED%84%B0%EB%A5%BC+%EC%83%9D%EC%84%B1%ED%95%A9%EB%8B%88%EB%8B%A4.%0A++++let+ptr1+%3D+vec1.as_mut_ptr%28%29%3B%0A++++let+ptr2+%3D+vec2.as_mut_ptr%28%29%3B%0A%0A++++%2F%2F+%EC%9B%90%EC%8B%9C+%ED%8F%AC%EC%9D%B8%ED%84%B0%EB%A5%BC+%EC%82%AC%EC%9A%A9%ED%95%98%EC%97%AC+%EB%B2%A1%ED%84%B0%EC%9D%98+%EC%9B%90%EC%86%8C%EB%A5%BC+%EA%B5%90%ED%99%98%ED%95%A9%EB%8B%88%EB%8B%A4.%0A++++for+i+in+0..vec1.len%28%29+%7B%0A++++++++%2F%2F+%EC%9B%90%EC%8B%9C+%ED%8F%AC%EC%9D%B8%ED%84%B0%EB%A5%BC+%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94+%EC%97%B0%EC%82%B0%EC%9D%80+unsafe+%EB%B8%94%EB%A1%9D+%EB%82%B4%EC%97%90%EC%84%9C+%EC%88%98%ED%96%89%ED%95%B4%EC%95%BC+%ED%95%A9%EB%8B%88%EB%8B%A4.%0A++++++++let+temp+%3D+*ptr1.add%28i%29%3B%0A++++++++*ptr1.add%28i%29+%3D+*ptr2.add%28i%29%3B%0A++++++++*ptr2.add%28i%29+%3D+temp%3B%0A++++%7D%0A%7D%0A" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
             </div>
         </div>
         <script>

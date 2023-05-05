@@ -35,46 +35,73 @@
                 <span class="toc"><a href="TOC_ko.html">목차</a></span>
             </div>
             <div class="page">
-            <h1>이터레이터(Iterators) 소개</h1>
-            <p>이터레이터는 Rust에서 컬렉션의 요소를 순회하고 처리하는 데 중요한 역할을 하는 추상화 개념입니다.</p>
-<p>이터레이터는 컬렉션의 요소를 효율적이고 간결한 방법으로 처리할 수 있게 도와줍니다.</p>
-<h2 id="arust">a. 이터레이터 개념 및 Rust에서의 중요성</h2>
-<p>이터레이터는 데이터 집합을 순차적으로 접근하는 데 사용되는 개체입니다.</p>
-<p>Rust에서 이터레이터는 컬렉션의 요소를 처리하는 데 사용되며, 함수형 프로그래밍 패턴과 함께 사용할 수 있습니다.</p>
-<p>이터레이터는 함수형 프로그래밍을 지원하며, 일반적으로 Rust의 for 루프에서 사용됩니다.</p>
-<p>Rust에서 이터레이터의 중요성은 다음과 같습니다:</p>
-<ol>
-<li>코드의 간결성: 이터레이터를 사용하면 반복문을 사용하는 코드를 보다 간결하게 작성할 수 있습니다.</li>
-<li>느긋한 평가(Lazy evaluation): 이터레이터는 필요한 경우에만 요소를 처리하므로, 메모리 사용량과 실행 시간을 줄일 수 있습니다.</li>
-<li>컴포지션: 이터레이터를 사용하면 여러 이터레이터 메서드를 연결하여 작업을 쉽게 구성할 수 있습니다.</li>
-</ol>
-<h2 id="biteratornextcollect">b. Iterator 트레잇과 메서드 소개 (next, collect 등)</h2>
-<p><code>Iterator</code> 트레잇은 Rust의 이터레이터를 구현하는 데 사용되는 트레잇입니다.</p>
-<p>이 트레잇에는 다음과 같은 메서드가 정의되어 있습니다.</p>
-<h3 id="next">next</h3>
-<p><code>next</code> 메서드는 이터레이터의 다음 요소를 반환합니다.</p>
-<p>모든 요소를 순회한 경우, <code>None</code>을 반환합니다.</p>
-<pre><code class="rust">let mut numbers = vec![1, 2, 3, 4, 5].into_iter();
+            <h1>해시맵(HashMap)</h1>
+            <p>해시맵은 키-값 쌍을 저장하는 데 사용되는 컬렉션입니다.</p>
+<p>해시 함수를 사용하여 키를 해싱하여 값을 빠르게 찾을 수 있습니다.</p>
+<p>해시맵은 삽입, 검색 및 삭제 작업에 대한 평균 시간 복잡도가 <code>O(1)</code>입니다.</p>
+<h2 id="a">a. 해시맵 생성 및 초기화</h2>
+<p>해시맵을 생성하려면 다음과 같은 방법을 사용할 수 있습니다.</p>
+<pre><code class="rust">use std::collections::HashMap;
 
-while let Some(number) = numbers.next() {
-    println!("Number: {}", number);
+// 빈 해시맵 생성
+let mut scores: HashMap&lt;String, u32> = HashMap::new();
+
+// 초기 값이 있는 해시맵 생성
+let scores = vec![("Alice", 50), ("Bob", 60)]
+    .into_iter()
+    .map(|(k, v)| (k.to_string(), v))
+    .collect::<HashMap<String, u32>>();</code></pre>
+<h2 id="b">b. 키-값 쌍 삽입 및 업데이트</h2>
+<p>해시맵에 키-값 쌍을 삽입하거나 업데이트하려면 <code>insert</code> 메서드를 사용합니다.</p>
+<pre><code class="rust">// 키-값 쌍 삽입
+scores.insert("Alice".to_string(), 50);
+scores.insert("Bob".to_string(), 60);
+
+// 키-값 쌍 업데이트
+scores.insert("Alice".to_string(), 55);</code></pre>
+<h2 id="c">c. 값에 접근하고 삭제하기</h2>
+<p>해시맵에서 값을 접근하거나 삭제하려면 <code>get</code> 또는 <code>remove</code> 메서드를 사용합니다.</p>
+<pre><code class="rust">// 값에 접근하기
+if let Some(score) = scores.get("Alice") {
+    println!("Alice의 점수: {}", score);
+}
+
+// 값 삭제하기
+scores.remove("Alice");</code></pre>
+<h2 id="d">d. 해시맵 순회하기</h2>
+<p>해시맵의 키-값 쌍을 반복하려면 <code>for</code> 루프를 사용합니다.</p>
+<pre><code class="rust">for (key, value) in &scores {
+    println!("{}: {}", key, value);
 }</code></pre>
-<h3 id="collect">collect</h3>
-<p><code>collect</code> 메서드는 이터레이터의 요소를 다른 컬렉션 타입으로 변환합니다.</p>
-<pre><code class="rust">let numbers = vec![1, 2, 3, 4, 5];
-let doubled_numbers: Vec&lt;_> = numbers.iter().map(|x| x * 2).collect();
+<h2 id="e">e. 일반적인 해시맵 작업</h2>
+<p>해시맵에서 자주 사용되는 작업들은 다음과 같습니다.</p>
+<ul>
+<li><code>contains_key</code>: 특정 키가 해시맵에 있는지 확인합니다.</li>
+<li><code>keys</code>: 해시맵의 모든 키를 반환합니다.</li>
+<li><code>values</code>: 해시맵의 모든 값을 반환합니다.</li>
+</ul>
+<pre><code class="rust">// 키가 해시맵에 있는지 확인하기
+if scores.contains_key("Alice") {
+    println!("Alice의 점수가 있습니다.");
+}
 
-println!("Doubled numbers: {:?}", doubled_numbers);</code></pre>
-<p>이 외에도 다양한 이터레이터 메서드가 있습니다.</p>
-<p>예를 들어, <code>filter</code>, <code>map</code>, <code>fold</code>, <code>take</code>, <code>skip</code>, <code>all</code>, <code>any</code> 등의 메서드를 사용하여 이터레이터를 처리할 수 있습니다.</p>
-<p>더 많은 메소드는 <a href="https://doc.rust-lang.org/core/iter/trait.Iterator.html" target="_blank" rel="noopener">공식 문서</a>를 참고하세요.</p>
+// 해시맵의 모든 키 출력하기
+for key in scores.keys() {
+    println!("키: {}", key);
+}
+
+// 해시맵의 모든 값 출력하기
+for value in scores.values() {
+    println!("값: {}", value);
+}</code></pre>
+<p>더 많은 메소드는 <a href="https://doc.rust-lang.org/std/collections/struct.HashMap.html" target="_blank" rel="noopener">공식 문서</a>를 참고하세요.</p>
             <div class="bottomnav">
                 <span class="back"><a href="35_ko.html" rel="prev">❮ 이전</a></span>
                 <span class="next"><a href="37_ko.html" rel="next">다음 ❯</a></span>
             </div>
             </div>
             <div class="code">
-            <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=struct+MyNumbers+%7B%0A++++numbers%3A+Vec%3Ci32%3E%2C%0A%7D%0A%0A%2F%2F+Iterator+for+%60iter%28%29%60%0Astruct+MyNumbersIter%3C%27a%3E+%7B%0A++++inner%3A+std%3A%3Aslice%3A%3AIter%3C%27a%2C+i32%3E%2C%0A%7D%0A%0Aimpl%3C%27a%3E+Iterator+for+MyNumbersIter%3C%27a%3E+%7B%0A++++type+Item+%3D+%26%27a+i32%3B%0A%0A++++fn+next%28%26mut+self%29+-%3E+Option%3CSelf%3A%3AItem%3E+%7B%0A++++++++self.inner.next%28%29%0A++++%7D%0A%7D%0A%0A%2F%2F+Iterator+for+%60iter_mut%28%29%60%0Astruct+MyNumbersIterMut%3C%27a%3E+%7B%0A++++inner%3A+std%3A%3Aslice%3A%3AIterMut%3C%27a%2C+i32%3E%2C%0A%7D%0A%0Aimpl%3C%27a%3E+Iterator+for+MyNumbersIterMut%3C%27a%3E+%7B%0A++++type+Item+%3D+%26%27a+mut+i32%3B%0A%0A++++fn+next%28%26mut+self%29+-%3E+Option%3CSelf%3A%3AItem%3E+%7B%0A++++++++self.inner.next%28%29%0A++++%7D%0A%7D%0A%0A%2F%2F+Iterator+for+%60into_iter%28%29%60%0Astruct+MyNumbersIntoIter+%7B%0A++++inner%3A+std%3A%3Avec%3A%3AIntoIter%3Ci32%3E%2C%0A%7D%0A%0Aimpl+Iterator+for+MyNumbersIntoIter+%7B%0A++++type+Item+%3D+i32%3B%0A%0A++++fn+next%28%26mut+self%29+-%3E+Option%3CSelf%3A%3AItem%3E+%7B%0A++++++++self.inner.next%28%29%0A++++%7D%0A%7D%0A%0Aimpl+MyNumbers+%7B%0A++++fn+iter%28%26self%29+-%3E+MyNumbersIter+%7B%0A++++++++MyNumbersIter+%7B%0A++++++++++++inner%3A+self.numbers.iter%28%29%2C%0A++++++++%7D%0A++++%7D%0A%0A++++fn+iter_mut%28%26mut+self%29+-%3E+MyNumbersIterMut+%7B%0A++++++++MyNumbersIterMut+%7B%0A++++++++++++inner%3A+self.numbers.iter_mut%28%29%2C%0A++++++++%7D%0A++++%7D%0A%7D%0A%0Aimpl+IntoIterator+for+MyNumbers+%7B%0A++++type+Item+%3D+i32%3B%0A++++type+IntoIter+%3D+MyNumbersIntoIter%3B%0A%0A++++fn+into_iter%28self%29+-%3E+Self%3A%3AIntoIter+%7B%0A++++++++MyNumbersIntoIter+%7B%0A++++++++++++inner%3A+self.numbers.into_iter%28%29%2C%0A++++++++%7D%0A++++%7D%0A%7D%0A%0Aimpl%3C%27a%3E+IntoIterator+for+%26%27a+MyNumbers+%7B%0A++++type+Item+%3D+%26%27a+i32%3B%0A++++type+IntoIter+%3D+MyNumbersIter%3C%27a%3E%3B%0A%0A++++fn+into_iter%28self%29+-%3E+Self%3A%3AIntoIter+%7B%0A++++++++self.iter%28%29%0A++++%7D%0A%7D%0A%0Aimpl%3C%27a%3E+IntoIterator+for+%26%27a+mut+MyNumbers+%7B%0A++++type+Item+%3D+%26%27a+mut+i32%3B%0A++++type+IntoIter+%3D+MyNumbersIterMut%3C%27a%3E%3B%0A%0A++++fn+into_iter%28self%29+-%3E+Self%3A%3AIntoIter+%7B%0A++++++++self.iter_mut%28%29%0A++++%7D%0A%7D%0A%0A%0Afn+main%28%29+%7B%0A++++let+my+%3D+MyNumbers+%7B+numbers%3A+vec%21%5B1%2C2%2C3%2C4%2C5%5D+%7D%3B%0A++++%0A++++%2F%2F+%EB%82%B4%EA%B0%80+%EB%A7%8C%EB%93%A0+Itertaor%0A++++for+a+in+my.iter%28%29+%7B%0A++++++++println%21%28%22a+%7Ba%7D%22%29%3B%0A++++%7D%0A++++%0A++++let+data+%3D+vec%21%5B1%2C+2%2C+3%2C+4%2C+5%2C+6%5D%3B%0A++++let+filtered_data%3A+Vec%3C_%3E+%3D+data.into_iter%28%29.filter%28%7Cx%7C+x+%25+2+%3D%3D+0%29.collect%28%29%3B%0A++++println%21%28%22Filtered%3A+%7B%3A%23%3F%7D%22%2C+filtered_data%29%3B+%2F%2F+Debug+Format+%EC%B6%9C%EB%A0%A5%0A%0A++++%0A++++let+items+%3D+vec%21%5B%22apple%22%2C+%22banana%22%2C+%22orange%22%5D%3B%0A%0A++++%2F%2F+%EB%AC%B4%ED%95%9C+Iterator%0A++++let+cycle_iter+%3D+items.into_iter%28%29.cycle%28%29%3B%0A%0A++++%2F%2F+Create+an+infinite+iterator+of+incrementing+numbers+starting+from+1%0A++++let+count_iter+%3D+1..%3B%0A%0A++++%2F%2F+Zip+the+two+iterators+to+create+pairs%0A++++let+result_iter+%3D+cycle_iter.zip%28count_iter%29%3B%0A%0A++++%2F%2F+Take+the+first+10+pairs+and+print+them%0A++++for+%28item%2C+count%29+in+result_iter.take%2810%29+%7B%0A++++++++println%21%28%22%7B%7D%3A+%7B%7D%22%2C+count%2C+item%29%3B%0A++++%7D%0A%7D%0A" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
+            <iframe id="rust-playground" width="100%" src="https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&code=%2F%2F+%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC+%EA%B0%80%EC%A0%B8%EC%98%A4%EA%B8%B0%0D%0Ause+std%3A%3Acollections%3A%3AHashMap%3B%0D%0A%0D%0Afn+main%28%29+%7B%0D%0A++++%2F%2F+%EB%B2%A1%ED%84%B0+%EC%83%9D%EC%84%B1%0D%0A++++let+mut+names%3A+Vec%3CString%3E+%3D+Vec%3A%3Anew%28%29%3B%0D%0A%0D%0A++++%2F%2F+%EB%AC%B8%EC%9E%90%EC%97%B4%EC%9D%84+%EB%B2%A1%ED%84%B0%EC%97%90+%EC%B6%94%EA%B0%80%0D%0A++++names.push%28%22%EC%B2%A0%EC%88%98%22.to_string%28%29%29%3B%0D%0A++++names.push%28%22%EC%98%81%ED%9D%AC%22.to_string%28%29%29%3B%0D%0A++++names.push%28%22%EB%AF%BC%EC%88%98%22.to_string%28%29%29%3B%0D%0A%0D%0A++++%2F%2F+%ED%95%B4%EC%8B%9C%EB%A7%B5+%EC%83%9D%EC%84%B1%0D%0A++++let+mut+ages%3A+HashMap%3CString%2C+u32%3E+%3D+HashMap%3A%3Anew%28%29%3B%0D%0A%0D%0A++++%2F%2F+%EB%AC%B8%EC%9E%90%EC%97%B4%EA%B3%BC+%EC%97%B0%EA%B4%80%EB%90%9C+%EA%B0%92%EC%9D%84+%ED%95%B4%EC%8B%9C%EB%A7%B5%EC%97%90+%EC%B6%94%EA%B0%80%0D%0A++++ages.insert%28%22%EC%B2%A0%EC%88%98%22.to_string%28%29%2C+25%29%3B%0D%0A++++ages.insert%28%22%EC%98%81%ED%9D%AC%22.to_string%28%29%2C+24%29%3B%0D%0A++++ages.insert%28%22%EB%AF%BC%EC%88%98%22.to_string%28%29%2C+26%29%3B%0D%0A%0D%0A++++%2F%2F+%EB%B2%A1%ED%84%B0%EC%9D%98+%EC%9A%94%EC%86%8C%EB%93%A4%EC%9D%84+%EB%B0%98%EB%B3%B5%ED%95%98%EB%A9%B0%2C+%EA%B0%81+%EC%9D%B4%EB%A6%84%EC%97%90+%EB%8C%80%ED%95%9C+%EB%82%98%EC%9D%B4%EB%A5%BC+%EC%B6%9C%EB%A0%A5%0D%0A++++for+name+in+names.iter%28%29+%7B%0D%0A++++++++%2F%2F+%ED%95%B4%EC%8B%9C%EB%A7%B5%EC%97%90%EC%84%9C+%EC%9D%B4%EB%A6%84%EC%97%90+%ED%95%B4%EB%8B%B9%ED%95%98%EB%8A%94+%EB%82%98%EC%9D%B4%EB%A5%BC+%EA%B0%80%EC%A0%B8%EC%98%B4%0D%0A++++++++let+age+%3D+ages.get%28name%29.unwrap%28%29%3B%0D%0A%0D%0A++++++++%2F%2F+%EA%B2%B0%EA%B3%BC+%EC%B6%9C%EB%A0%A5%0D%0A++++++++println%21%28%22%7B%7D%EB%8B%98%EC%9D%98+%EB%82%98%EC%9D%B4%EB%8A%94+%7B%7D%EC%82%B4%EC%9E%85%EB%8B%88%EB%8B%A4.%22%2C+name%2C+age%29%3B%0D%0A++++%7D%0D%0A%7D%0D%0A" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals" title="Rust Playground" loading="lazy"></iframe>
             </div>
         </div>
         <script>
