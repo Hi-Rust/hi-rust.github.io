@@ -64,9 +64,9 @@
 <p>열거형을 다루려면, 종종 match 표현식을 사용하며, 이를 통해 열거형 변종에 따라 다른 작업을 수행할 수 있습니다:</p>
 <pre><code class="rust">fn print_status_message(status: Status) {
     match status {
-        Status::Active => println!("사용자가 활성 상태입니다."),
-        Status::Inactive => println!("사용자가 비활성 상태입니다."),
-        Status::Pending => println!("사용자가 보류 중입니다."),
+        Status::Active =&gt; println!("사용자가 활성 상태입니다."),
+        Status::Inactive =&gt; println!("사용자가 비활성 상태입니다."),
+        Status::Pending =&gt; println!("사용자가 보류 중입니다."),
     }
 }
 fn main() {
@@ -102,8 +102,8 @@ fn main() {
 
     // 튜플 열거형 변종의 값에 접근
     match circle {
-        Shape::Circle(radius) => println!("원의 반지름: {}", radius),
-        _ => (),
+        Shape::Circle(radius) =&gt; println!("원의 반지름: {}", radius),
+        _ =&gt; (),
     }
 }</code></pre>
 <hr />

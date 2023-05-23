@@ -45,7 +45,7 @@
 <p>선언형 매크로는 매크로 규칙을 사용하여 코드를 생성하는 매크로입니다.</p>
 <p><code>macro_rules!</code> 키워드를 사용하여 선언형 매크로를 정의할 수 있습니다.</p>
 <pre><code class="rust">macro_rules! vec {
-    ( $( $x:expr ),* ) => {
+    ( $( $x:expr ),* ) =&gt; {
         {
             let mut temp_vec = Vec::new();
             $(
@@ -70,7 +70,7 @@ use quote::quote;
 use syn::{parse_macro_input, DeriveInput};
 
 #[proc_macro_derive(HelloMacro)]
-pub fn hello_macro_derive(input: TokenStream) -> TokenStream {
+pub fn hello_macro_derive(input: TokenStream) -&gt; TokenStream {
     let ast = parse_macro_input!(input as DeriveInput);
     let name = &ast.ident;
     let gen = quote! {
@@ -112,7 +112,7 @@ fn main() {
 <li><code>$(...)+</code>: 1회 이상 반복</li>
 </ul>
 <pre><code class="rust">macro_rules! create_function {
-    ($func_name:ident) => (
+    ($func_name:ident) =&gt; (
         fn $func_name() {
             println!("함수 {}가 호출되었습니다.", stringify!($func_name));
         }

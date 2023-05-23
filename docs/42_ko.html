@@ -75,7 +75,7 @@ fn main() {
 <p>외부 함수를 사용하려면 <code>extern</code> 키워드와 <code>unsafe</code>를 사용해야 합니다.</p>
 <pre><code class="rust">// C 언어의 함수를 호출하는 예시
 extern "C" {
-    fn abs(input: i32) -> i32;
+    fn abs(input: i32) -&gt; i32;
 }
 
 fn main() {

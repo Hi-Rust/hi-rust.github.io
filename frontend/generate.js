@@ -9,7 +9,16 @@ const rustExtension = {
   type: "lang",
   regex: /%rust%([^]+?)%end%/gi,
   replace: (s, match) =>
-    `<pre><code class="rust">${match.trim().replace("<", "&lt;")}</code></pre>`,
+    `<pre><code class="rust">${match
+      .trim()
+      .split("{{")
+      .join("&lt;&lt;")
+      .split("}}")
+      .join("&gt;&gt;")
+      .split("<")
+      .join("&lt;")
+      .split(">")
+      .join("&gt;")}</code></pre>`,
 };
 
 const langExtension = {

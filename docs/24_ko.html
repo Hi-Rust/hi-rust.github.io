@@ -52,11 +52,11 @@
 }
 
 // 넓이를 계산하는 함수
-fn area(shape: &Shape) -> f64 {
+fn area(shape: &Shape) -&gt; f64 {
     match shape {
-        Shape::Circle(r) => 3.14 * r * r,
-        Shape::Rectangle(w, h) => w * h,
-        Shape::Triangle(a, b, c) => {
+        Shape::Circle(r) =&gt; 3.14 * r * r,
+        Shape::Rectangle(w, h) =&gt; w * h,
+        Shape::Triangle(a, b, c) =&gt; {
             // 삼각형의 넓이 공식
             let s = (a + b + c) / 2.0;
             let area = s * (s - a) * (s - b) * (s - c);
@@ -71,15 +71,15 @@ fn area(shape: &Shape) -> f64 {
 }
 
 // 둘레를 계산하는 함수
-fn perimeter(shape: &Shape) -> f64 {
+fn perimeter(shape: &Shape) -&gt; f64 {
     match shape {
-        Shape::Circle(r) => 2.0 * 3.14 * r,
-        Shape::Rectangle(w, h) => 2.0 * (w + h),
-        Shape::Triangle(a, b, c) => {
+        Shape::Circle(r) =&gt; 2.0 * 3.14 * r,
+        Shape::Rectangle(w, h) =&gt; 2.0 * (w + h),
+        Shape::Triangle(a, b, c) =&gt; {
             // 삼각형의 둘레 공식
             let p = a + b + c;
             // 둘레가 음수면 에러 발생
-            if p < 0.0 {
+            if p &lt; 0.0 {
                 panic!("Invalid triangle");
             } else {
                 p
@@ -89,11 +89,11 @@ fn perimeter(shape: &Shape) -> f64 {
 }
 
 // 정사각형인지 판별하는 함수
-fn is_square(shape: &Shape) -> bool {
+fn is_square(shape: &Shape) -&gt; bool {
     match shape {
-        Shape::Circle(_) => false,
-        Shape::Rectangle(w, h) => w == h,
-        Shape::Triangle(_, _, _) => false,
+        Shape::Circle(_) =&gt; false,
+        Shape::Rectangle(w, h) =&gt; w == h,
+        Shape::Triangle(_, _, _) =&gt; false,
     }
 }
 

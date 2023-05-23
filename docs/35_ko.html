@@ -61,7 +61,7 @@ println!("변경된 벡터: {:?}", vec);</code></pre>
 <p>이를 통해 벡터의 요소를 다른 데이터 구조로 쉽게 옮길 수 있습니다.</p>
 <pre><code class="rust">let vec = vec!["a".to_string(), "b".to_string(), "c".to_string()];
 
-let mut uppercased_vec: Vec&lt;String> = Vec::new();
+let mut uppercased_vec: Vec&lt;String&gt; = Vec::new();
 
 for element in vec.into_iter() {
     uppercased_vec.push(element.to_uppercase());

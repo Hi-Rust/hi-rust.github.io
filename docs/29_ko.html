@@ -49,8 +49,8 @@
 <p>예제 1: 함수 시그니처에서 수명 표시</p>
 <pre><code class="rust">// 여기에서 사용된 'a는 수명을 나타내는 표시입니다.
 // 이를 통해 입력과 출력의 참조들이 동일한 수명을 가지도록 합니다.
-fn longest&lt;'a>(s1: &'a str, s2: &'a str) -> &'a str {
-    if s1.len() > s2.len() {
+fn longest&lt;'a&gt;(s1: &'a str, s2: &'a str) -&gt; &'a str {
+    if s1.len() &gt; s2.len() {
         s1
     } else {
         s2
@@ -59,7 +59,7 @@ fn longest&lt;'a>(s1: &'a str, s2: &'a str) -> &'a str {
 <p>예제 2: 구조체에서 수명 표시</p>
 <pre><code class="rust">// Person 구조체는 이름을 문자열 슬라이스로 저장합니다.
 // 여기에서 사용된 'a는 구조체의 이름 필드가 참조하는 문자열 슬라이스의 수명을 나타냅니다.
-struct Person&lt;'a> {
+struct Person&lt;'a&gt; {
     name: &'a str,
 }</code></pre>
 <p>수명과 빌림 검사기:</p>
@@ -68,12 +68,12 @@ struct Person&lt;'a> {
 <p>그러나 복잡한 상황에서는 개발자가 수명을 명시해야 할 수도 있습니다.</p>
 <p>수명을 이해하고 올바르게 사용함으로써 Rust의 빌림 검사기가 메모리 관리를 안전하게 수행할 수 있도록 지원할 수 있습니다.</p>
 <p>이는 Rust 프로그램의 성능과 안정성에 크게 기여합니다.</p>
-<pre><code class="rust">struct Wrapper&lt;'a, T: 'a> {
+<pre><code class="rust">struct Wrapper&lt;'a, T: 'a&gt; {
     value: &'a T,
 }
 
-impl<'a, T> Wrapper<'a, T> {
-    fn new(value: &'a T) -> Self {
+impl&lt;'a, T&gt; Wrapper&lt;'a, T&gt; {
+    fn new(value: &'a T) -&gt; Self {
         Wrapper { value }
     }
 }

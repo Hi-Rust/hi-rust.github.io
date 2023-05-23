@@ -62,7 +62,7 @@ while let Some(number) = numbers.next() {
 <h3 id="collect">collect</h3>
 <p><code>collect</code> 메서드는 이터레이터의 요소를 다른 컬렉션 타입으로 변환합니다.</p>
 <pre><code class="rust">let numbers = vec![1, 2, 3, 4, 5];
-let doubled_numbers: Vec&lt;_> = numbers.iter().map(|x| x * 2).collect();
+let doubled_numbers: Vec&lt;_&gt; = numbers.iter().map(|x| x * 2).collect();
 
 println!("Doubled numbers: {:?}", doubled_numbers);</code></pre>
 <p>이 외에도 다양한 이터레이터 메서드가 있습니다.</p>

@@ -313,7 +313,7 @@
     let scores = vec![("Alice", 50), ("Bob", 60)]
         .into_iter()
         .map(|(k, v)| (k.to_string(), v))
-        .collect::<HashMap<String, u32>>();
+        .collect::<HashMap<String, u32}}();
     %end%
 
 

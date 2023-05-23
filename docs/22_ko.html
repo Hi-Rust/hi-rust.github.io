@@ -47,10 +47,10 @@ Rust에서는 결과를 나타내기 위해 Result 열거형을 사용합니다.
 <p>예를 들어, 정수를 문자열로 변환하는 간단한 함수를 작성해 봅시다.</p>
 <p>이 함수는 문자열을 입력으로 받아 정수로 변환하려고 시도하고, 변환에 성공하면 Ok 값을 반환합니다.</p>
 <p>만약 변환에 실패하면, Err 값을 반환합니다.</p>
-<pre><code class="rust">fn parse_integer(input: &str) -> Result&lt;i32, String> {
-    match input.parse::&lt;i32>() {
-        Ok(value) => Ok(value),
-        Err(_) => Err(format!("'{}' is not a valid integer.", input)),
+<pre><code class="rust">fn parse_integer(input: &str) -&gt; Result&lt;i32, String&gt; {
+    match input.parse::&lt;i32&gt;() {
+        Ok(value) =&gt; Ok(value),
+        Err(_) =&gt; Err(format!("'{}' is not a valid integer.", input)),
     }
 }</code></pre>
 <p><strong>match 문을 사용한 오류 처리</strong></p>
@@ -61,8 +61,8 @@ Rust에서는 결과를 나타내기 위해 Result 열거형을 사용합니다.
     let parsed = parse_integer(input);
 
     match parsed {
-        Ok(value) => println!("The integer value is: {}", value),
-        Err(error) => println!("Error: {}", error),
+        Ok(value) =&gt; println!("The integer value is: {}", value),
+        Err(error) =&gt; println!("Error: {}", error),
     }
 }</code></pre>
 <p>이 코드는 parse_integer 함수를 호출하여 결과를 가져옵니다.</p>

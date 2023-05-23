@@ -44,13 +44,13 @@
 <pre><code class="rust">use std::collections::HashMap;
 
 // 빈 해시맵 생성
-let mut scores: HashMap&lt;String, u32> = HashMap::new();
+let mut scores: HashMap&lt;String, u32&gt; = HashMap::new();
 
 // 초기 값이 있는 해시맵 생성
 let scores = vec![("Alice", 50), ("Bob", 60)]
     .into_iter()
     .map(|(k, v)| (k.to_string(), v))
-    .collect::<HashMap<String, u32>>();</code></pre>
+    .collect::&lt;HashMap&lt;String, u32&gt;&gt;();</code></pre>
 <h2 id="b">b. 키-값 쌍 삽입 및 업데이트</h2>
 <p>해시맵에 키-값 쌍을 삽입하거나 업데이트하려면 <code>insert</code> 메서드를 사용합니다.</p>
 <pre><code class="rust">// 키-값 쌍 삽입

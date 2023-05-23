@@ -47,7 +47,7 @@
 </ol>
 <div> <button type="button" class="collapsible">정답 보기</button> <div class="content"> <p> <pre><code class="rust">// 매크로를 사용하여 두 벡터의 덧셈을 수행하는 함수를 작성합니다.
 macro_rules! add_vectors {
-    ($vec1:expr, $vec2:expr) => {
+    ($vec1:expr, $vec2:expr) =&gt; {
         add_vectors_unsafe(&$vec1, &$vec2)
     };
 }
@@ -60,7 +60,7 @@ fn main() {
     println!("벡터 덧셈 결과: {:?}", result);
 }
 
-fn add_vectors_unsafe(vec1: &[i32], vec2: &[i32]) -> Vec&lt;i32> {
+fn add_vectors_unsafe(vec1: &[i32], vec2: &[i32]) -&gt; Vec&lt;i32&gt; {
     // 벡터의 길이가 같은지 확인합니다.
     assert_eq!(vec1.len(), vec2.len());
 
