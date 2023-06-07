@@ -32,11 +32,373 @@
 
     # 준비물:
 
-    1. public에서 접속 가능한 주소 (포트포워딩이나 AWS EC2를 이용)
+    1. public에서 접속 가능한 머신 (포트포워딩이나 AWS EC2, [fly.io](https://fly.io) 등 이용)
     2. 카카오 i 챗봇 만들기 [@링크](https://i.kakao.com/)
     3. 카카오톡 채널 만들기 [@링크](https://center-pf.kakao.com/profiles)
-- title: Chapter 6 - Conclusion
+- title: Hello World API
+  source: >-
+    /8080.png
+  content_markdown: |
+    이번 튜토리얼에서는 Rust와 Actix-web을 이용하여 'Hello World' 메시지를 출력하는 기본적인 웹 서버를 만들어 보겠습니다.
+
+    ## 시작하기
+
+    첫 단계로, 새로운 binary 기반의 Cargo 프로젝트를 생성합니다:
+
+    ```bash
+    cargo new hello-world
+    cd hello-world
+    ```
+
+    그 후, 프로젝트에 actix-web을 의존성으로 추가해야 합니다.
+
+    이를 위해 `Cargo.toml` 파일을 열고 다음과 같이 입력합니다:
+
+    ```toml
+    [dependencies]
+    actix-web = "4"
+    ```
+
+    ## 핸들러 작성하기
+
+    웹 서버에서 요청을 처리하기 위해 핸들러 함수를 작성합니다.
+
+    이 함수들은 비동기 함수로, 필요한 매개변수를 받아 HttpResponse를 반환합니다.
+
+    이 HttpResponse는 웹 서버가 클라이언트에게 보낼 응답입니다.
+
+    `src/main.rs` 파일을 다음과 같이 수정합니다:
+
+    ```rust
+    use actix_web::{get, post, web, App, HttpResponse, HttpServer, Responder};
+
+    #[get("/")]
+    async fn hello() -> impl Responder {
+        HttpResponse::Ok().body("Hello world!")
+    }
+
+    #[post("/echo")]
+    async fn echo(req_body: String) -> impl Responder {
+        HttpResponse::Ok().body(req_body)
+    }
+
+    async fn manual_hello() -> impl Responder {
+        HttpResponse::Ok().body("Hey there!")
+    }
+    ```
+
+    각 핸들러는 HTTP 메소드와 경로에 따라 요청을 처리합니다.
+
+    수동으로 경로를 설정하고 싶다면, 그에 맞는 함수를 작성하면 됩니다.
+
+    ## App 생성 및 요청 핸들러 등록
+
+    다음 단계로, App 인스턴스를 생성하고 요청 핸들러를 등록합니다.
+
+    경로 정보가 있는 핸들러는 `App::service`를 사용하고, 수동으로 경로를 설정한 핸들러는 `App::route`를 사용합니다.
+
+    ```rust
+    #[actix_web::main]
+    async fn main() -> std::io::Result<()> {
+        HttpServer::new(|| {
+            App::new()
+                .service(hello)
+                .service(echo)
+                .route("/hey", web::get().to(manual_hello))
+        })
+        .bind(("127.0.0.1", 8080))?
+        .run()
+        .await
+    }
+    ```
+
+    ## 서버 실행
+
+    이제 `cargo run` 명령어를 통해 프로그램을 컴파일하고 실행할 수 있습니다.
+
+    웹 브라우저에서 http://127.0.0.1:8080/ 주소로 접속하면 'Hello World' 메시지를 확인할 수 있습니다.
+
+    이 간단한 예제를 통해 Rust와 Actix-web을 이용하여 웹 서버를 어떻게 만드는지 배웠습니다.
+
+    이러한 기본 원리를 이용하면 다양한 웹 서비스를 만들어볼 수 있습니다.
+
+- title: main() && impl Responder
+  source: >-
+    /8080.png
+  content_markdown: |
+    ## actix-rs main()
+
+    아래는 웹 서버를 시작하는 역할을 합니다. 
+
+    ```rust
+    #[actix_web::main]
+    async fn main() -> std::io::Result<()> {
+        HttpServer::new(|| {
+            App::new()
+                .service(hello)
+                .service(echo)
+                .route("/hey", web::get().to(manual_hello))
+        })
+        .bind(("127.0.0.1", 8080))? // localhost:8080 or 127.0.0.1:8080
+        .run()
+        .await
+    }
+    ```
+
+    여기서 `#[actix_web::main]`은 Actix 웹 프레임워크에서 제공하는 매크로로, 이를 이용해 비동기 메인 함수를 생성할 수 있습니다. 
+
+    그리고 `HttpServer::new` 함수를 호출하여 새로운 HTTP 서버 인스턴스를 만듭니다.
+
+    이 함수의 인자로는 클로저가 들어가며, 이 클로저 내부에서 App 인스턴스를 만들고,
+
+    우리가 앞서 정의한 hello, echo, 그리고 manual_hello 함수를 각각 서비스로 등록합니다.
+
+    또한, `/hey` 라는 경로는 수동으로 설정된 경로입니다.
+
+    `web::get().to(manual_hello)`를 통해 get 요청이 들어왔을 때 `manual_hello` 함수가 호출되도록 설정했습니다.
+
+    그 후 `.bind(("127.0.0.1", 8080))?`를 통해 서버를 로컬 호스트의 8080 포트에 바인딩하게 됩니다.
+
+    만약 바인딩에 실패하면 에러를 반환하며 프로그램은 종료됩니다.
+
+    마지막으로 `.run().await`를 통해 서버를 실행시키며, 이 서버는 비동기적으로 작동하게 됩니다.
+
+    ## impl Responder
+
+    Rust의 'Trait'에 대해 알아보고, 특히 actix-web에서 제공하는 'Responder' Trait에 대해 살펴보겠습니다.
+
+    Responder는 웹 응답을 만드는데 굉장히 중요한 역할을 하는 Trait입니다.
+
+    ## Trait 이란?
+
+    Rust에서 Trait는 특정 기능이나 행동을 정의한 것으로,
+
+    Trait를 구현하면 해당 구조체나 열거형은 Trait에서 정의된 메소드를 사용할 수 있게 됩니다.
+
+    Rust는 상속 대신 Trait를 사용하여 코드의 재사용성과 모듈성을 증가시킵니다.
+
+    ## Responder Trait
+
+    Responder는 actix-web에서 제공하는 Trait 중 하나로, HTTP 응답을 생성하는 메소드를 제공합니다.
+
+    이 Trait를 이용하면 웹 서버가 클라이언트에게 보내는 HTTP 응답을 쉽게 만들 수 있습니다. 
+
+    Responder Trait은 두 가지 메소드를 정의합니다: 
+
+    1. `respond_to`: HttpRequest 객체를 받아 HttpResponse를 생성하는 메소드로, 이는 핸들러에서 클라이언트의 요청을 받아 적절한 응답을 생성하는 데 사용됩니다.
+    2. `customize`: 응답을 커스터마이징 할 수 있는 메소드로, 이 메소드는 Responder가 구현되어 있는 경우 사용할 수 있습니다.
+
+    ## Responder 사용하기
+
+    핸들러 함수에서는 `impl Responder`를 리턴 타입으로 사용합니다.
+
+    이렇게 하면 어떤 값이든, 그 값이 Responder Trait를 구현하고 있다면 리턴할 수 있게 됩니다.
+
+    예를 들어, 'String', 'HttpResponse' 등은 모두 Responder를 구현하고 있습니다.
+
+    이를 통해 해당 값을 리턴하는 핸들러를 쉽게 만들 수 있습니다.
+
+    Rust의 강력한 타입 시스템 덕분에 컴파일 타임에 각 핸들러가 어떤 타입의 값을 리턴하는지를 확인할 수 있게 되어,
+
+    런타임 에러를 사전에 방지하는 데 매우 유용합니다.
+
+    결국, Responder는 웹 응답을 만드는 과정을 추상화하고, 다양한 타입의 값을 HTTP 응답으로 쉽게 변환할 수 있게 해주는 역할을 합니다.
+
+    이를 통해 강력하면서도 유연한 웹 응답을 만들 수 있게 됩니다.
+
+    Responder를 활용하면 웹 서버 개발이 훨씬 편리해집니다.
+- title: kakao-rs
   source: >-
     /ferris_lofi.png
   content_markdown: |
-    CSW
+    카카오톡 API 템플릿을 쉽게 만들어 주는 `kakao-rs` 라이브러리에 대해 알아보겠습니다. 
+
+    ## kakao-rs 라이브러리란?
+
+    kakao-rs는 Rust 언어로 작성된 카카오 챗봇 서버를 만들 때 사용할 수 있는 라이브러리입니다.
+
+    이 라이브러리는 SimpleText, SimpleImage, ListCard, Carousel, BasicCard, CommerceCard, ItemCard 등의 JSON 데이터를 쉽게 생성할 수 있도록 돕는 도구들을 제공합니다.
+
+    ## 사용 방법
+
+    kakao-rs 라이브러리를 사용하려면, 먼저 프로젝트의 `Cargo.toml` 파일에 kakao-rs를 의존성으로 추가해야 합니다. 
+
+    ```toml
+    [dependencies]
+    kakao-rs = "0.3"
+    ```
+
+    이 라이브러리를 이용하면 다양한 종류의 버튼(예: 공유 버튼, 링크 버튼, 일반 메시지 버튼, 전화 버튼 등)을 쉽게 만들 수 있습니다.
+
+    ## 카카오 JSON 데이터 연동
+
+    kakao-rs는 카카오 JSON 데이터와의 연동이 매우 간단합니다.
+
+    유저의 발화문을 얻기 위해서는 아래와 같이 작성하면 됩니다.
+
+    ```rust
+    #[post("/end")]
+    pub async fn test(kakao: web::Json<Value>) -> impl Responder {  // actix
+        println!("{}", kakao["userRequest"]["utterance"].as_str().unwrap()); // 발화문
+        unimplemented!()
+    }
+    ```
+
+    이 라이브러리를 이용하면 다양한 형태의 카카오 챗봇 메시지를 쉽게 생성할 수 있습니다.
+
+    예를 들어, ListCard를 생성하는 코드는 아래와 같습니다.
+
+    ```rust
+    let mut list_card = ListCard::new("리스트 카드 제목!"); // 제목
+    // ... 
+    result.add_output(list_card.build()); // moved list_card's ownership
+    ```
+
+    kakao-rs 라이브러리를 통해 SimpleText, SimpleImage, BasicCard, CommerceCard, Carousel 등의
+
+    다양한 형태의 카카오 챗봇 메시지를 쉽게 생성할 수 있습니다.
+
+    카카오 챗봇 서버를 Rust로 구현하려는 개발자들에게 kakao-rs 라이브러리는 매우 유용한 도구가 될 것입니다.
+- title: 실행
+  source: >-
+    /ferris_lofi.png
+  content_markdown: |
+    `kakao-rs`를 `actix-rs`에 적용시켜보겠습니다.
+
+    단순하게 SimpleText를 반환할 것이며 더 많은 카카오톡 반응 디자인은 다음을 참고하세요: [@링크](https://i.kakao.com/docs/skill-response-format)
+
+    <div align="center">
+    <p>
+        <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fn5Ud0%2FbtraVUpTmyM%2FLSdvhi5uKkzx9tcN2SFbh1%2Fimg.png">
+    </p>
+    </div>
+
+
+    1. 의존성 추가
+
+    ```bash
+    cargo add kakao-rs
+    ```
+
+    카카오톡 챗봇 POST json 구조: 챗봇 관리자 > 스킬 > 편집 
+
+    ```json
+    "intent": {
+        "id": "hequ",
+        "name": "블록 이름"
+      },
+      "userRequest": {
+        "timezone": "Asia/Seoul",
+        "params": {
+          "ignoreMe": "true"
+        },
+        "block": {
+          "id": "op",
+          "name": "블록 이름"
+        },
+        "utterance": "발화 내용",
+        "lang": null,
+        "user": {
+          "id": "138",
+          "type": "accountId",
+          "properties": {}
+        }
+      },
+      "bot": {
+        "id": "5fe45a6",
+        "name": "봇 이름"
+      },
+      "action": {
+        "name": "yl",
+        "clientExtra": null,
+        "params": {},
+        "id": "xx89p2dlfm",
+        "detailParams": {}
+      }
+    }
+    ```
+
+    2. 메인 함수
+
+    ```bash
+    cargo add serde_json
+    ```
+
+    ```rust
+    use actix_web::{get, post, web, App, HttpResponse, HttpServer, Responder};
+    use kakao_rs::prelude::*;
+    use serde_json::Value;
+
+    #[get("/")]
+    async fn hello() -> impl Responder {
+        HttpResponse::Ok().body("Hello world!")
+    }
+
+    #[post("/kakao")]
+    async fn kakao(kakao: web::Json<Value>) -> impl Responder {
+        let mut result = Template::new();
+
+        result.add_output(SimpleText::new("안녕하세요~").build());
+
+        let body = serde_json::to_string(&result).unwrap();
+
+        HttpResponse::Ok()
+            .content_type("application/json")
+            .body(body)
+    }
+
+    #[actix_web::main]
+    async fn main() -> std::io::Result<()> {
+        HttpServer::new(|| {
+            App::new()
+                .service(hello)
+                .service(kakao)
+        })
+        .bind(("127.0.0.1", 8080))?
+        .run()
+        .await
+    }
+    ```
+
+    해당 코드는 Rust의 Actix 웹 프레임워크에서 사용하는 함수 정의의 한 예입니다.
+
+    이 함수는 HTTP POST 요청을 처리하고 있으며, `/kakao` 라는 경로에 대한 요청을 처리하는 역할을 합니다.
+
+    함수의 정의에 대해 세부적으로 살펴보겠습니다.
+
+    ## 함수 시그니처
+
+    ```rust
+    #[post("/kakao")]
+    async fn kakao(kakao: web::Json<Value>) -> impl Responder {
+        let mut result = Template::new();
+
+        result.add_output(SimpleText::new("안녕하세요~").build());
+
+        let body = serde_json::to_string(&result).unwrap();
+
+        HttpResponse::Ok()
+            .content_type("application/json")
+            .body(body)
+    }
+    ```
+
+    위 함수는 다음과 같은 요소들로 구성되어 있습니다.
+
+    - `async fn`: 함수가 비동기 함수임을 나타내는 키워드입니다. Rust에서는 이 키워드를 사용하여 비동기 함수를 정의하고, 이 함수 내에서는 `.await` 연산자를 사용하여 비동기 작업을 기다릴 수 있습니다.
+    - `kakao`: 함수의 이름입니다. 이 이름은 이 함수가 무슨 작업을 하는지를 설명하는 데 사용됩니다.
+    - `(kakao: web::Json<Value>)`: 함수의 인자 목록입니다. 이 함수는 `web::Json<Value>` 타입의 인자 하나를 받습니다. 이 인자는 HTTP 요청의 본문을 JSON 형식으로 파싱한 결과입니다. `Value`는 `serde_json` 라이브러리에서 제공하는 타입으로, 임의의 JSON 데이터를 나타냅니다.
+    - `-> impl Responder`: 함수의 리턴 타입입니다. 이 함수는 `impl Responder`라는 리턴 타입을 가집니다.`Responder`는 Actix 웹 프레임워크에서 정의한 트레잇(trait)으로, HTTP 응답을 생성하는 메소드를 제공합니다.
+
+    Template 부분은 kakao-rs 라이브러리를 참고하시면 모든 카카오톡 챗봇 응답 타입들을 일단 Template에 담아야 합니다.
+
+    1가지 이상의 응답을 보낼 수 있기 때문입니다. (ex. SimpleText, BasicCard 같이)
+
+    그후 `serde_json`의 `to_string`을 이용해서 serialize 가능한 구조체들을 쉽게 json string으로 변환해서 return 할 수 있습니다.
+- title: Chapter 6 - Conclusion
+  source: >-
+    /weather.png
+  content_markdown: |
+    지금까지 `actix-rs`를 이용해서 카카오톡 챗봇 서버를 만들어보았습니다.
+
+    데이터베이스 연동이나 24시간 실행하는 등 방법들을 배워보고 추가해보시길 바랍니다. (ex. [actix-rs + mongodb](https://choiseokwon.tistory.com/332))

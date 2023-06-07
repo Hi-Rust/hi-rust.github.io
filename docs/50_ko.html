@@ -35,14 +35,64 @@
                 <span class="toc"><a href="TOC_ko.html">목차</a></span>
             </div>
             <div class="page">
-            <h1>Chapter 6 - Conclusion</h1>
-            <p>CSW</p>
+            <h1>Hello World API</h1>
+            <p>이번 튜토리얼에서는 Rust와 Actix-web을 이용하여 'Hello World' 메시지를 출력하는 기본적인 웹 서버를 만들어 보겠습니다.</p>
+<h2 id="">시작하기</h2>
+<p>첫 단계로, 새로운 binary 기반의 Cargo 프로젝트를 생성합니다:</p>
+<pre><code class="bash">cargo new hello-world
+cd hello-world</code></pre>
+<p>그 후, 프로젝트에 actix-web을 의존성으로 추가해야 합니다.</p>
+<p>이를 위해 <code>Cargo.toml</code> 파일을 열고 다음과 같이 입력합니다:</p>
+<pre><code class="toml">[dependencies]
+actix-web = "4"</code></pre>
+<h2 id="-1">핸들러 작성하기</h2>
+<p>웹 서버에서 요청을 처리하기 위해 핸들러 함수를 작성합니다.</p>
+<p>이 함수들은 비동기 함수로, 필요한 매개변수를 받아 HttpResponse를 반환합니다.</p>
+<p>이 HttpResponse는 웹 서버가 클라이언트에게 보낼 응답입니다.</p>
+<p><code>src/main.rs</code> 파일을 다음과 같이 수정합니다:</p>
+<pre><code class="rust">use actix_web::{get, post, web, App, HttpResponse, HttpServer, Responder};
+
+#[get("/")]
+async fn hello() -> impl Responder {
+    HttpResponse::Ok().body("Hello world!")
+}
+
+#[post("/echo")]
+async fn echo(req_body: String) -> impl Responder {
+    HttpResponse::Ok().body(req_body)
+}
+
+async fn manual_hello() -> impl Responder {
+    HttpResponse::Ok().body("Hey there!")
+}</code></pre>
+<p>각 핸들러는 HTTP 메소드와 경로에 따라 요청을 처리합니다.</p>
+<p>수동으로 경로를 설정하고 싶다면, 그에 맞는 함수를 작성하면 됩니다.</p>
+<h2 id="app">App 생성 및 요청 핸들러 등록</h2>
+<p>다음 단계로, App 인스턴스를 생성하고 요청 핸들러를 등록합니다.</p>
+<p>경로 정보가 있는 핸들러는 <code>App::service</code>를 사용하고, 수동으로 경로를 설정한 핸들러는 <code>App::route</code>를 사용합니다.</p>
+<pre><code class="rust">#[actix_web::main]
+async fn main() -> std::io::Result&lt;()> {
+    HttpServer::new(|| {
+        App::new()
+            .service(hello)
+            .service(echo)
+            .route("/hey", web::get().to(manual_hello))
+    })
+    .bind(("127.0.0.1", 8080))?
+    .run()
+    .await
+}</code></pre>
+<h2 id="-2">서버 실행</h2>
+<p>이제 <code>cargo run</code> 명령어를 통해 프로그램을 컴파일하고 실행할 수 있습니다.</p>
+<p>웹 브라우저에서 http://127.0.0.1:8080/ 주소로 접속하면 'Hello World' 메시지를 확인할 수 있습니다.</p>
+<p>이 간단한 예제를 통해 Rust와 Actix-web을 이용하여 웹 서버를 어떻게 만드는지 배웠습니다.</p>
+<p>이러한 기본 원리를 이용하면 다양한 웹 서비스를 만들어볼 수 있습니다.</p>
             <div class="bottomnav">
                 <span class="back"><a href="49_ko.html" rel="prev">❮ 이전</a></span>
-                <span class="next"><a href="chapter_7_ko.html" rel="next">다음 ❯</a></span>
+                <span class="next"><a href="51_ko.html" rel="next">다음 ❯</a></span>
             </div>
             </div>
-            <div class="code"><center><img src="/ferris_lofi.png" alt="Rust Tutorial" width="80%" height="100%"></center></div>
+            <div class="code"><center><img src="/8080.png" alt="Rust Tutorial" width="80%" height="100%"></center></div>
         </div>
         <script>
         var pres = document.querySelectorAll("pre>code");

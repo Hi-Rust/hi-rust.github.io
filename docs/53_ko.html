@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+    <html lang="ko">
+    <head>
+        <title>Rust 튜토리얼 - 자기주도프로젝트</title>
+
+        <meta charset="UTF-8">
+        <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+        <meta content="utf-8" http-equiv="encoding">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+        <meta name="keywords" content="Rust, Programming, Learning">
+        <meta name="description" content="Rust tutorial website based on tour_of_rust by 최석원">
+        <meta name="theme-color" content="#ff6801"/>
+        <meta http-equiv="Cache-Control" content="max-age=3600">
+        
+        <link rel="stylesheet" href="tour.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/night-owl.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
+        
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="/manifest" href="./site.webmanifest">
+        
+        <script src="//unpkg.com/@highlightjs/cdn-assets@11.7.0/highlight.min.js"></script>
+
+        <script src="./tour.js" defer></script>
+        <!-- <script>hljs.highlightAll();</script> -->
+        <script src="./highlight.badge.min.js"></script>
+    </head>
+    <body>
+        <div class="tour">
+            <div class="header">
+                <span class="title"><a href="index.html">Rust 튜토리얼</a></span>
+                <span class="nav">
+                <span class="toc"><a href="TOC_ko.html">목차</a></span>
+            </div>
+            <div class="page">
+            <h1>실행</h1>
+            <p><code>kakao-rs</code>를 <code>actix-rs</code>에 적용시켜보겠습니다.</p>
+<p>단순하게 SimpleText를 반환할 것이며 더 많은 카카오톡 반응 디자인은 다음을 참고하세요: <a href="https://i.kakao.com/docs/skill-response-format" target="_blank" rel="noopener">@링크</a></p>
+<div align="center">
+<p>
+    <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fn5Ud0%2FbtraVUpTmyM%2FLSdvhi5uKkzx9tcN2SFbh1%2Fimg.png">
+</p>
+</div>
+<ol>
+<li>의존성 추가</li>
+</ol>
+<pre><code class="bash">cargo add kakao-rs</code></pre>
+<p>카카오톡 챗봇 POST json 구조: 챗봇 관리자 &gt; 스킬 &gt; 편집 </p>
+<pre><code class="json">"intent": {
+    "id": "hequ",
+    "name": "블록 이름"
+  },
+  "userRequest": {
+    "timezone": "Asia/Seoul",
+    "params": {
+      "ignoreMe": "true"
+    },
+    "block": {
+      "id": "op",
+      "name": "블록 이름"
+    },
+    "utterance": "발화 내용",
+    "lang": null,
+    "user": {
+      "id": "138",
+      "type": "accountId",
+      "properties": {}
+    }
+  },
+  "bot": {
+    "id": "5fe45a6",
+    "name": "봇 이름"
+  },
+  "action": {
+    "name": "yl",
+    "clientExtra": null,
+    "params": {},
+    "id": "xx89p2dlfm",
+    "detailParams": {}
+  }
+}</code></pre>
+<ol start="2">
+<li>메인 함수</li>
+</ol>
+<pre><code class="bash">cargo add serde_json</code></pre>
+<pre><code class="rust">use actix_web::{get, post, web, App, HttpResponse, HttpServer, Responder};
+use kakao_rs::prelude::*;
+use serde_json::Value;
+
+#[get("/")]
+async fn hello() -> impl Responder {
+    HttpResponse::Ok().body("Hello world!")
+}
+
+#[post("/kakao")]
+async fn kakao(kakao: web::Json&lt;Value>) -> impl Responder {
+    let mut result = Template::new();
+
+    result.add_output(SimpleText::new("안녕하세요~").build());
+
+    let body = serde_json::to_string(&result).unwrap();
+
+    HttpResponse::Ok()
+        .content_type("application/json")
+        .body(body)
+}
+
+#[actix_web::main]
+async fn main() -> std::io::Result<()> {
+    HttpServer::new(|| {
+        App::new()
+            .service(hello)
+            .service(kakao)
+    })
+    .bind(("127.0.0.1", 8080))?
+    .run()
+    .await
+}</code></pre>
+<p>해당 코드는 Rust의 Actix 웹 프레임워크에서 사용하는 함수 정의의 한 예입니다.</p>
+<p>이 함수는 HTTP POST 요청을 처리하고 있으며, <code>/kakao</code> 라는 경로에 대한 요청을 처리하는 역할을 합니다.</p>
+<p>함수의 정의에 대해 세부적으로 살펴보겠습니다.</p>
+<h2 id="">함수 시그니처</h2>
+<pre><code class="rust">#[post("/kakao")]
+async fn kakao(kakao: web::Json&lt;Value>) -> impl Responder {
+    let mut result = Template::new();
+
+    result.add_output(SimpleText::new("안녕하세요~").build());
+
+    let body = serde_json::to_string(&result).unwrap();
+
+    HttpResponse::Ok()
+        .content_type("application/json")
+        .body(body)
+}</code></pre>
+<p>위 함수는 다음과 같은 요소들로 구성되어 있습니다.</p>
+<ul>
+<li><code>async fn</code>: 함수가 비동기 함수임을 나타내는 키워드입니다. Rust에서는 이 키워드를 사용하여 비동기 함수를 정의하고, 이 함수 내에서는 <code>.await</code> 연산자를 사용하여 비동기 작업을 기다릴 수 있습니다.</li>
+<li><code>kakao</code>: 함수의 이름입니다. 이 이름은 이 함수가 무슨 작업을 하는지를 설명하는 데 사용됩니다.</li>
+<li><code>(kakao: web::Json&lt;Value&gt;)</code>: 함수의 인자 목록입니다. 이 함수는 <code>web::Json&lt;Value&gt;</code> 타입의 인자 하나를 받습니다. 이 인자는 HTTP 요청의 본문을 JSON 형식으로 파싱한 결과입니다. <code>Value</code>는 <code>serde_json</code> 라이브러리에서 제공하는 타입으로, 임의의 JSON 데이터를 나타냅니다.</li>
+<li><code>-&gt; impl Responder</code>: 함수의 리턴 타입입니다. 이 함수는 <code>impl Responder</code>라는 리턴 타입을 가집니다.<code>Responder</code>는 Actix 웹 프레임워크에서 정의한 트레잇(trait)으로, HTTP 응답을 생성하는 메소드를 제공합니다.</li>
+</ul>
+<p>Template 부분은 kakao-rs 라이브러리를 참고하시면 모든 카카오톡 챗봇 응답 타입들을 일단 Template에 담아야 합니다.</p>
+<p>1가지 이상의 응답을 보낼 수 있기 때문입니다. (ex. SimpleText, BasicCard 같이)</p>
+<p>그후 <code>serde_json</code>의 <code>to_string</code>을 이용해서 serialize 가능한 구조체들을 쉽게 json string으로 변환해서 return 할 수 있습니다.</p>
+            <div class="bottomnav">
+                <span class="back"><a href="52_ko.html" rel="prev">❮ 이전</a></span>
+                <span class="next"><a href="54_ko.html" rel="next">다음 ❯</a></span>
+            </div>
+            </div>
+            <div class="code"><center><img src="/ferris_lofi.png" alt="Rust Tutorial" width="80%" height="100%"></center></div>
+        </div>
+        <script>
+        var pres = document.querySelectorAll("pre>code");
+        for (var i = 0; i < pres.length; i++) {
+            hljs.highlightElement(pres[i]);
+        }
+        var options = {
+            loadDelay: 0,
+            copyIconClass: "far fa-clipboard",
+            checkIconClass: "fa fa-check text-success",
+            blogURL: "http://rust-study.ajousw.kr/"
+        };
+        window.highlightJsBadge(options);
+        </script>
+
+        <footer>
+          <p><a target="_blank" rel="noopener" href="https://www.youtube.com/c/SoftwareToolTime">아주대학교 Software Tool Time</a> - Rust 튜토리얼 (Basic)</p>
+        </footer>
+    </body>
+</html>
