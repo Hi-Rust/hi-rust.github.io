@@ -1,8 +1,6 @@
-# Rust Tutorial
+# Rust Tutorial [@웹사이트](http://rust-study.ajousw.kr/)
 
-[@메인 소스 관리](https://github.com/Hi-Rust/hi-rust.github.io)
-
-자기주도프로젝트 최석원
+![image](https://github.com/Hi-Rust/hi-rust.github.io/assets/2356749/9d0f544b-dc32-469a-ba94-7168c46697dd)
 
 ## > public
 
