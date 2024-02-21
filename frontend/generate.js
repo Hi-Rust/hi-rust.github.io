@@ -123,7 +123,7 @@ converter.setOption("simpleLineBreaks", true);
 const getHead = (words, lang) => `<!DOCTYPE html>
     <html lang="${lang}">
     <head>
-        <title>Rust 튜토리얼 - 자기주도프로젝트</title>
+        <title>Rust 튜토리얼 (기초)</title>
 
         <meta charset="UTF-8">
         <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
